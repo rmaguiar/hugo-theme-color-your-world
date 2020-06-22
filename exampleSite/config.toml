@@ -1,0 +1,256 @@
+baseURL = "https://example.com"
+languageCode = "en"
+title = "Color Your World"
+theme = "color-your-world"
+
+copyright = "Copyright © 2008–2020, Steve Francia and the Hugo Authors;\n All rights reserved."
+
+enableEmoji = true
+enableInlineShortcodes = true
+
+paginate = 5
+
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+  [markup.highlight]
+    # To make use of the custom Chroma, this should be false
+    # and "useCustomChroma" should be true
+    noClasses = false
+
+
+[params]
+  
+  # Site description
+  description = "John Doe's personal website"
+  
+  # Author
+  author = "John Doe"
+  authorDesc = "Some indescribable horror."
+  
+  # Site cover, for Open Graph, Twitter Cards and Schema.org
+  # It will be used if the current page doesn't have a image cover
+  # File will be picked from the "assets" directory
+  # Comment the lines if you don't want to use it
+  #cover     = "img/cover.jpg"
+  #coverAlt  = "A placeholder that doesn't deserve to be described."
+  
+  # Shows a message in the footer about JavaScript being disabled
+  hasNoscriptNotice = true
+  
+  # Default path for images in posts
+  # Can also be set in the front matter
+  # ie.: "content/some-post/img"
+  imgPath = "img"
+  
+  # Default classes for markup image 
+  # Modifies the default behavior of images placed via markdown
+  # Can also be set PER PAGE via front matter
+  # Default classes are: border or borderless
+  markupImgClass = "borderless"
+  
+  # This will append a separator (of your choice) along the site title to your <title>
+  # You can disabled it PER PAGE by using "disableTitleSeparator" at front
+  # matter or disable it entirely by commenting the line below
+  # ie.: | ❚ - – — • ⚫ 
+  titleSeparator = "|"
+  
+  
+  # Contact form shortcode
+  [params.contact]
+  
+    # formspree.io Form ID
+    formspreeFormId = "example"
+    
+    # Autocomplete [on/off] and min character length for message
+    autoComplete      = false
+    messageMinLength  = 140
+    
+    # Subject
+    # You can set a single value below (and it will cease to be a dropdown),
+    # BUT KEEP IT AS AN ARRAY
+    # It can also be disabled entirely (and it will turn into a text field)
+    subject = [ 'Just saying "hi"', "I know what you did last winter", "... Is that a sloth?", "お前はもう死んでいる。" ]
+
+
+    # Text placeholders. As usual, comment the lines if you don't want use them
+    # The "subject" below will only be used if the "subject" above doesn't exist (ie.: commented/deleted)
+    [params.contact.placeholder]
+      name    = "Jane Doe"
+      email   = "janedoe@example.com"
+      subject = 'Just saying "hi"'
+      message = "Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla nullam quis risus."
+
+  [params.style]
+  
+    # Dark mode as default
+    isDark = true
+  
+    # Default accent colors for light and dark mode respectively
+    lightAccent  = "#225670"
+    darkAccent   = "#d73d67"
+
+    # More colors, pick as many as you want (not really sure if there's a limit)
+    # Apparently these may not show up on every modern browser (ie. Firefox)
+    presets = [ "#1f676b", "#ffa51e", "#902b37", "#1dbc91", "#754e85", "#7fc121", "#a8314a", "#ff7433", "#3e6728", "#ae46ab" ]
+    
+    # Use an icon or text for footnote return links
+    hasIconAsFootnoteReturnLink = true
+    
+    # For the social shortcode
+    # Use flexbox (with flex-grow) or grid (equal width)
+    socialIsFlex = true
+    
+    # Keep anchor links hidden until it's focused/hovered
+    # They will always be visible in mobile devices, regardless the option
+    hideAnchors = true
+    
+    # To make use of the custom Chroma, this should be true
+    # and "noClasses" should be false
+    useCustomChroma = true
+
+    # CSS animation transition when changing colors
+    changeTransition = ".3s ease"
+    
+    
+  # For a simple 404
+  [params.notFound]
+    title         = "Page not found"
+    description   = "This page was not found."
+    text          = "Nothing to see here, buddy."
+    
+  [params.social.centralized]
+    facebook      = [ "https://facebook.com/nowaythiswastaken", "Zuckerburg" ]
+    github        = [ "https://github.com/nowaythiswastaken" ]
+    gitlab        = [ "https://gitlab.com/nowaythiswastaken" ]
+    instagram     = [ "https://instagram.com/nowaythiswastaken" ]
+    keybase       = [ "https://keybase.io/nowaythiswastaken" ]
+    linkedin      = [ "https://www.linkedin.com/in/nowaythiswastaken" ]
+    medium        = [ "https://medium.com/@nowaythiswastaken" ]
+    reddit        = [ "https://www.reddit.com/user/nowaythiswastaken" ]
+    stackOverflow = [ "https://stackoverflow.com/users/0000000/nowaythiswastaken" ]
+    telegram      = [ "https://t.me/nowaythiswastaken" ]
+    twitter       = [ "https://twitter.com/nowaythiswastaken", "@nowaythiswastaken" ]
+    #entry         = [ "url", "label (optional)" ]
+    
+    # The "entry" here IS important. It's used to load the icon.
+
+  [params.social.decentralized]
+  
+    [params.social.decentralized.mastodon]
+      1 = [ "https://mastodon.social/@nowaythiswastaken", "mastodon.social" ]
+      2 = [ "https://mastodon.too/@nowaythiswastaken", "mastodon.too" ]
+      3 = [ "https://yet.another.one/@nowaythiswastaken", "yet.another.one" ]
+      #entry   = [ "url", "label (required)" ]
+
+    [params.social.decentralized.matrix]
+      1 = [ "https://matrix.to/#/@nowaythiswastaken:matrix.org", "matrix.org" ]
+      #entry   = [ "url", "label (required)" ]
+    
+    # The "entry" here ISN'T important. It's used for nothing.
+
+
+
+
+
+    
+[privacy]
+
+  [privacy.vimeo]
+    disabled = false
+    simple = true
+
+  [privacy.twitter]
+    disabled = false
+    enableDNT = true
+    simple = true
+
+  [privacy.instagram]
+    disabled = false
+    simple = true
+
+  [privacy.youtube]
+    disabled = false
+    privacyEnhanced = true
+
+[services]
+
+  [services.instagram]
+    disableInlineCSS = true
+
+  [services.twitter]
+    disableInlineCSS = true
+
+
+
+    
+    
+    
+    
+    
+    
+    
+
+
+
+[languages]
+  [languages.en]
+    languagename = "English"
+
+    [languages.en.menu]
+
+      [[languages.en.menu.main]]
+      name = "About"
+      weight = 1
+      url = "about/"
+
+      [[languages.en.menu.main]]
+      name = "Posts"
+      weight = 2
+      url = "posts/"
+      
+      [[languages.en.menu.main]]
+        name = "Contact"
+        weight = 3
+        url = "contact/"
+
+    [languages.pt]
+      languagename  = "Português"
+      
+      copyright = "Copyright © 2008–2020, Steve Francia e os autores do Hugo;\n Todos os direitos reservados."
+
+      [languages.pt.params]        
+        description = "Sítio pessoal de João Ninguém"
+        
+        author = "João Ninguém"
+        authorDesc = "Algum horror indescritível."
+        
+        [languages.pt.params.notFound]
+          title         = "Página não encontrada"
+          description   = "Essa página não foi encontrada."
+          text          = "Nada a se ver aqui, colega."
+
+      [languages.pt.menu]
+
+        [[languages.pt.menu.main]]
+          name = "Postagens"
+          weight = 2
+          url = "posts/"
+        
+        [[languages.pt.menu.main]]
+          name = "Contato"
+          weight = 3
+          url = "contact/"
+        
+        [languages.pt.params.contact]
+          subject = [ 'Só dando um "oi"', "Eu sei o que você fez no inverno passado", "... Aquilo é uma preguiça?", "お前はもう死んでいる。" ]
+        
+          [languages.pt.params.contact.placeholder]
+            name    = "Joana Ninguém"
+            email   = "me@janedoe.com"
+            subject = 'Só dando um "oi"'
+            message = "Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla nullam quis risus."
+        

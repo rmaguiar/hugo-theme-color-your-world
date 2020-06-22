@@ -1,0 +1,101 @@
+[change_accent]
+other = "Change accent color."
+
+[change_mode]
+other = "Change mode."
+
+[noscript]
+other = "Unable to execute JavaScript. Some features were disabled."
+
+[also_available]
+other = "Also available in"
+
+[anchor_for]
+other = "Anchor for"
+
+[missing_codec]
+other = "Your browser doesn't support HTML5 audio/video."
+
+[table_of_contents]
+other = "Contents"
+
+[references]
+other = "References"
+
+[see_footnotes]
+other = "See footnotes."
+
+[return]
+other = "Return"
+
+[return_to_text]
+other = "Return to text."
+
+[box_containing_code]
+other = "Box containing code sample."
+
+[box_containing_expression]
+other = "Box containing expression."
+
+[published_on]
+other = "Published on"
+
+[last_updated_on]
+other = "Last updated on"
+
+[name]
+other = "Name"
+
+[subject]
+other = "Subject"
+
+[message]
+other = "Message"
+
+[submit]
+other = "Submit"
+
+[go_to_pag]
+other = "Go to page {{ .PageNumber }}."
+
+[go_to_first]
+other = "Go to first page."
+
+[go_to_next]
+other = "Go to next page."
+
+[go_to_prev]
+other = "Go to previous page."
+
+[go_to_last]
+other = "Go to last page."
+
+[page]
+other = "page"
+
+[of]
+other = "of"
+
+[posts]
+other = "Posts"
+
+[and]
+other = " and "
+
+[posts_under_tag]
+other = "Posts under the \"{{ .Title }}\" tag."
+
+[posts_under_category]
+other = "Posts under the \"{{ .Title }}\" category."
+
+[page_containing]
+other = "Page containing"
+
+[tag]
+other = "Tag"
+
+[tags]
+other = "Tags"
+
+[categories]
+other = "Categories"

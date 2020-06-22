@@ -1,0 +1,40 @@
+<!-- Set SVG bundle -->
+{{ $icons := (.Scratch.Get "svgBundle").RelPermalink }}
+
+<!-- Custom footer or default copyright -->
+{{ if or (templates.Exists "partials/custom/footer") (templates.Exists "partials/custom/footer.html") }}
+  {{ partialCached "custom/footer" . }}
+{{ else }}
+  <p>{{ .Site.Copyright | markdownify | emojify }}</p>
+{{ end }}
+
+<!--
+  TODO
+  Maybe I should rethink this
+-->
+
+{{ if gt (len .Translations) 0 }}
+
+  {{ $processedKeys := slice }}
+
+  {{ range .Translations }}
+    {{ $currentKey := printf "<a rel=\"alternate\" hreflang=\"%s\" href=\"%s\">%s</a>" .Language.Lang .RelPermalink .Language.LanguageName }}
+    {{ $processedKeys = $processedKeys | append $currentKey }}
+  {{ end }}
+
+  <p>{{ T "also_available" }}: {{ delimit $processedKeys ", " (T "and") }}.</p>
+
+{{ end }}
+
+
+<!-- Fancy stuff -->
+<aside class="js">
+  <button title="{{ T "change_mode" }}"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="{{ $icons }}#adjust"/></svg></button><input type="color" list="presets" value="{{ if .Site.Params.Style.isDark }}{{ .Site.Params.style.darkAccent }}{{ else }}{{ .Site.Params.style.lightAccent }}{{ end }}" title="{{ T "change_accent" }}"><datalist id="presets"><option value="{{ .Site.Params.style.lightAccent }}"><option value="{{ .Site.Params.style.darkAccent }}"><!-- Extra colors -->{{- range .Site.Params.style.presets -}}<option value="{{ . }}">{{ end }}</datalist>
+</aside>
+
+<!-- noscript notice -->
+{{ if .Site.Params.hasNoscriptNotice }}
+  <noscript>
+    <p class="noscript">{{ T "noscript" }}</p>
+  </noscript>
+{{ end }}

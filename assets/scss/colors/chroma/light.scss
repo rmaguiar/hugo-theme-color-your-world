@@ -1,0 +1,111 @@
+// Solarized Dark (pygments-high-contrast-stylesheets)
+// Original: https://github.com/mpchadwick/pygments-high-contrast-stylesheets/blob/gh-pages/solarized-dark.css
+// 15 Nov 2017
+
+.chroma,
+pre,
+p code,
+li code {
+  background-color: #002b36;
+  color: #93a1a1
+}
+
+.chroma .ge {
+  color: #93a1a1;
+  font-style: italic
+}
+
+.chroma .gs {
+  color: #93a1a1;
+  font-weight: 700
+}
+
+.chroma .nb {
+  color: #B58900
+}
+
+.chroma .ow,
+.chroma .kp,
+.chroma .kn,
+.chroma .gi,
+.chroma .cs,
+.chroma .cp,
+.chroma .o,
+.chroma .k {
+  color: #859900
+}
+
+.chroma .sb,
+.chroma .c1,
+.chroma .cm,
+.chroma .c {
+  color: #759299
+}
+
+.chroma .se,
+.chroma .ne,
+.chroma .ni,
+.chroma .no,
+.chroma .kc,
+.chroma .gu,
+.chroma .gh,
+.chroma .x {
+  color: #e9662f
+}
+
+.chroma .sh,
+.chroma .sd,
+.chroma .w,
+.chroma .py,
+.chroma .nx,
+.chroma .nn,
+.chroma .nl,
+.chroma .na,
+.chroma .ld,
+.chroma .gt,
+.chroma .gp,
+.chroma .go,
+.chroma .p,
+.chroma .n,
+.chroma .l,
+.chroma .g,
+.chroma .err {
+  color: #93a1a1
+}
+
+.chroma .sr,
+.chroma .kt,
+.chroma .gr {
+  color: #e8625f
+}
+
+.chroma .vi,
+.chroma .vg,
+.chroma .vc,
+.chroma .bp,
+.chroma .nv,
+.chroma .nt,
+.chroma .nf,
+.chroma .nd,
+.chroma .nc,
+.chroma .kr,
+.chroma .kd {
+  color: #3294da
+}
+
+.chroma .il,
+.chroma .ss,
+.chroma .s1,
+.chroma .sx,
+.chroma .si,
+.chroma .s2,
+.chroma .sc,
+.chroma .mo,
+.chroma .mi,
+.chroma .mh,
+.chroma .mf,
+.chroma .s,
+.chroma .m,
+.chroma .gd {
+  color: #2aa198
+}

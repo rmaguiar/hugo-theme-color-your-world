@@ -1,0 +1,100 @@
+{{ define "main" }}
+
+  {{ $svgBundle := ($.Page.Scratch.Get "svgBundle").RelPermalink }}
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>{{ .Title }}</h1>
+
+        {{ if or .Params.categories .Params.tags }}
+          <aside class="tags">
+            <ul>
+            {{- with .Params.categories -}}
+                {{- range sort . -}}
+                  <li class="cats"><a class="btn" href="/categories/{{ . | urlize }}">{{ . }}</a></li>
+                {{- end -}}
+            {{- end -}}
+            {{- with .Params.tags -}}
+                {{- range sort . -}}
+                  <li><a class="btn" href="/tags/{{ . | urlize }}">{{ . }}</a></li>
+                {{- end -}}
+            {{ end }}
+          </aside>
+        {{- end -}}
+        
+        {{ if not .Date.IsZero }}
+          <p>
+            {{ if eq .PublishDate .Lastmod }}
+              {{ T "published_on" }} <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "2006-01-02" }}</time>
+            {{ else }}
+              {{ T "last_updated_on" }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time>
+            {{ end }}
+          </p>
+        {{ end }}
+        
+        {{ if .Params.cover }}
+          {{ partial "cover" . }}
+        {{ end }}
+        
+      </header>
+    
+      {{ if and .Params.toc (gt (len .Page.TableOfContents) 32) }}
+        <details class="toc" open>
+          <summary>{{ T "table_of_contents" }}</summary>
+          {{ .Page.TableOfContents }}
+        </details>
+      {{ end }}
+      
+      <!-- 
+        For some reason, Chrome will ignore some elements when using TAB
+        (while Firefox will not). Since Chrome is used by the majority,
+        I feel like I need to "fix" this.
+        
+        For now, I'll be using "tabindex=0" (but then it makes Firefox
+        complain about accessibility). OH, THIS GONNA BE GREAT.
+        
+        Also, sorry for my REGEX skills.
+      -->
+
+      <!-- i18n -->
+      {{ $references    := (printf "${1}<h2>%s</h2>" (T "references")) }}
+      {{ $seeFootnotes  := (printf "${1} title=\"%s\"" (T "see_footnotes")) }}
+      {{ $returnToText  := (printf "${1} title=\"%s\"" (T "return_to_text")) }}
+      
+      <!-- a11y, kind of (probably useless) -->
+      {{ $highlightLabel := (printf "${1} aria-label=\"%s\" tabindex=0${2}" (T "box_containing_code")) }}
+      
+      <!-- Wrapped to make use of overflow-x property (plus the tabindex thing) -->
+      {{ $improvedTable := printf "<section class=scroll tabindex=0> ${1} </section>" }}
+      
+      <!-- Replace the footnote return links with a text label -->
+      {{ $footnoteReturnLink := ( printf "${1}%s${2}" (T "return")) }}
+      
+      <!-- OR replace the footnote return links with a SVG icon -->
+      {{ if .Site.Params.Style.hasIconAsFootnoteReturnLink }}
+        {{ $footnoteReturnLink = ( printf "${1}<svg transform=\"rotate(180) translate(0 -1)\" aria-hidden=\"true\" ><use xlink:href=\"%s#caret-down\"/></svg>${2}" $svgBundle) }}
+      {{ end }}
+
+      <!--
+        This is doing 4 things right now (or is it):
+        
+        * Adding "tabindex=0" to native table and code fences;
+        * Making tables scrollable;
+        * Localizing some text;
+        * Adding a "h2" to footnotes.
+      -->
+
+      <!--
+        For some reason, I don't seem to be able to capture the "↩" (not even using \x{21A9}).
+        To bypass this, I basically captured everything but the "↩"...
+      -->
+
+        {{ .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $improvedTable | replaceRE "(<div class=\"highlight\"><(?:pre|div) class=\"chroma\")(>)" $highlightLabel | replaceRE "(class=\"footnote-ref\")" $seeFootnotes | replaceRE "(class=\"footnote-backref\")" $returnToText | replaceRE "(<section class=\"footnotes\" role=\"doc-endnotes\">)" $references | replaceRE "(<a (?:.*) class=\"footnote-backref\" (?:.*)>)(?:.*)(</a>)" $footnoteReturnLink | safeHTML }}
+
+    </article>
+    
+  </main>
+
+{{ end }}

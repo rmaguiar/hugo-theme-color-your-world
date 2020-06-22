@@ -1,0 +1,63 @@
+// The CSS below should only appear rarely (ideally once, excluding translations)
+@import '../base/_all',
+        '../fonts/variables';
+
+
+
+section.social {
+  
+  {{ if .Site.Params.Style.socialIsFlex }}
+  
+    display: flex;
+    flex-wrap: wrap;
+    
+  {{ else }}
+  
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  {{ end }}
+  
+  a {
+    display: flex;
+    
+    {{ if .Site.Params.Style.socialIsFlex }}
+      flex: 1;
+    {{ end }}
+    
+    align-items: center;
+    
+    margin: 0 9px 9px 0;
+    min-width: 150px; //150px;
+    padding: 15px 21px; // 24px 12px 15px; // 18px 0;
+    
+    text-align: center;
+
+    svg {
+      fill: currentColor;
+      
+      stroke: var(--lpress);
+      stroke-width: 9px;
+      
+      @include squared(36px);
+    }
+    
+    p {
+      flex: 1;
+      
+      margin: 0 12px;
+      
+      font-size: .75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      
+      line-height: 1rem;
+
+      user-select: none;
+    }
+    
+    &:hover {
+      opacity: .75;
+    }
+  }
+}

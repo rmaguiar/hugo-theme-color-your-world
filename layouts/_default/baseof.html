@@ -1,0 +1,54 @@
+<!--
+  Generate and set SVG bundle
+  Currently here to avoid certain priority issues...
+-->
+
+{{- $svgBundle := resources.Get "bundle.svg" | resources.ExecuteAsTemplate "img/bundle.svg" . | minify | resources.Fingerprint "md5" -}}
+{{- $.Page.Scratch.Set "svgBundle" $svgBundle -}}
+
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}" data-mode="{{ if .Site.Params.Style.isDark }}dark{{ else }}light{{ end }}">
+  <head prefix="og: http://ogp.me/ns#">
+    {{ partial "head" . }}
+  </head>
+
+  <body>
+
+    <header>
+      {{ partial "header" . }}
+    </header>
+
+    <div class="filler">
+      {{ block "main" . }}
+        <!-- Stuff -->
+      {{ end }}
+    </div>
+    
+    <footer>
+      {{ partial "footer" . }}
+    </footer>
+
+    <!--
+      Remnant JavaScript
+      If not using Hugo server, remove every "console.log()"
+    -->
+    
+    {{ with resources.Get "js/postpone.js" | resources.ExecuteAsTemplate .Page . | minify }}
+
+      <script>
+        {{ if $.Site.IsServer }}
+          {{ .Content | safeJS }}
+        {{ else }}
+          {{ .Content | replaceRE "console.log(.*?);" "" | safeJS }}
+        {{ end }}
+      </script>
+
+    {{ end }}
+    
+    <!-- KaTeX -->
+    {{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}
+      {{ partial "katex.html" . }}
+    {{ end }}
+
+  </body>
+</html>

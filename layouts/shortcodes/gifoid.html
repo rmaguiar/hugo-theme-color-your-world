@@ -1,0 +1,41 @@
+<!--
+  Using videos as "GIFs"
+
+  Convert them to video using ffmpeg or whatever, place them in a
+  folder named "video" (can be changed via params "videoPath"),
+  then use this shortcode.
+  
+  For reference:
+    https://web.dev/replace-gifs-with-videos/
+    
+  More references:
+    ffmpeg -i "cat_n_laser.gif" -b:v 0 -crf 25 "cat_n_laser.mp4"
+    ffmpeg -i "cat_n_laser.gif" -c vp9 -b:v 0 -crf 41 "cat_n_laser.webm"
+    ffmpeg -i "cat_n_laser.mp4" -vframes 1 -q:v 2 "cat_n_laser.jpg"
+  
+  Usage:
+    gifoid "cat_n_laser" "It's your standard internet cat chasing a laser pointer." border
+    
+  Default classes:
+    border
+    borderless
+    
+  TODO
+    * Write a routine (using os.Stat?) that places the smallest file
+    at the top of the video tag, as it's apparently important.
+    * Allow the user to use the full filename and the shortcode will
+    strip its extension.
+-->
+
+{{ $fileName  := (.Get 0) }}
+{{ $title     := (.Get 1) }}
+{{ $class     := (.Get 2) }}
+
+{{ $videoPath := .Page.Params.videoPath | default "video" }}
+{{ $filePath  := path.Join $videoPath $fileName }}
+
+<video class="gifoid {{ $class }}" autoplay loop muted playsinline {{ with $title }}title="{{ . }}"{{ end }}>
+  <source src="{{ $filePath }}.mp4" type="video/mp4">
+  <source src="{{ $filePath }}.webm" type="video/webm">
+  <p class="error">{{ T "missing_codec" }}</p>
+</video>

@@ -1,0 +1,394 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- I'm 99% sure there's a smarter way of doing it but whatever -->
+{{ $currentTitle  := (.Title | emojify) }}
+{{ $mainTitle     := .Params.mainTitle }}
+
+
+{{ $titleSeparator := .Site.Params.titleSeparator }}
+
+
+{{ if (eq .Kind "404") }}
+
+  <!-- If 404 page -->
+  {{ $currentTitle = .Site.Params.notFound.title }}
+  
+{{ else if (eq .Kind "section") }}
+
+  <!-- If it's a post list -->
+  {{ if gt .Paginator.TotalPages 1 }}
+    {{ $mainTitle = printf "%s, %s %s %s %s" .Title (T "page") (string .Paginator.PageNumber) (T "of") (string .Paginator.TotalPages) }}
+  {{ end }}
+  
+{{ else if (and (ne .Kind "taxonomyTerm") (eq .Type "tags")) }}
+
+  <!-- If it's a post list for a tag -->
+  {{ $currentTitle = printf "%s: \"%s\"" (T "tag") .Title }}
+
+  {{ if gt .Paginator.TotalPages 1 }}
+    {{ $mainTitle = printf "%s: \"%s\", %s %s %s %s" (T "tag") .Title (T "page") (string .Paginator.PageNumber) (T "of") (string .Paginator.TotalPages) }}
+  {{ else }}
+    {{ $mainTitle = printf "%s: \"%s\"" (T "tag") .Title }}
+  {{ end }}
+
+{{ else if (and (eq .Kind "taxonomyTerm") (eq .Type "tags")) }}
+
+  <!-- /categories/ page -->
+  {{ $currentTitle = (T "tags") }}
+
+{{ else if (and (eq .Kind "taxonomyTerm") (eq .Type "categories")) }}
+
+  <!-- /tags/ page -->
+  {{ $currentTitle = (T "categories") }}
+  
+{{ else if and (.IsHome) (not .Content) }}
+
+  <!-- If it's the home page without content -->
+  {{ $currentTitle = (.Site.Title | emojify) }}
+
+{{ end }}
+
+
+{{ $currentDesc := (.Params.Description | emojify) }}
+
+{{ if .IsHome }}
+  {{ $currentDesc = (.Site.Params.description | emojify) }}
+{{ else if and (ne .Kind "taxonomyTerm") (eq .Type "tags") (not .Params.description) }}
+  {{ $currentDesc = (T "posts_under_tag" .) }}
+{{ else if and (ne .Kind "taxonomyTerm") (eq .Type "categories") (not .Params.description) }}
+  {{ $currentDesc = (T "posts_under_category" .) }}
+{{ else if eq .Kind "taxonomyTerm" }}
+  {{ $currentDesc = printf "%s %s." (T "page_containing") ($currentTitle | lower) }}
+{{ else if (eq .Kind "404") }}
+  {{ $currentDesc = .Site.Params.notFound.description }}
+{{ end }}
+
+
+<!-- Scratch -->
+{{ $.Scratch.Set "currentTitle" $currentTitle }}
+
+
+
+<!-- Beginning of the SEO madness -->
+
+<title>
+  {{- if and $titleSeparator (not .Params.disableTitleSeparator ) -}}
+    {{ if $mainTitle }}
+      {{- $mainTitle = printf "%s %s %s" $mainTitle $titleSeparator .Site.Title -}}
+    {{ else }}
+      {{- $mainTitle = printf "%s %s %s" $currentTitle $titleSeparator .Site.Title -}}
+    {{ end }}
+  {{- end -}}
+  
+  {{- if $mainTitle -}}
+    {{- $mainTitle -}}
+  {{ else }}
+    {{- $currentTitle -}}
+  {{- end -}}
+</title>
+
+
+{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+{{ with $currentDesc }}<meta name="description" content="{{ . }}">{{ end }}
+
+
+<meta name="robots" content="{{ if and (ne .Kind "404") (ne .Params.noindex true) }}index follow{{ else }}noindex follow{{ end }}">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+
+<!-- Canon -->
+{{ if and (.IsPage) (not .Params.sitemap_exclude) }}
+  {{ if .Params.canonicalURL }}
+    <link rel="canonical" href="{{ .Params.canonicalURL }}">
+  {{ else if and (ne .Kind "404") (ne .Params.sitemap_exclude true) }}
+    <link rel="canonical" href="{{ .Permalink }}">
+  {{ end }}
+{{ else if (eq .Kind "section") }}
+  <link rel="canonical" href="{{ .Paginator.URL | absURL }}">
+  
+  {{ if .Paginator.HasPrev }}
+    <link rel="prev" href="{{ .Paginator.Prev.URL | absURL }}">
+  {{ end }}
+  
+  {{ if .Paginator.HasNext }}
+    <link rel="next" href="{{ .Paginator.Next.URL | absURL }}">
+  {{ end }}
+{{ end }}
+
+
+
+<!-- Reserved -->
+{{ if or (templates.Exists "partials/custom/head") (templates.Exists "partials/custom/head.html") }}
+  {{ partial "custom/head" . }}
+{{ end }}
+
+
+
+<!-- Open Graph / Twitter Card -->
+<meta property="og:site_name" content="{{ .Site.Title }}">
+<meta property="og:title" content="{{ $currentTitle }}">
+{{ with $currentDesc }}<meta property="og:description" content="{{ . }}">{{ end }}
+
+{{- if ne .Kind "404" }}
+  <meta property="og:url" content="{{ .Permalink }}">
+{{ end -}}
+
+
+<!-- Generated images for Open Graph, Twitter Cards and also Schema.org -->
+
+{{ $imgPath := .Page.Param "imgPath" }}
+
+{{- if .Params.cover }}
+
+  {{ $file := .Params.cover }}
+
+  {{ if $imgPath }}
+    {{ $file = path.Join $imgPath $file }}
+  {{ end }}
+
+  {{- with .Resources.GetMatch $file }}
+    <meta property="og:image" content="{{ (.Fill "1200x630").Permalink }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    {{ with $.Params.coverAlt }}
+      <meta property="og:image:alt" content="{{ . }}">
+    {{ end }}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ (.Fill "1280x640").Permalink }}">
+
+    {{ $.Scratch.Set "schemaCover" (.Fill "960x540").Permalink }}
+  {{ end -}}
+{{ else if .Site.Params.cover }}
+  {{ with resources.Get (.Site.Params.cover | default "img/cover.jpg") }}
+    <meta property="og:image" content="{{ (.Fill "1200x630 center").Permalink }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    {{ with $.Site.Params.coverAlt }}
+      <meta property="og:image:alt" content="{{ . }}">
+    {{ end }}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ (.Fill "1280x640 center").Permalink }}">
+    
+    {{ $.Scratch.Set "schemaCover" (.Fill "960x540").Permalink }}
+  {{ end }}
+{{ end -}}
+
+<!-- More social crap -->
+{{ if and (.IsPage) (not .Params.sitemap_exclude) }}
+  <meta property="og:type" content="article">
+  
+  {{ if not .Date.IsZero }}
+    <meta property="article:published_time" content="{{ .PublishDate.Format "2006-01-02" | safeHTML }}">
+    <meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02" | safeHTML }}">
+    <meta property="og:updated_time" content="{{ .Lastmod.Format "2006-01-02" | safeHTML }}">
+  {{ end }}
+
+  {{ with .Params.author }}
+    <meta property="article:author" content="{{ . }}">
+  {{ end }}
+  
+  {{ with .Site.Params.Social.Centralized.twitter }}
+    <meta name="twitter:creator" content="{{ (urls.Parse (index . 0)).Path | replaceRE "/" "@" }}">
+  {{ end}}
+  
+{{ else }}
+  <meta property="og:type" content="website">
+{{ end -}}
+
+{{ with .Site.Params.Social.Centralized.twitter }}
+  <meta name="twitter:site" content="{{ (urls.Parse (index . 0)).Path | replaceRE "/" "@" }}">
+{{ end }}
+
+
+
+{{ with .Site.Params.locale }}
+  <meta property="og:locale" content="{{ . }}">
+{{ end }}
+
+{{ if .Site.Config.Privacy.Twitter.EnableDNT }}
+  <meta name="twitter:dnt" content="on">
+{{ end }}
+
+<!-- Feed -->
+<link rel="alternate" type="application/rss+xml" href="{{ "index.xml" | relURL }}" title="{{ .Site.Title }}">
+
+<!-- i18n -->
+{{ if .IsTranslated }}
+  {{ range .Translations }}
+    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" title="{{ .Language.LanguageName }}">
+  {{ end }}
+{{ end }}
+
+
+<!-- Will be replaced by JS anyway -->
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+<!-- Social on Schema.org -->
+{{ $sameAs := slice }}
+
+{{ range .Site.Params.Social.Centralized }}
+  {{ $sameAs = $sameAs | append (index . 0) }}
+{{ end }}
+
+{{ range .Site.Params.Social.Decentralized }}
+  {{ range . }}
+    {{ $sameAs = $sameAs | append (index . 0) }}
+  {{ end }}
+{{ end }}
+
+
+
+<!-- Schema Markup / Structured Data -->
+
+<!--
+  TODO
+  The lack of "datePublished" will throw an error,
+  but I don't know if leaving it as "0001-01-01" is any better.
+  
+  Also, there's something wrong with the Google's validation tool. It's ignoring the "Person" type for https://schema.org/publisher.
+  
+  Reference: https://www.drupal.org/project/schema_metatag/issues/3097526
+-->
+
+{{ if and (in .Site.Params.mainSections .Section) (not .Params.sitemap_exclude) }}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebSite",
+        "@id": "{{ .Site.BaseURL }}"
+      },
+      "headline": {{ $currentTitle }},
+      "description": {{ $currentDesc }},
+      {{ with $.Scratch.Get "schemaCover" }}"image": "{{ . }}",{{ end }}
+      "url": "{{ .Permalink }}",
+      "inLanguage": "{{ .Site.Language.Lang }}",
+      "datePublished": "{{ .PublishDate.Format "2006-01-02" | safeHTML }}",
+      {{ with .Lastmod }}"dateModified": "{{ .Format "2006-01-02" | safeHTML }}",{{ end }}
+      "wordCount" : "{{ .WordCount }}",
+      "publisher": {
+        "@type": "Person",
+        "name": "{{ .Site.Params.author }}"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "{{ .Site.Params.author }}",
+        {{ with .Site.Params.authorDesc }}"description": {{ . }},{{ end }}
+        {{ if gt (len $sameAs) 0 }}"sameAs": {{ $sameAs }}{{ end }}
+      }
+    }
+  </script>
+{{ else }}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "{{ .Site.BaseURL }}",
+      "inLanguage": "{{ .Site.Language.Lang }}",
+      "name": {{ .Site.Title }},
+      "description": {{ .Site.Params.description | emojify }},
+      "publisher": "{{ .Site.Params.author }}"
+    }
+  </script>
+{{ end }}
+
+
+
+<!-- Main CSS -->
+{{ $main := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "css/main.scss" . | toCSS | minify | resources.Fingerprint "sha512" }}
+<link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}">
+
+
+<!-- If JS is disabled -->
+<noscript>
+
+  <!-- Not properly tested? -->
+  <meta name="theme-color" content="{{ .Site.Params.Style.lightAccent }}" {{ if .Site.Params.Style.isDark }}media="(prefers-color-scheme: light)"{{ end }}>
+  <meta name="theme-color" content="{{ .Site.Params.Style.darkAccent }}" {{ if not .Site.Params.Style.isDark }}media="(prefers-color-scheme: dark)"{{ end }}>
+
+  <style>
+  
+    html {
+      --accent: {{ if .Site.Params.Style.isDark }}{{ .Site.Params.Style.darkAccent }}{{ else }}{{ .Site.Params.Style.lightAccent }}{{ end }};
+    }
+  
+    .js,
+    img.lazyload {
+      display: none;
+    }
+    
+  </style>
+</noscript>
+
+
+<!-- Exclusive CSS / CSS that "ideally" should appear once -->
+{{ if or (.HasShortcode "contact-form") (.HasShortcode "social") }}
+  <style>
+    {{ if .HasShortcode "contact-form" }}
+      {{ with resources.Get "scss/exclusive/contact-form.scss" | resources.ExecuteAsTemplate .Layout . | toCSS | minify }}
+        {{ .Content | safeCSS }}
+      {{ end }}
+    {{ end }}
+    
+    {{ if .HasShortcode "social" }}
+      {{ with resources.Get "scss/exclusive/social.scss" | resources.ExecuteAsTemplate .Layout . | toCSS | minify }}
+        {{ .Content | safeCSS }}
+      {{ end }}
+    {{ end }}
+  </style>
+{{ end }}
+
+
+<!-- Should be loaded even if browser has native lazy load support -->
+
+{{ $lazysizes := resources.Get "lazysizes@5.2.2/lazysizes.min.js" | resources.ExecuteAsTemplate "js/lazysizes.min.js" . | minify | resources.Fingerprint "sha512" }}
+
+<script defer src="{{ $lazysizes.RelPermalink }}" integrity="{{ $lazysizes.Data.Integrity }}" crossorigin="anonymous"></script>
+
+
+<!-- KaTeX -->
+{{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+{{ end }}
+
+
+<!--
+  rel="me"
+  Not even sure how useful is this nowdays,
+  but since it's easy to implement...
+-->
+
+{{ range .Site.Params.Social.Centralized }}
+  <link rel="me" href="{{ index . 0 }}"/> 
+{{ end }}
+
+{{ range .Site.Params.Social.Decentralized }}
+  {{ range . }}
+    <link rel="me" href="{{ index . 0 }}"/> 
+  {{ end }}
+{{ end }}
+
+
+<!--
+  Priority JavaScript
+  If not using Hugo server, remove every "console.log()"
+-->
+
+{{ with resources.Get "js/prepone.js" | resources.ExecuteAsTemplate .Page . | minify }}
+
+  <script>
+    {{ if $.Site.IsServer }}
+      {{ .Content | safeJS }}
+    {{ else }}
+      {{ .Content | replaceRE "console.log(.*?);" "" | safeJS }}
+    {{ end }}
+  </script>
+
+{{ end }}

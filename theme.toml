@@ -1,0 +1,32 @@
+# theme.toml template for a Hugo theme
+# See https://github.com/gohugoio/hugoThemes#themetoml for an example
+
+name = "Color Your World"
+license = "MIT"
+licenselink = "https://gitlab.com/rmaguiar/hugo-theme-color-your-world/blob/master/LICENSE.md"
+description = "A minimalist theme for personal blogs with a colored twist."
+homepage = "https://gitlab.com/rmaguiar/hugo-theme-color-your-world"
+tags = [
+  "blog",
+  "contact form",
+  "dark",
+  "extended",
+  "highlighting",
+  "light",
+  "multilingual",
+  "minimalist",
+  "personal",
+  "responsive",
+  "technical"
+]
+features = [
+  "dark mode",
+  "noscript",
+  "privacy",
+  "syntax highlighting"
+]
+min_version = "0.71.0"
+
+[author]
+  name = "rmaguiar"
+  homepage = "https://rmaguiar.keybase.pub"

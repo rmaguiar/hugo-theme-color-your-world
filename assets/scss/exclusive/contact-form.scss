@@ -1,0 +1,116 @@
+// The CSS below should only appear rarely (ideally once, excluding translations)
+@import '../base/_all',
+        '../fonts/variables';
+
+
+
+#contact {
+
+  margin: 1.5rem 0;
+
+  label {
+    display: block;
+    margin-top: 1rem;
+    
+    font-family: $heading-font;
+    font-size: .9rem;
+    
+    letter-spacing: .5px;
+    line-height: 1.8rem;
+    text-transform: uppercase;
+    
+    user-select: none;
+  }
+
+  input[name=name],
+  input[name=_replyto],
+  input[name=_subject],
+  select,
+  textarea {
+    background: var(--input-bg);
+    border: 1px solid var(--input-bd);
+    color: var(--input-fg);
+    
+    font-family: $body-font;
+    font-size: .9rem;
+    line-height: 1.5rem;
+  
+    display: block;
+    
+    margin: 3px 0;
+    max-width: 100%;
+    
+    transition: outline .2s ease-in-out;
+    
+    outline: 2px solid transparent;
+
+    &:focus {
+      outline-color: var(--accent);
+    }
+  }
+  
+  input[name=name],
+  input[name=_replyto],
+  input[name=_subject] {
+    min-width: 240px;
+    padding: 6px 12px;
+  }
+  
+  select {
+    min-width: 210px;
+    padding: 6px;
+  }
+  
+  textarea {
+    padding: 9px 15px;
+    
+    width: 90%;
+    height: auto;
+  }
+
+  input[type=submit] {
+    cursor: pointer;
+    
+    font-family: $heading-font;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .05rem;
+    
+    margin-top: 1.2rem;
+    padding: 12px 42px 15px;
+
+    outline: 2px dashed transparent;
+    outline-offset: 2px;
+    
+    transition:
+      border .2s ease-in-out,
+      outline .2s ease-in-out,
+      opacity .2s ease-in-out;
+    
+    &:focus {
+      outline-color: var(--accent);
+    }
+    
+    &:hover {
+      opacity: .75;
+    }
+
+    // HACK
+    // Override Firefox unnecessary extra inner outline
+    &::-moz-focus-inner {
+      border: 0;
+    }
+  }
+}
+
+// HACK
+// Override Firefox unnecessary extra inner outline
+// https://stackoverflow.com/a/11603104
+// https://stackoverflow.com/a/52903457
+@supports (-moz-appearance: meterbar) {
+  #contact select {
+    color: var(--fg);
+    color: rgba(0,0,0,0);
+    text-shadow: 0 0 0 var(--fg);
+  }
+}

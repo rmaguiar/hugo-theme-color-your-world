@@ -1,0 +1,101 @@
+[change_accent]
+other = "Mudar cor de acentuação."
+
+[change_mode]
+other = "Alternar modo."
+
+[noscript]
+other = "Não foi possível executar o JavaScript. Alguns recursos foram desativados."
+
+[also_available]
+other = "Também disponível em"
+
+[anchor_for]
+other = "Âncora para"
+
+[missing_codec]
+other = "Seu navegador não suporta áudio/vídeo em HTML5."
+
+[table_of_contents]
+other = "Conteúdo"
+
+[references]
+other = "Referências"
+
+[see_footnotes]
+other = "Ver nota no rodapé."
+
+[return]
+other = "Retornar"
+
+[return_to_text]
+other = "Retornar ao texto."
+
+[box_containing_code]
+other = "Caixa contendo amostra de código."
+
+[box_containing_expression]
+other = "Caixa contendo expressão."
+
+[published_on]
+other = "Publicado em"
+
+[last_updated_on]
+other = "Última atualização em"
+
+[name]
+other = "Nome"
+
+[subject]
+other = "Assunto"
+
+[message]
+other = "Mensagem"
+
+[submit]
+other = "Enviar"
+
+[go_to_pag]
+other = "Ir para a página {{ .PageNumber }}."
+
+[go_to_first]
+other = "Ir para a primeira página."
+
+[go_to_next]
+other = "Ir para a próxima página."
+
+[go_to_prev]
+other = "Ir para a página anterior."
+
+[go_to_last]
+other = "Ir para a última página."
+
+[page]
+other = "página"
+
+[of]
+other = "de"
+
+[posts]
+other = "Postagens"
+
+[and]
+other = " e "
+
+[posts_under_tag]
+other = "Postagens sob o marcador \"{{ .Title }}\"."
+
+[posts_under_category]
+other = "Postagens sob a categoria \"{{ .Title }}\"."
+
+[page_containing]
+other = "Página contendo"
+
+[tag]
+other = "Marcador"
+
+[tags]
+other = "Marcadores"
+
+[categories]
+other = "Categorias"

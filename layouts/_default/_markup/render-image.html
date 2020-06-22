@@ -1,0 +1,69 @@
+<!--
+  It always expects the image is inside a folder called "img".
+  File will be converted into 3 versions: 500w, 800w and 1200w.
+
+  Usage:
+    img "weird_cat.jpg" "Something that can (or not) be a cat."
+    img file="weird_cat.jpg" alt="Something that can (or not) be a cat."
+-->
+
+{{ $file    := .Destination }}
+{{ $altText := .Text }}
+
+{{ $class   := .Page.Param "markupImgClass" | default "borderless" }}
+
+
+{{ $imgPath := .Page.Param "imgPath" }}
+
+{{ if $imgPath }}
+  {{ $file = path.Join $imgPath $file }}
+{{ end }}
+
+{{ $encodedPixel := "image/gif;base64,R0lGODdhAQABAIABAICAgP///ywAAAAAAQABAAACAkQBADs=" }}
+
+<!-- Assume file is local -->
+{{ with $.Page.Resources.GetMatch $file }}
+
+  {{ $placeholder         := (.Resize "800x png") | images.Filter (images.Contrast -100) }}
+  {{ $encodedPlaceholder  := printf "image/png;base64,%s" ($placeholder.Content | base64Encode) }}
+  
+  <img
+    class="lazyload {{ $class }}"
+    loading="lazy"
+    data-srcset="{{ (.Resize "1200x").RelPermalink }} 1200w, {{ (.Resize "800x").RelPermalink }} 800w, {{ (.Resize "500x q90").RelPermalink }} 500w"
+    src="data:{{ $encodedPlaceholder }}"
+    data-src="{{ (.Resize "800x").RelPermalink }}"
+    {{ with $altText }}alt="{{ . }}"{{ end }}
+  />
+
+  <noscript>
+    <img
+      {{ with $class }}class="{{ . }}"{{ end }}
+      loading="lazy"
+      srcset="{{ (.Resize "1200x").RelPermalink }} 1200w, {{ (.Resize "800x").RelPermalink }} 800w, {{ (.Resize "500x q90").RelPermalink }} 500w"
+      src="data:{{ $encodedPlaceholder }}"
+      {{ with $altText }}alt="{{ . }}"{{ end }}
+    />
+  </noscript>
+{{ else }}
+  {{ with (.Destination | safeURL) }}
+    <!-- If local file isn't found, assume it's a remote file -->
+    <img
+      class="lazyload {{ $class }}"
+      loading="lazy"
+      src="data:{{ $encodedPixel }}"
+      data-src="{{ . }}"
+      {{ with $altText }}alt="{{ . }}"{{ end }}
+    />
+    
+    <noscript>
+      <img
+        {{ with $class }}class="{{ . }}"{{ end }}
+        loading="lazy"
+        src="{{ . }}"
+        {{ with $altText }}alt="{{ . }}"{{ end }}
+      />
+    </noscript>
+  
+  {{ end }}
+{{ end }}

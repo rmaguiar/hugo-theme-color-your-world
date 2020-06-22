@@ -1,0 +1,50 @@
+{{ define "main" }}
+  
+  {{ $currentTitle := .Scratch.Get "currentTitle" }}
+  
+  <main class="list">
+  
+    <h1>{{ $currentTitle }}</h1>
+    
+    {{ if eq .Kind "taxonomyTerm" }}
+      {{ if eq .Type "categories" }}
+        {{ partial "categories" . }}
+      {{ else if eq .Type "tags" }}
+        {{ partial "tags" . }}
+      {{ end }}
+    {{ else }}
+
+      <!--
+      range last 9
+      .Format "2006-01-02"
+      | dateFormat "Jan 02"
+      -->
+
+      {{ $pages := where site.RegularPages "Type" "in" .Site.Params.mainSections }}
+      
+      {{ $paginator := .Paginate .Pages }}
+
+      <ul class="posts">
+        {{ range $paginator.Pages }}
+          <li>
+            <a class="btn" href="{{ .RelPermalink }}">
+              <p>{{ .Title | emojify }}</p>
+              {{ if not .Date.IsZero }}<time datetime="{{ .Date | dateFormat "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+      
+      {{ partial "pagination" . }}
+
+      {{ if and (gt (len .Site.Taxonomies.tags) 1) (ne .Section "categories") }}
+        <hr>
+        <h2>{{ T "tags" }}</h2>
+        {{ partial "tags" . }}
+      {{ end }}
+
+    {{ end }}
+    
+  </main>
+  
+{{ end }}

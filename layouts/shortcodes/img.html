@@ -1,0 +1,51 @@
+<!--
+  It always expects the image is inside a folder called "img".
+  File will be converted into 3 versions: 500w, 800w and 1200w.
+
+  Usage examples:
+    img "weird_cat.jpg" "Something that can (or not) be a cat."
+    img file="weird_cat.jpg" alt="Something that can (or not) be a cat."
+    img class="border" file="weird_cat.jpg" alt="Something that can (or not) be a cat."
+    img "weird_cat.jpg" "Something that can (or not) be a cat." "border"
+
+  Default classes:
+    border
+    borderless
+-->
+
+{{ $file    := .Get "file"  | default (.Get 0) }}
+{{ $altText := .Get "alt"   | default (.Get 1) }}
+{{ $class   := .Get "class" | default (.Get 2) }}
+
+
+{{ $imgPath := .Page.Param "imgPath" }}
+
+{{ if $imgPath }}
+  {{ $file = path.Join $imgPath $file }}
+{{ end }}
+
+{{ with $.Page.Resources.GetMatch $file }}
+
+  {{ $placeholder         := (.Resize "800x png") | images.Filter (images.Contrast -100) }}
+  {{ $encodedPlaceholder  := printf "image/png;base64,%s" ($placeholder.Content | base64Encode) }}
+  {{ $encodedPixel        := "image/gif;base64,R0lGODdhAQABAIABAICAgP///ywAAAAAAQABAAACAkQBADs=" }}
+
+  <img
+    class="lazyload {{ $class }}"
+    loading="lazy"
+    data-srcset="{{ (.Resize "1200x").RelPermalink }} 1200w, {{ (.Resize "800x").RelPermalink }} 800w, {{ (.Resize "500x q90").RelPermalink }} 500w"
+    src="data:{{ $encodedPlaceholder }}"
+    data-src="{{ (.Resize "800x").RelPermalink }}"
+    {{ with $altText }}alt="{{ . }}"{{ end }}
+  />
+
+  <noscript>
+    <img
+      {{ with $class }}class="{{ . }}"{{ end }}
+      loading="lazy"
+      srcset="{{ (.Resize "1200x").RelPermalink }} 1200w, {{ (.Resize "800x").RelPermalink }} 800w, {{ (.Resize "500x q90").RelPermalink }} 500w"
+      src="data:{{ $encodedPlaceholder }}"
+      {{ with $altText }}alt="{{ . }}"{{ end }}
+    />
+  </noscript>
+{{ end }}
