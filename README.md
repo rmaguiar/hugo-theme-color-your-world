@@ -1,9 +1,5 @@
 # Color Your World
 
-![Theme screenshot in dark mode.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/screenshot.png)
-
-![Theme screenshot in light mode.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/screenshot2.png)
-
 **Color Your World** is a [Hugo](https://gohugo.io) theme developed around a single experiment that led me to this:
 
 ![HTML color picker.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/color-picker.png)
@@ -26,6 +22,13 @@ I've been working on this theme for so long that there are features I don't even
 * Responsive images via image processing;
 * Image lazy loading (native + [lazysizes](https://github.com/aFarkas/lazysizes));
 * **noscript** capable to an extent (except KaTeX).
+
+
+## Screenshots
+
+![Theme screenshot in dark mode.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/screenshot.png)
+
+![Theme screenshot in light mode.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/screenshot2.png)
 
 ## Requirements
 
@@ -143,7 +146,7 @@ This information will also be used to generate social meta tags (ie.: rel="me" a
 Alternatively, you can have these params in the front matter of any page.
 
 
-### Contact
+### Contact form
 
 ```toml
 # Contact form shortcode
