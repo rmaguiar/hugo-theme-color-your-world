@@ -1,12 +1,12 @@
 # Color Your World
 
-![Theme screenshot in dark mode.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/blob/master/images/screenshot.png)
+![Theme screenshot in dark mode.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/screenshot.png)
 
-![Theme screenshot in light mode.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/blob/master/images/screenshot2.png)
+![Theme screenshot in light mode.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/screenshot2.png)
 
 **Color Your World** is a [Hugo](https://gohugo.io) theme developed around a single experiment that led me to this:
 
-![HTML color picker.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/blob/master/images/color-picker.png)
+![HTML color picker.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/color-picker.png)
 
 It's a HTML color picker. Along with some vanilla JS, it allows anyone to change what I'll be calling here... the **accent color**, a color used mostly in interactive elements.
 
@@ -73,7 +73,7 @@ You can change the default mode and accent colors in the config:
 
 This theme comes with two chroma styles, meant to be used with light and dark mode respectively. These are **Solarized Dark** for light mode and **Monokai** for dark mode.
 
-![Syntax highlighting](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/blob/master/images/syntax-highlight.gif)
+![Syntax highlighting](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/syntax-highlight.gif)
 
 It's worth noting that I'm not using the original files, but modified stylesheets from [pygments-high-contrast-stylesheets](https://github.com/mpchadwick/pygments-high-contrast-stylesheets) (aka "WCAG AA passing Pygments stylesheets").
 
