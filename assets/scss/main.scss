@@ -12,10 +12,11 @@
 
 // Import base (variables and mixins), typography and general colors
 @import 'base/_all',
+        'fonts/variables',
         'colors/variables';
 
 
-// Fonts
+// Default font face
 // "A Hassle-Free Way to Self-Host Google Fonts" by Mario Ranftl
 // https://google-webfonts-helper.herokuapp.com/fonts
 
@@ -67,16 +68,6 @@ $display: swap;
        url('{{ "fonts/open-sans-v17-latin-italic.woff2" | absURL }}') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
        url('{{ "fonts/open-sans-v17-latin-italic.woff" | absURL }}') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
-
-
-$heading-font:  'Oswald', sans-serif;
-$body-font:     'Open Sans', sans-serif;
-$code-font:     monospace;
-
-$font-size:     18px;
-
-$heading-weight:    700;
-$body-bold-weight:  700;
 
 
 // Transition for color changes
