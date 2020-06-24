@@ -1,114 +1,120 @@
-// Monokai (pygments-high-contrast-stylesheets)
-// Original: https://github.com/mpchadwick/pygments-high-contrast-stylesheets/blob/gh-pages/monokai.css
-// 23 Feb 2019
-
 .chroma,
 pre,
 p code,
 li code {
+  color: #f8f8f2;
   background: #272822;
-  color: #f8f8f2
-}
-
-.chroma .hll {
-  background-color: #49483e
 }
 
 .chroma .err {
+  color: #eb0083;
   background-color: #1e0010;
-  color: #eb0083
+}
+
+.chroma .lntd {
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.chroma .lntable {
+  border-spacing: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: auto;
+  overflow: auto;
+  display: block;
+}
+
+.chroma .hl {
+  display: block;
+  width: 100%;
+  
+  // TODO Fails at WCAG 2.0 AA due contrast
+  background-color: rgba(255,255,204,.15);
 }
 
 .chroma .ge {
-  font-style: italic
+	font-style: italic;
 }
 
 .chroma .gs {
-  font-weight: 700
+	font-weight: bold;
 }
 
-.chroma .gu,
-.chroma .cs,
-.chroma .c1,
-.chroma .cpf,
-.chroma .cp,
-.chroma .cm,
-.chroma .ch,
-.chroma .c {
-  color: #949076
+.chroma .lnt,
+.chroma .ln {
+  margin-right: .4em;
+  padding: 0 .4em;
+  color: #8e8e8e;
 }
 
-.chroma .no,
-.chroma .kt,
-.chroma .kr,
-.chroma .kp,
-.chroma .kd,
+.chroma .k,
 .chroma .kc,
-.chroma .k {
-  color: #66d9ef
+.chroma .kd,
+.chroma .kp,
+.chroma .kr,
+.chroma .kt,
+.chroma .no {
+  color: #66d9ef;
 }
 
-.chroma .ow,
-.chroma .nt,
 .chroma .kn,
-.chroma .gd,
-.chroma .o {
-  color: #f94e8a
+.chroma .nt,
+.chroma .o,
+.chroma .ow,
+.chroma .gd {
+  color: #f94e8a;
 }
 
-.chroma .ss,
-.chroma .s1,
-.chroma .sr,
-.chroma .sx,
-.chroma .si,
-.chroma .sh,
-.chroma .s2,
-.chroma .sd,
-.chroma .dl,
-.chroma .sc,
-.chroma .sb,
-.chroma .sa,
-.chroma .s,
-.chroma .ld {
-  color: #e6db74
-}
-
-.chroma .fm,
-.chroma .nx,
-.chroma .nf,
-.chroma .ne,
-.chroma .nd,
-.chroma .nc,
 .chroma .na,
+.chroma .nc,
+.chroma .nd,
+.chroma .ne,
+.chroma .nf,
+.chroma .nx,
 .chroma .gi {
-  color: #a6e22e
+  color: #a6e22e;
 }
 
-.chroma .vm,
-.chroma .vi,
-.chroma .vg,
-.chroma .vc,
-.chroma .bp,
-.chroma .w,
-.chroma .nv,
-.chroma .py,
-.chroma .nn,
-.chroma .nl,
-.chroma .ni,
-.chroma .nb,
-.chroma .p,
-.chroma .n {
-  color: #f8f8f2
-}
-
-.chroma .il,
+.chroma .l,
 .chroma .se,
-.chroma .mo,
-.chroma .mi,
-.chroma .mh,
-.chroma .mf,
-.chroma .mb,
 .chroma .m,
-.chroma .l {
-  color: #ae81ff
+.chroma .mb,
+.chroma .mf,
+.chroma .mh,
+.chroma .mi,
+.chroma .il,
+.chroma .mo {
+  color: #ae81ff;
+}
+
+.chroma .ld,
+.chroma .s,
+.chroma .sa,
+.chroma .sb,
+.chroma .sc,
+.chroma .dl,
+.chroma .sd,
+.chroma .s2,
+.chroma .sh,
+.chroma .si,
+.chroma .sx,
+.chroma .sr,
+.chroma .s1,
+.chroma .ss {
+  color: #e6db74;
+}
+
+.chroma .c,
+.chroma .ch,
+.chroma .cm,
+.chroma .c1,
+.chroma .cs,
+.chroma .cp,
+.chroma .cpf,
+.chroma .gu {
+  color: #949076;
 }

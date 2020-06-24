@@ -1,111 +1,123 @@
-// Solarized Dark (pygments-high-contrast-stylesheets)
-// Original: https://github.com/mpchadwick/pygments-high-contrast-stylesheets/blob/gh-pages/solarized-dark.css
-// 15 Nov 2017
-
 .chroma,
 pre,
 p code,
 li code {
+  color: #93a1a1;
   background-color: #002b36;
-  color: #93a1a1
 }
 
-.chroma .ge {
-  color: #93a1a1;
-  font-style: italic
+.chroma .lntd {
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 
-.chroma .gs {
-  color: #93a1a1;
-  font-weight: 700
+.chroma .lntable {
+  border-spacing: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: auto;
+  overflow: auto;
+  display: block;
+}
+
+.chroma .hl {
+  display: block;
+  width: 100%;
+  
+  // TODO Fails at WCAG 2.0 AA due contrast
+  background-color: rgba(255,255,204,.15);
 }
 
 .chroma .nb {
-  color: #B58900
+  color: #b58900;
 }
 
-.chroma .ow,
-.chroma .kp,
+.chroma .ge {
+  font-style: italic;
+}
+
+.chroma .gr {
+  color: #e8625f;
+  font-weight: bold;
+}
+
+.chroma .gs {
+  font-weight: bold;
+}
+
+.chroma .x,
+.chroma .kc,
+.chroma .no,
+.chroma .ni,
+.chroma .ne,
+.chroma .se,
+.chroma .gh {
+  color: #e9662f;
+}
+
+.chroma .lnt,
+.chroma .ln {
+  margin-right: .4em;
+  padding: 0 .4em;
+  color: #848f8f;
+}
+
+.chroma .k,
 .chroma .kn,
-.chroma .gi,
+.chroma .kp,
+.chroma .o,
+.chroma .ow,
 .chroma .cs,
 .chroma .cp,
-.chroma .o,
-.chroma .k {
-  color: #859900
+.chroma .cpf,
+.chroma .gi {
+  color: #859900;
+}
+
+.chroma .kd,
+.chroma .kr,
+.chroma .bp,
+.chroma .nc,
+.chroma .nd,
+.chroma .nf,
+.chroma .nt,
+.chroma .nv,
+.chroma .gu {
+  color: #3294da;
+}
+
+.chroma .kt,
+.chroma .sr,
+.chroma .gd {
+  color: #e8625f;
+}
+
+.chroma .s,
+.chroma .sa,
+.chroma .sc,
+.chroma .dl,
+.chroma .s2,
+.chroma .si,
+.chroma .sx,
+.chroma .s1,
+.chroma .ss,
+.chroma .m,
+.chroma .mb,
+.chroma .mf,
+.chroma .mh,
+.chroma .mi,
+.chroma .il,
+.chroma .mo {
+  color: #2aa198;
 }
 
 .chroma .sb,
-.chroma .c1,
+.chroma .c,
+.chroma .ch,
 .chroma .cm,
-.chroma .c {
-  color: #759299
-}
-
-.chroma .se,
-.chroma .ne,
-.chroma .ni,
-.chroma .no,
-.chroma .kc,
-.chroma .gu,
-.chroma .gh,
-.chroma .x {
-  color: #e9662f
-}
-
-.chroma .sh,
-.chroma .sd,
-.chroma .w,
-.chroma .py,
-.chroma .nx,
-.chroma .nn,
-.chroma .nl,
-.chroma .na,
-.chroma .ld,
-.chroma .gt,
-.chroma .gp,
-.chroma .go,
-.chroma .p,
-.chroma .n,
-.chroma .l,
-.chroma .g,
-.chroma .err {
-  color: #93a1a1
-}
-
-.chroma .sr,
-.chroma .kt,
-.chroma .gr {
-  color: #e8625f
-}
-
-.chroma .vi,
-.chroma .vg,
-.chroma .vc,
-.chroma .bp,
-.chroma .nv,
-.chroma .nt,
-.chroma .nf,
-.chroma .nd,
-.chroma .nc,
-.chroma .kr,
-.chroma .kd {
-  color: #3294da
-}
-
-.chroma .il,
-.chroma .ss,
-.chroma .s1,
-.chroma .sx,
-.chroma .si,
-.chroma .s2,
-.chroma .sc,
-.chroma .mo,
-.chroma .mi,
-.chroma .mh,
-.chroma .mf,
-.chroma .s,
-.chroma .m,
-.chroma .gd {
-  color: #2aa198
+.chroma .c1 {
+  color: #759299;
 }
