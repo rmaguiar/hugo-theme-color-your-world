@@ -91,11 +91,11 @@ paginate = 5
   
     # Default accent colors for light and dark mode respectively
     lightAccent  = "#225670"
-    darkAccent   = "#d73d67"
+    darkAccent   = "#dd587c"
 
     # More colors, pick as many as you want (not really sure if there's a limit)
     # Apparently these may not show up on every modern browser (ie. Firefox)
-    presets = [ "#1f676b", "#ffa51e", "#902b37", "#1dbc91", "#754e85", "#7fc121", "#a8314a", "#ff7433", "#3e6728", "#ae46ab" ]
+    presets = [ "#1f676b", "#f3a530", "#902b37", "#1dbc91", "#754e85", "#7fc121", "#a8314a", "#ff7433", "#3e6728", "#c063bd" ]
     
     # Use an icon or text for footnote return links
     hasIconAsFootnoteReturnLink = true
