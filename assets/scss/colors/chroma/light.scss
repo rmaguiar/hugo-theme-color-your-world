@@ -1,3 +1,6 @@
+// Based on Solarized Dark (pygments-high-contrast-stylesheets)
+// Source: https://github.com/mpchadwick/pygments-high-contrast-stylesheets/blob/gh-pages/solarized-dark.css
+
 .chroma,
 pre,
 p code,
@@ -26,9 +29,7 @@ li code {
 .chroma .hl {
   display: block;
   width: 100%;
-  
-  // TODO Fails at WCAG 2.0 AA due contrast
-  background-color: rgba(255,255,204,.15);
+  background-color: rgba(0,0,0,.3);
 }
 
 .chroma .nb {
