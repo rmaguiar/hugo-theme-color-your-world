@@ -1,5 +1,9 @@
-<!-- Set SVG bundle -->
+<!-- Get SVG bundle -->
 {{ $icons := (.Scratch.Get "svgBundle").RelPermalink }}
+
+<!-- Get default accent colors -->
+{{ $darkAccent  := .Scratch.Get "darkAccent" }}
+{{ $lightAccent := .Scratch.Get "lightAccent" }}
 
 <!-- Custom footer or default copyright -->
 {{ if or (templates.Exists "partials/custom/footer") (templates.Exists "partials/custom/footer.html") }}
@@ -27,9 +31,9 @@
 {{ end }}
 
 
-<!-- Fancy stuff -->
+<!-- Footer button and color picker -->
 <aside class="js">
-  <button title="{{ T "change_mode" }}"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="{{ $icons }}#adjust"/></svg></button><input type="color" list="presets" value="{{ if .Site.Params.Style.isDark }}{{ .Site.Params.style.darkAccent }}{{ else }}{{ .Site.Params.style.lightAccent }}{{ end }}" title="{{ T "change_accent" }}"><datalist id="presets"><option value="{{ .Site.Params.style.lightAccent }}"><option value="{{ .Site.Params.style.darkAccent }}"><!-- Extra colors -->{{- range .Site.Params.style.presets -}}<option value="{{ . }}">{{ end }}</datalist>
+  <button title="{{ T "change_mode" }}"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="{{ $icons }}#adjust"/></svg></button><input type="color" list="presets" value="{{ if .Site.Params.Style.isDark }}{{ $darkAccent }}{{ else }}{{ $lightAccent }}{{ end }}" title="{{ T "change_accent" }}"><datalist id="presets"><option value="{{ $lightAccent }}"><option value="{{ $darkAccent }}"><!-- Extra colors -->{{- range .Site.Params.style.presets -}}<option value="{{ . }}">{{ end }}</datalist>
 </aside>
 
 <!-- noscript notice -->

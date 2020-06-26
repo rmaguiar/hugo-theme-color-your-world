@@ -299,6 +299,10 @@
 {{ end }}
 
 
+<!-- Set as scratch to be used in CSS and JS -->
+{{ $changeTransition := .Site.Params.Style.changeTransition | default ".5s ease" }}
+{{ .Scratch.Set "changeTransition" $changeTransition }}
+
 
 <!-- Main CSS -->
 {{ $main := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "css/main.scss" . | toCSS | minify | resources.Fingerprint "sha512" }}
@@ -308,14 +312,21 @@
 <!-- If JS is disabled -->
 <noscript>
 
+  {{ $darkAccent   := .Site.Params.Style.darkAccent   | default "#dd587c" }}
+  {{ $lightAccent  := .Site.Params.Style.lightAccent  | default "#225670" }}
+  
+  <!-- Set default accent colors -->
+  {{ .Scratch.Set "darkAccent"  $darkAccent }}
+  {{ .Scratch.Set "lightAccent" $lightAccent }}
+
   <!-- Not properly tested? -->
-  <meta name="theme-color" content="{{ .Site.Params.Style.lightAccent }}" {{ if .Site.Params.Style.isDark }}media="(prefers-color-scheme: light)"{{ end }}>
-  <meta name="theme-color" content="{{ .Site.Params.Style.darkAccent }}" {{ if not .Site.Params.Style.isDark }}media="(prefers-color-scheme: dark)"{{ end }}>
+  <meta name="theme-color" content="{{ $darkAccent }}" {{ if not .Site.Params.Style.isDark }}media="(prefers-color-scheme: dark)"{{ end }}>
+  <meta name="theme-color" content="{{ $lightAccent }}" {{ if .Site.Params.Style.isDark }}media="(prefers-color-scheme: light)"{{ end }}>
 
   <style>
   
     html {
-      --accent: {{ if .Site.Params.Style.isDark }}{{ .Site.Params.Style.darkAccent }}{{ else }}{{ .Site.Params.Style.lightAccent }}{{ end }};
+      --accent: {{ if .Site.Params.Style.isDark }}{{ $darkAccent }}{{ else }}{{ $lightAccent }}{{ end }};
     }
   
     .js,

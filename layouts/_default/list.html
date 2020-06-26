@@ -14,12 +14,6 @@
       {{ end }}
     {{ else }}
 
-      <!--
-      range last 9
-      .Format "2006-01-02"
-      | dateFormat "Jan 02"
-      -->
-
       {{ $pages := where site.RegularPages "Type" "in" .Site.Params.mainSections }}
       
       {{ $paginator := .Paginate .Pages }}

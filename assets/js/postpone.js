@@ -19,5 +19,4 @@ PALETTE.onchange = function () {
   };
   
   updateAccent()
-};
-
+}

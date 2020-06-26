@@ -1,5 +1,12 @@
 'use strict';
 
+// Get default accent colors
+{{ $darkAccent  := .Scratch.Get "darkAccent" }}
+{{ $lightAccent := .Scratch.Get "lightAccent" }}
+
+// Get CSS transition
+{{ $changeTransition := .Scratch.Get "changeTransition" }}
+
 /******************************
 / Mode switcher + Custom accent color
 / Based on: https://gist.github.com/regpaq/04c67e8aceecbf0fd819945835412d1f
@@ -47,7 +54,7 @@ function getAccent() {
       console.log("The user never used the palette while in the 'dark' mode.");
       console.log("As the mode is 'dark', loading the 'default accent color' for the dark mode.");
       
-      var currentAccent = "{{ .Site.Params.style.darkAccent }}"
+      var currentAccent = "{{ $darkAccent }}"
     } else {
     
       var currentAccent = localStorage.getItem('darkAccent')
@@ -62,7 +69,7 @@ function getAccent() {
       console.log("The user never used the palette while in the 'light' mode.");
       console.log("As the mode is 'light', loading the 'default accent color' for the light mode.");
 
-      var currentAccent = "{{ .Site.Params.style.lightAccent }}"
+      var currentAccent = "{{ $lightAccent }}"
     } else {
       var currentAccent = localStorage.getItem('lightAccent')
       
@@ -94,17 +101,6 @@ function updateAccent() {
 };
 
 
-// Currently being used for a HACK
-// See the KaTeX partial
-function getAll(selector) {
-  return Array.prototype.slice.call(document.querySelectorAll(selector), 0)
-};
-
-
-// Match the property found in the CSS
-// Used in the function below
-{{ $changeTransition := .Site.Params.Style.changeTransition | default ".5s ease" }}
-  
 document.addEventListener('DOMContentLoaded', function () {
 
   // Update the color picker with the active accent color 

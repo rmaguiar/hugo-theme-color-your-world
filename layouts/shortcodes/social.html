@@ -1,9 +1,14 @@
-{{ $svgBundle := resources.Get "bundle.svg" | resources.ExecuteAsTemplate "img/bundle.svg" . | minify | resources.Fingerprint "md5" }}
-{{ $icons := $svgBundle.RelPermalink }}
+{{ $icons := (.Page.Scratch.Get "svgBundle").RelPermalink }}
+
+<!-- Reduce repetition... -->
+{{ $centralizedOnPage   := .Page.Params.Social.Centralized }}
+{{ $centralizedOnSite   := .Site.Params.Social.Centralized }}
+{{ $decentralizedOnPage := .Page.Params.Social.Decentralized }}
+{{ $decentralizedOnSite := .Site.Params.Social.Decentralized }}
 
 <section class="social">
 
-  {{ with or .Page.Params.Social.Centralized.facebook .Site.Params.Social.Centralized.facebook }}
+  {{ with or $centralizedOnPage.facebook $centralizedOnSite.facebook }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "Facebook" }}
@@ -22,7 +27,7 @@
     
   {{ end }}
   
-  {{ with or .Page.Params.Social.Centralized.github .Site.Params.Social.Centralized.github }}
+  {{ with or $centralizedOnPage.github $centralizedOnSite.github }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "GitHub" }}
@@ -41,7 +46,7 @@
     
   {{ end }}
 
-  {{ with or .Page.Params.Social.Centralized.gitlab .Site.Params.Social.Centralized.gitlab }}
+  {{ with or $centralizedOnPage.gitlab $centralizedOnSite.gitlab }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "GitLab" }}
@@ -60,7 +65,7 @@
     
   {{ end }}
   
-  {{ with or .Page.Params.Social.Centralized.instagram .Site.Params.Social.Centralized.instagram }}
+  {{ with or $centralizedOnPage.instagram $centralizedOnSite.instagram }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "Instagram" }}
@@ -79,7 +84,7 @@
     
   {{ end }}
   
-  {{ with or .Page.Params.Social.Centralized.keybase .Site.Params.Social.Centralized.keybase }}
+  {{ with or $centralizedOnPage.keybase $centralizedOnSite.keybase }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "Keybase" }}
@@ -98,7 +103,7 @@
     
   {{ end }}
 
-  {{ with or .Page.Params.Social.Centralized.linkedin .Site.Params.Social.Centralized.linkedin }}
+  {{ with or $centralizedOnPage.linkedin $centralizedOnSite.linkedin }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "LinkedIn" }}
@@ -119,15 +124,9 @@
   
 
 
+  {{ if or $decentralizedOnPage.mastodon $decentralizedOnSite.mastodon }}
   
-
-
-  
-  
-  
-  {{ if or .Page.Params.Social.Decentralized.mastodon .Site.Params.Social.Decentralized.mastodon }}
-  
-    {{ range or .Page.Params.Social.Decentralized.mastodon .Site.Params.Social.Decentralized.mastodon }}
+    {{ range or $decentralizedOnPage.mastodon $decentralizedOnSite.mastodon }}
 
       <a rel="me nofollow" href="{{ index . 0 }}" title="{{ index . 1 }} (Mastodon)">
         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -141,9 +140,9 @@
     
   {{ end }}
   
-  {{ if or .Page.Params.Social.Decentralized.matrix .Site.Params.Social.Decentralized.matrix }}
+  {{ if or $decentralizedOnPage.matrix $decentralizedOnSite.matrix }}
   
-    {{ range or .Page.Params.Social.Decentralized.matrix .Site.Params.Social.Decentralized.matrix }}
+    {{ range or $decentralizedOnPage.matrix $decentralizedOnSite.matrix }}
       <a rel="me nofollow" href="{{ index . 0 }}" title="{{ index . 1 }} (Matrix)">
         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <use xlink:href="{{ $icons }}#matrix"/>
@@ -156,7 +155,7 @@
   {{ end }}
   
   
-  {{ with or .Page.Params.Social.Centralized.medium .Site.Params.Social.Centralized.medium }}
+  {{ with or $centralizedOnPage.medium $centralizedOnSite.medium }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "Medium" }}
@@ -176,7 +175,7 @@
   {{ end }}
   
   
-  {{ with or .Page.Params.Social.Centralized.stackOverflow .Site.Params.Social.Centralized.stackOverflow }}
+  {{ with or $centralizedOnPage.stackOverflow $centralizedOnSite.stackOverflow }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "Stack Overflow" }}
@@ -196,7 +195,7 @@
   {{ end }}
   
   
-  {{ with or .Page.Params.Social.Centralized.reddit .Site.Params.Social.Centralized.reddit }}
+  {{ with or $centralizedOnPage.reddit $centralizedOnSite.reddit }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "Reddit" }}
@@ -216,7 +215,7 @@
   {{ end }}
   
 
-  {{ with or .Page.Params.Social.Centralized.telegram .Site.Params.Social.Centralized.telegram }}
+  {{ with or $centralizedOnPage.telegram $centralizedOnSite.telegram }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "Telegram" }}
@@ -235,7 +234,7 @@
     
   {{ end }}
   
-  {{ with or .Page.Params.Social.Centralized.twitter .Site.Params.Social.Centralized.twitter }}
+  {{ with or $centralizedOnPage.twitter $centralizedOnSite.twitter }}
   
     {{ $url   := (index . 0) }}
     {{ $label := "Twitter" }}

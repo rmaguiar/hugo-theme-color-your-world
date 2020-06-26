@@ -4,7 +4,7 @@
 -->
 
 {{- $svgBundle := resources.Get "bundle.svg" | resources.ExecuteAsTemplate "img/bundle.svg" . | minify | resources.Fingerprint "md5" -}}
-{{- $.Page.Scratch.Set "svgBundle" $svgBundle -}}
+{{- .Scratch.Set "svgBundle" $svgBundle -}}
 
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}" data-mode="{{ if .Site.Params.Style.isDark }}dark{{ else }}light{{ end }}">

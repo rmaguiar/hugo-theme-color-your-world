@@ -1,6 +1,6 @@
 {{ define "main" }}
 
-  {{ $svgBundle := ($.Page.Scratch.Get "svgBundle").RelPermalink }}
+  {{ $icons := (.Scratch.Get "svgBundle").RelPermalink }}
 
   <main>
     <article>
@@ -74,7 +74,7 @@
       
       <!-- OR replace the footnote return links with a SVG icon -->
       {{ if .Site.Params.Style.hasIconAsFootnoteReturnLink }}
-        {{ $footnoteReturnLink = ( printf "${1}<svg transform=\"rotate(180) translate(0 -1)\" aria-hidden=\"true\" ><use xlink:href=\"%s#caret-down\"/></svg>${2}" $svgBundle) }}
+        {{ $footnoteReturnLink = ( printf "${1}<svg transform=\"rotate(180) translate(0 -1)\" aria-hidden=\"true\" ><use xlink:href=\"%s#caret-down\"/></svg>${2}" $icons) }}
       {{ end }}
 
       <!--
