@@ -175,26 +175,6 @@
   {{ end }}
   
   
-  {{ with or $centralizedOnPage.stackOverflow $centralizedOnSite.stackOverflow }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "Stack Overflow" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#stack-overflow"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-  
-  
   {{ with or $centralizedOnPage.reddit $centralizedOnSite.reddit }}
   
     {{ $url   := (index . 0) }}
@@ -207,6 +187,26 @@
     <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <use xlink:href="{{ $icons }}#reddit"/>
+      </svg>
+
+      <p>{{ $label }}</p>
+    </a>
+    
+  {{ end }}
+  
+  
+  {{ with or $centralizedOnPage.stackOverflow $centralizedOnSite.stackOverflow }}
+  
+    {{ $url   := (index . 0) }}
+    {{ $label := "Stack Overflow" }}
+  
+    {{ with (index . 1) }}
+      {{ $label = . }}
+    {{ end }}
+    
+    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
+      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use xlink:href="{{ $icons }}#stack-overflow"/>
       </svg>
 
       <p>{{ $label }}</p>

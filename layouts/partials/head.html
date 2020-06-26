@@ -188,7 +188,7 @@
     <meta property="article:author" content="{{ . }}">
   {{ end }}
   
-  {{ with .Site.Params.Social.Centralized.twitter }}
+  {{ with or .Page.Params.Social.Centralized .Site.Params.Social.Centralized.twitter }}
     <meta name="twitter:creator" content="{{ (urls.Parse (index . 0)).Path | replaceRE "/" "@" }}">
   {{ end}}
   
@@ -196,7 +196,7 @@
   <meta property="og:type" content="website">
 {{ end -}}
 
-{{ with .Site.Params.Social.Centralized.twitter }}
+{{ with or .Page.Params.Social.Centralized .Site.Params.Social.Centralized.twitter }}
   <meta name="twitter:site" content="{{ (urls.Parse (index . 0)).Path | replaceRE "/" "@" }}">
 {{ end }}
 
@@ -231,11 +231,11 @@
 <!-- Social on Schema.org -->
 {{ $sameAs := slice }}
 
-{{ range .Site.Params.Social.Centralized }}
+{{ range or .Page.Params.Social.Centralized .Site.Params.Social.Centralized }}
   {{ $sameAs = $sameAs | append (index . 0) }}
 {{ end }}
 
-{{ range .Site.Params.Social.Decentralized }}
+{{ range or .Page.Params.Social.Decentralized .Site.Params.Social.Decentralized }}
   {{ range . }}
     {{ $sameAs = $sameAs | append (index . 0) }}
   {{ end }}
@@ -376,11 +376,11 @@
   but since it's easy to implement...
 -->
 
-{{ range .Site.Params.Social.Centralized }}
+{{ range or .Page.Params.Social.Centralized .Site.Params.Social.Centralized }}
   <link rel="me" href="{{ index . 0 }}"/> 
 {{ end }}
 
-{{ range .Site.Params.Social.Decentralized }}
+{{ range or .Page.Params.Social.Decentralized .Site.Params.Social.Decentralized }}
   {{ range . }}
     <link rel="me" href="{{ index . 0 }}"/> 
   {{ end }}
