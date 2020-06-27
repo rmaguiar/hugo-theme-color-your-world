@@ -18,7 +18,7 @@ paginate = 5
 
   [markup.highlight]
     # To make use of the custom Chroma, this should be false
-    # and "useCustomChroma" should be true
+    # The default is true
     noClasses = false
 
 
@@ -28,8 +28,8 @@ paginate = 5
   description = "John Doe's personal website"
   
   # Author
-  author = "John Doe"
-  authorDesc = "Some indescribable horror."
+  author      = "John Doe"
+  authorDesc  = "Some indescribable horror."
   
   # Site cover, for Open Graph, Twitter Cards and Schema.org
   # It will be used if the current page doesn't have a image cover
@@ -39,6 +39,7 @@ paginate = 5
   #coverAlt  = "A placeholder that doesn't deserve to be described."
   
   # Shows a message in the footer about JavaScript being disabled
+  # The default is false
   hasNoscriptNotice = true
   
   # Default path for images in posts
@@ -49,7 +50,7 @@ paginate = 5
   # Default classes for markup image 
   # Modifies the default behavior of images placed via markdown
   # Can also be set PER PAGE via front matter
-  # Default classes are: border or borderless
+  # The default classes are: border or borderless
   markupImgClass = "borderless"
   
   # This will append a separator (of your choice) along the site title to your <title>
@@ -66,8 +67,8 @@ paginate = 5
     formspreeFormId = "example"
     
     # Autocomplete [on/off] and min character length for message
-    autoComplete      = false
-    messageMinLength  = 140
+    autoComplete      = false # Default is false
+    messageMinLength  = 140   # Default is 140
     
     # Subject
     # You can set a single value below (and it will cease to be a dropdown),
@@ -87,32 +88,39 @@ paginate = 5
   [params.style]
   
     # Dark mode as default
+    # The default is false
     isDark = true
   
-    # Default accent colors for light and dark mode respectively
-    lightAccent  = "#225670"
-    darkAccent   = "#dd587c"
+    # Accent colors for light and dark mode respectively
+    lightAccent  = "#225670" # Default is "#225670"
+    darkAccent   = "#dd587c" # Default is "#dd587c"
 
     # More colors, pick as many as you want (not really sure if there's a limit)
     # Apparently these may not show up on every modern browser (ie. Firefox)
+    # There's no default value. Used here just as example
     presets = [ "#1f676b", "#f3a530", "#902b37", "#1dbc91", "#754e85", "#7fc121", "#a8314a", "#ff7433", "#3e6728", "#c063bd" ]
     
     # Use an icon or text for footnote return links
+    # The default is false
     hasIconAsFootnoteReturnLink = true
     
     # For the social shortcode
     # Use flexbox (with flex-grow) or grid (equal width)
+    # The default is false
     socialIsFlex = true
     
     # Keep anchor links hidden until it's focused/hovered
     # They will always be visible in mobile devices, regardless the option
+    # The default is false
     hideAnchors = true
     
     # To make use of the custom Chroma, this should be true
-    # and "noClasses" should be false
+    # and "noClasses" (at markup.highlight) should be false
+    # The default is true
     useCustomChroma = true
 
     # CSS animation transition when changing colors
+    # The default is ".5s ease"
     changeTransition = ".3s ease"
     
     
@@ -144,16 +152,13 @@ paginate = 5
       1 = [ "https://mastodon.social/@nowaythiswastaken", "mastodon.social" ]
       2 = [ "https://mastodon.too/@nowaythiswastaken", "mastodon.too" ]
       3 = [ "https://yet.another.one/@nowaythiswastaken", "yet.another.one" ]
-      #entry   = [ "url", "label (required)" ]
+      #entry = [ "url", "label (required)" ]
 
     [params.social.decentralized.matrix]
       1 = [ "https://matrix.to/#/@nowaythiswastaken:matrix.org", "matrix.org" ]
-      #entry   = [ "url", "label (required)" ]
+      #entry = [ "url", "label (required)" ]
     
     # The "entry" here ISN'T important. It's used for nothing.
-
-
-
 
 
     
@@ -186,31 +191,23 @@ paginate = 5
 
 
 
-    
-    
-    
-    
-    
-    
-    
-
-
-
 [languages]
+
   [languages.en]
+  
     languagename = "English"
 
     [languages.en.menu]
 
       [[languages.en.menu.main]]
-      name = "About"
-      weight = 1
-      url = "about/"
+        name = "About"
+        weight = 1
+        url = "about/"
 
       [[languages.en.menu.main]]
-      name = "Posts"
-      weight = 2
-      url = "posts/"
+        name = "Posts"
+        weight = 2
+        url = "posts/"
       
       [[languages.en.menu.main]]
         name = "Contact"
@@ -218,6 +215,7 @@ paginate = 5
         url = "contact/"
 
     [languages.pt]
+
       languagename  = "Português"
       
       copyright = "Copyright © 2008–2020, Steve Francia e os autores do Hugo;\n Todos os direitos reservados."
@@ -225,8 +223,8 @@ paginate = 5
       [languages.pt.params]        
         description = "Sítio pessoal de João Ninguém"
         
-        author = "João Ninguém"
-        authorDesc = "Algum horror indescritível."
+        author      = "João Ninguém"
+        authorDesc  = "Algum horror indescritível."
         
         [languages.pt.params.notFound]
           title         = "Página não encontrada"

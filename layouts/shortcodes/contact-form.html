@@ -37,7 +37,7 @@
   {{ end }}
   
   
-  <label>{{ T "message" }}<textarea id="message" aria-label="{{ T "message" }}" rows="6" name="message" {{ with or .Page.Params.Contact.messageMinLength .Site.Params.Contact.messageMinLength }}minlength="{{ . }}"{{ end }} {{ with or .Page.Params.Contact.Placeholder.message .Site.Params.Contact.Placeholder.message }}placeholder="{{ . }}"{{ end }} required></textarea></label>
+  <label>{{ T "message" }}<textarea id="message" aria-label="{{ T "message" }}" rows="6" name="message" {{ with or .Page.Params.Contact.messageMinLength .Site.Params.Contact.messageMinLength | default 140 }}minlength="{{ . }}"{{ end }} {{ with or .Page.Params.Contact.Placeholder.message .Site.Params.Contact.Placeholder.message }}placeholder="{{ . }}"{{ end }} required></textarea></label>
   
   <input type="text" name="_gotcha" style="display:none">
   

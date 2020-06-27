@@ -53,7 +53,7 @@ Both color palettes can be found in `assets/scss/colors/variables.scss`.
 
 ### Accent color
 
-By default, there are 12 accent colors distributed into pairs.
+By default, there are 2 accent colors plus 10 on the `exampleSite`, distributed into pairs.
 
 You can change the default mode and accent colors in the config:
 
@@ -61,15 +61,17 @@ You can change the default mode and accent colors in the config:
 [params.style]
 
   # Dark mode as default
+  # The default is false
   isDark = true
 
-  # Default accent colors for light and dark mode respectively
-  lightAccent  = "#225670"
-  darkAccent   = "#d73d67"
+  # Accent colors for light and dark mode respectively
+  lightAccent  = "#225670" # Default is "#225670"
+  darkAccent   = "#dd587c" # Default is "#dd587c"
 
   # More colors, pick as many as you want (not really sure if there's a limit)
   # Apparently these may not show up on every modern browser (ie. Firefox)
-  presets = [ "#1f676b", "#ffa51e", "#902b37", "#1dbc91", "#754e85", "#7fc121", "#a8314a", "#ff7433", "#3e6728", "#ae46ab" ]
+  # There's no default value. Used here just as example
+  presets = [ "#1f676b", "#f3a530", "#902b37", "#1dbc91", "#754e85", "#7fc121", "#a8314a", "#ff7433", "#3e6728", "#c063bd" ]
 ```
 
 ### Syntax highlighting
@@ -78,22 +80,25 @@ This theme comes with two chroma styles, meant to be used with light and dark mo
 
 ![Syntax highlighting](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/syntax-highlight.gif)
 
-It's worth noting that I'm not using the original files, but modified stylesheets from [pygments-high-contrast-stylesheets](https://github.com/mpchadwick/pygments-high-contrast-stylesheets) (aka "WCAG AA passing Pygments stylesheets").
+It's worth noting that I'm not using the original stylesheets, but modified stylesheets based on the [pygments-high-contrast-stylesheets](https://github.com/mpchadwick/pygments-high-contrast-stylesheets) (aka "WCAG AA passing Pygments stylesheets").
 
-In case you want to change it, it can be found in `assets/scss/colors/chroma` as `dark.scss` and `light.scss`.
+In case you want to change it, it can be found in `assets/scss/colors/chroma` as `light.scss` and `dark.scss`.
 
-The lines below are REQUIRED in your config file to make use of this feature:
+The lines below are **required** in your config file to make use of this feature:
 
 ```toml
 [markup]
   [markup.highlight]
     noClasses = false
-
-[params]
-  [params.style]
-    useCustomChroma = true
 ```
 
+To disable it, you can just remove the `noClasses = false` (as its default value is `true`) and add the lines below:
+
+```toml
+[params]
+  [params.style]
+    useCustomChroma = false
+```
 
 ## Shortcodes
 
@@ -129,14 +134,14 @@ Here's an example of config file:
 [params.social.decentralized]
 
   [params.social.decentralized.mastodon]
-    social  = [ "https://mastodon.social/@nowaythiswastaken", "mastodon.social" ]
-    too     = [ "https://mastodon.too/@nowaythiswastaken", "mastodon.too" ]
-    whynot  = [ "https://yet.another.one/@nowaythiswastaken", "yet.another.one" ]
-    #entry   = [ "url", "label (required)" ]
+    1 = [ "https://mastodon.social/@nowaythiswastaken", "mastodon.social" ]
+    2 = [ "https://mastodon.too/@nowaythiswastaken", "mastodon.too" ]
+    3 = [ "https://yet.another.one/@nowaythiswastaken", "yet.another.one" ]
+    #entry = [ "url", "label (required)" ]
 
   [params.social.decentralized.matrix]
-    matrixOrg = [ "https://matrix.to/#/@nowaythiswastaken:matrix.org", "matrix.org" ]
-    #entry   = [ "url", "label (required)" ]
+    1 = [ "https://matrix.to/#/@nowaythiswastaken:matrix.org", "matrix.org" ]
+    #entry = [ "url", "label (required)" ]
   
   # The "entry" here ISN'T important. It's used for nothing.
 ```
@@ -156,8 +161,8 @@ Alternatively, you can have these params in the front matter of any page.
   formspreeFormId = "example"
   
   # Autocomplete [on/off] and min character length for message
-  autoComplete      = false
-  messageMinLength  = 140
+  autoComplete      = false # Default is false
+  messageMinLength  = 140   # Default is 140
   
   # Subject
   # You can set a single value below (and it will cease to be a dropdown),
@@ -184,7 +189,7 @@ Minimal effort was put here, since I don't use this feature. I recommend that yo
 
 ### 404
 
-A REALLY basic 404 page can be generated via config file by using:
+A **really** basic 404 page can be generated via config file by using:
 
 ```toml
 [params.notFound]
@@ -195,8 +200,9 @@ A REALLY basic 404 page can be generated via config file by using:
 
 ### Custom partials
 
-* The title can be replaced by creating a file named `layouts/partials/custom/header.html`;
+* The site title can be replaced by creating a file named `layouts/partials/custom/header.html`;
 * Custom favicons can be used by creating a file named `layouts/partials/custom/head.html`;
+* Custom CSS can be imported into the main CSS file by creating a file named `static/css/custom.css` or `assets/scss/custom.scss`;
 * The `copyright` param can be replaced by creating a file named `layouts/partials/custom/footer.html`.
 
 ### More config
@@ -210,8 +216,8 @@ More possible params for your config file:
   description = "John Doe's personal website"
   
   # Author
-  author = "John Doe"
-  authorDesc = "Some indescribable horror."
+  author      = "John Doe"
+  authorDesc  = "Some indescribable horror."
   
   # Site cover, for Open Graph, Twitter Cards and Schema.org
   # It will be used if the current page doesn't have a image cover
@@ -221,6 +227,7 @@ More possible params for your config file:
   coverAlt  = "A placeholder that doesn't deserve to be described."
   
   # Shows a message in the footer about JavaScript being disabled
+  # The default is false
   hasNoscriptNotice = true
   
   # Default path for images in posts
@@ -231,7 +238,7 @@ More possible params for your config file:
   # Default classes for markup image 
   # Modifies the default behavior of images placed via markdown
   # Can also be set PER PAGE via front matter
-  # Default classes are: border or borderless
+  # The default classes are: border or borderless
   markupImgClass = "borderless"
   
   # This will append a separator (of your choice) along the site title to your <title>
@@ -242,16 +249,20 @@ More possible params for your config file:
 
   [params.style]
     # Use an icon or text for footnote return links
+    # The default is false
     hasIconAsFootnoteReturnLink = true
     
     # For the social shortcode
     # Use flexbox (with flex-grow) or grid (equal width)
+    # The default is false
     socialIsFlex = true
     
     # Keep anchor links hidden until it's focused/hovered
     # They will always be visible in mobile devices, regardless the option
+    # The default is false
     hideAnchors = true
 
     # CSS animation transition when changing colors
+    # The default is ".5s ease"
     changeTransition = ".3s ease"
 ```

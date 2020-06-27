@@ -313,19 +313,15 @@ article > header {
 
 
 // Typography
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+%heading-base {
   font-family: $heading-font;
   font-weight: $heading-weight;
 }
 
-
 @for $i from 1 through 6 {
   h#{$i} {
+    @extend %heading-base;
+    
     font-size: 1rem + $heading-scaling * (6 - $i);
   }
 }
@@ -393,21 +389,24 @@ main.index {
   }
 }
 
-h1 + p,
-h2 + p,
-h3 + p,
-h4 + p,
-h5 + p,
-h6 + p {
+%reset-top {
   margin-top: 0;
 }
 
-h2,
-h3,
-h4,
-h5,
-h6 {
+@for $i from 1 through 6 {
+  h#{$i} + p {
+    @extend %reset-top;
+  }
+}
+
+%padding-top {
   padding-top: 1rem;
+}
+
+@for $i from 2 through 6 {
+  h#{$i} {
+    @extend %padding-top;
+  }
 }
 
 audio,
@@ -424,29 +423,23 @@ a.anchor {
   svg {
     fill: var(--accent);
     
-    @include squared(21px);
+    vertical-align: middle;
+    
+    @include squared(24px);
   }
 }
 
 
 // Resize the anchor SVG depending on the heading level
 // Also minor spacing ajustment
-h2 {
-  a.anchor {
-    margin-left: .4rem;
-  
-    svg {
-      transform: scale(1.5);
-    }
-  }
-}
-
-h3 {
-  a.anchor {
-    margin-left: .2rem;
-  
-    svg {
-      transform: scale(1.25);
+@for $i from 2 through 6 {
+  h#{$i} {
+    a.anchor {
+      margin: 0 0 0 (.25rem + .1 * (6 - $i));
+      
+      svg {
+        transform: scale(1 + .175 * (6 - $i));
+      }
     }
   }
 }
@@ -546,11 +539,12 @@ section.footnotes {
   // I can't really find a pattern (between browsers and/or platforms)
   // Kind of solved by replacing the "↩" symbol with a SVG (or plain text)
   a.footnote-backref {
-    margin-left: 9px;
+    margin: 0 0 0 9px;
     
     {{ if .Site.Params.Style.hasIconAsFootnoteReturnLink }}
       
-      padding: 0 9px; // or 0 6px;
+      padding: 0 9px;
+      vertical-align: middle;
       
       svg {
         fill: var(--dtl);
@@ -563,9 +557,8 @@ section.footnotes {
     
     {{ else }}
     
-      //display: inline-block;
-      //padding: 0 15px 4.5px; // 0 15px 2.5px;
-      padding: 3px 18px 6.5px;
+      padding: 0 15px 4.5px;
+      vertical-align: top;
       
       font-size: .75rem;
       text-transform: lowercase;
@@ -1106,16 +1099,6 @@ input[type=submit] {
 
 
 
-
-
-
-
-
-
-
-
-
-
 {{ if .Site.Taxonomies.categories }}
   // Categories
   li.cats a {
@@ -1305,23 +1288,26 @@ article {
 
 
 
-{{ if .Site.Params.Style.hideAnchors | default false }}
+{{ if .Site.Params.Style.hideAnchors }}
 
   @media (min-width: $mobile-breakpoint) {
     a.anchor:not(:focus) {
       opacity: 0;
     }
-
-    h2 > a:focus + a.anchor,
-    h3 > a:focus + a.anchor,
-    h2:hover > a.anchor,
-    h3:hover > a.anchor {
+    
+    %visible {
       opacity: 1;
+    }
+    
+    @for $i from 2 through 6 {
+      h#{$i} > a:focus + a.anchor,
+      h#{$i}:hover > a.anchor {
+        @extend %visible;
+      }
     }
   }
   
 {{ end }}
-
 
 
 p.error {
@@ -1342,7 +1328,6 @@ p.error {
 {{ else if (fileExists "assets/scss/rich-content.scss") }}
   @import 'rich-content';
 {{ end }}
-
 
 
 // TODO
