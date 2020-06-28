@@ -1314,7 +1314,7 @@ p.error {
   color: $error-color;
 }
 
-{{ if .Site.Params.hasNoscriptNotice | default true }}
+{{ if .Site.Params.hasNoscriptNotice }}
   p.noscript {
     font-weight: bold;
   }
