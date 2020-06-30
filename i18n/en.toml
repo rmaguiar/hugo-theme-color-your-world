@@ -1,8 +1,11 @@
+[main_menu]
+other = "Main menu."
+
 [change_accent]
 other = "Change accent color."
 
 [change_mode]
-other = "Change mode."
+other = "Change to light/dark mode."
 
 [noscript]
 other = "Unable to execute JavaScript. Some features were disabled."

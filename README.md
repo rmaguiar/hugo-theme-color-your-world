@@ -231,14 +231,17 @@ More possible params for your config file:
   hasNoscriptNotice = true
   
   # Default path for images in posts
-  # Can also be set in the front matter
   # ie.: "content/some-post/img"
+  # Can also be set PER PAGE
+  # It can be used to reduce repetition
+  # There's no default value
   imgPath = "img"
   
   # Default classes for markup image 
   # Modifies the default behavior of images placed via markdown
   # Can also be set PER PAGE via front matter
-  # The default classes are: border or borderless
+  # Available classes are: border and borderless
+  # There's no default value
   markupImgClass = "borderless"
   
   # This will append a separator (of your choice) along the site title to your <title>

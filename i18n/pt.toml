@@ -1,8 +1,11 @@
+[main_menu]
+other = "Menu principal."
+
 [change_accent]
 other = "Mudar cor de acentuação."
 
 [change_mode]
-other = "Alternar modo."
+other = "Mudar para o modo claro/escuro."
 
 [noscript]
 other = "Não foi possível executar o JavaScript. Alguns recursos foram desativados."
