@@ -162,23 +162,23 @@
     <meta name="twitter:image" content="{{ (.Fill "1280x640").Permalink }}">
 
     {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemap_exclude) }}
-      {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630 center").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
+      {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
     {{ end }}
     
   {{ end -}}
 {{ else if .Site.Params.cover }}
   {{ with resources.Get (.Site.Params.cover | default "img/cover.jpg") }}
-    <meta property="og:image" content="{{ (.Fill "1200x630 center").Permalink }}">
+    <meta property="og:image" content="{{ (.Fill "1200x630").Permalink }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     {{ with $.Site.Params.coverAlt }}
       <meta property="og:image:alt" content="{{ . }}">
     {{ end }}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="{{ (.Fill "1280x640 center").Permalink }}">
+    <meta name="twitter:image" content="{{ (.Fill "1280x640").Permalink }}">
 
     {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemap_exclude) }}
-      {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630 center").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
+      {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
     {{ end }}
     
   {{ end }}
