@@ -54,7 +54,7 @@ paginate = 5
   # Can also be set PER PAGE via front matter
   # Available classes are: border and borderless
   # There's no default value
-  markupImgClass = "borderless"
+  markupImgClass = ""
   
   # This will append a separator (of your choice) along the site title to your <title>
   # You can disabled it PER PAGE by using "disableTitleSeparator" at front
@@ -191,6 +191,11 @@ paginate = 5
 
   [services.twitter]
     disableInlineCSS = true
+
+
+
+[build]   
+  publishResources = false
 
 
 

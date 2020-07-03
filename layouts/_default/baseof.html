@@ -1,10 +1,17 @@
 <!--
   Generate and set SVG bundle
+  Also set image processing options
   Currently here to avoid certain priority issues...
 -->
 
 {{- $svgBundle := resources.Get "bundle.svg" | resources.ExecuteAsTemplate "img/bundle.svg" . | minify | resources.Fingerprint "md5" -}}
 {{- .Scratch.Set "svgBundle" $svgBundle -}}
+
+{{- .Scratch.Set "highRes"    (.Site.Params.imageProc.highRes   | default (slice "1280x" "1280w")) -}}
+{{- .Scratch.Set "mediumRes"  (.Site.Params.imageProc.mediumRes | default (slice "960x" "960w")) -}}
+{{- .Scratch.Set "lowRes"     (.Site.Params.imageProc.lowRes    | default (slice "640x q90" "640w")) -}}
+
+{{- .Scratch.Set "markupAutoResizeWidth" (.Site.Params.imageProc.markupAutoResizeWidth | default 1280) -}}
 
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}" data-mode="{{ if .Site.Params.Style.isDark }}dark{{ else }}light{{ end }}">

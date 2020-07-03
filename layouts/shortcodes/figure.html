@@ -1,7 +1,4 @@
 <!--
-  It always expects the image is inside a folder called "img".
-  File will be converted into 3 versions: 500w, 800w and 1200w.
-
   Usage:
     figure "weird_cat.jpg" "Something that can (or not) be a cat."
     figure file="weird_cat.jpg" alt="Something that can (or not) be a cat."
@@ -9,7 +6,7 @@
     figure "weird_cat.jpg" "Something that can (or not) be a cat." "border"
     figure class="border" file="weird_cat.jpg" caption="Something that can (or not) be a cat." alt="Ask someone blind if a caption and alt text are the same thing."
 
-  Default classes:
+  Default available classes:
     border
     borderless
 -->
@@ -19,7 +16,12 @@
 {{ $class   := .Get "class"   | default (.Get 2) }}
 {{ $alt     := .Get "alt"     | default $caption }}
 
+<!-- Image processing resolutions -->
+{{ $highRes   := .Page.Scratch.Get "highRes" }}
+{{ $mediumRes := .Page.Scratch.Get "mediumRes" }}
+{{ $lowRes    := .Page.Scratch.Get "lowRes" }}
 
+<!-- Default image path -->
 {{ $imgPath := .Page.Param "imgPath" }}
 
 {{ if $imgPath }}
@@ -28,15 +30,18 @@
 
 {{ with $.Page.Resources.GetMatch $file }}
 
-  {{ $placeholder         := (.Resize "800x png") | images.Filter (images.Contrast -100) }}
-  {{ $encodedPlaceholder  := printf "image/png;base64,%s" ($placeholder.Content | base64Encode) }}
-  {{ $encodedPixel        := "image/gif;base64,R0lGODdhAQABAIABAICAgP///ywAAAAAAQABAAACAkQBADs=" }}
+  <!--
+    HACK
+    Reduce reflow by generating a placeholder with similar size
+  -->
+  
+  {{ $encodedPlaceholder := printf "image/png;base64,%s" (((resources.Get "pixel.gif").Resize (printf "%vx%v %s" (.Resize (index $mediumRes 0)).Width (.Resize (index $mediumRes 0)).Height "png")).Content | base64Encode) }}
 
   <figure>
     <img
       class="lazyload {{ $class }}"
       loading="lazy"
-      data-srcset="{{ (.Resize "1200x").RelPermalink }} 1200w, {{ (.Resize "800x").RelPermalink }} 800w, {{ (.Resize "500x q90").RelPermalink }} 500w"
+      data-srcset="{{ (.Resize (index $highRes 0)).RelPermalink }} {{ index $highRes 1 }}, {{ (.Resize (index $mediumRes 0)).RelPermalink }} {{ index $mediumRes 1 }}, {{ (.Resize (index $lowRes 0)).RelPermalink }} {{ index $lowRes 1 }}"
       src="data:{{ $encodedPlaceholder }}"
       data-src="{{ (.Resize "800x").RelPermalink }}"
       {{ with $alt }}alt="{{ . }}"{{ end }}
@@ -46,7 +51,7 @@
       <img
         {{ with $class }}class="{{ . }}"{{ end }}
         loading="lazy"
-        srcset="{{ (.Resize "1200x").RelPermalink }} 1200w, {{ (.Resize "800x").RelPermalink }} 800w, {{ (.Resize "500x q90").RelPermalink }} 500w"
+        srcset="{{ (.Resize (index $highRes 0)).RelPermalink }} {{ index $highRes 1 }}, {{ (.Resize (index $mediumRes 0)).RelPermalink }} {{ index $mediumRes 1 }}, {{ (.Resize (index $lowRes 0)).RelPermalink }} {{ index $lowRes 1 }}"
         src="data:{{ $encodedPlaceholder }}"
         {{ with $alt }}alt="{{ . }}"{{ end }}
       />

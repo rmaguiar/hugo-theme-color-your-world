@@ -100,6 +100,28 @@ To disable it, you can just remove the `noClasses = false` (as its default value
     useCustomChroma = false
 ```
 
+## Image processing
+
+By default, images with width equal or greater than 1280 pixels are processed (resized) into 3 resolutions: 1280x, 960x and 640x (this one with quality at 90, as opposed to the default 75).
+
+You can change this behavior via config:
+
+```toml
+[params.imageProc]
+  highRes   = [ "1280x", "1280w" ]
+  mediumRes = [ "960x", "960w" ]
+  lowRes    = [ "640x q90", "640w" ]
+  # entry = [ resize options, condition ]
+  
+  # Images with width equal or greater this value
+  # will be processed into the 3 resolutions above
+  # Valid only for images rendered via markdown
+  # The default value is 1280
+  markupAutoResizeWidth = 1280
+```
+
+The shortcodes `img` and `figure` will **always** process images and cover images will *also* process resolutions for Open Graph (1200x630) and Twitter (1280x640).
+
 ## Shortcodes
 
 The most complex shortcodes here are the `social` and `contact-form`. They can be used to inject a list of social platform links and a contact form, respectively.

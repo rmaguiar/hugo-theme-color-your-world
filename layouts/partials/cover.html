@@ -1,7 +1,12 @@
-{{ $file    := (.Params.cover) }}
-{{ $altText := (.Params.coverAlt) }}
+{{ $file    := .Params.cover }}
+{{ $altText := .Params.coverAlt }}
 
-<!-- https://discourse.gohugo.io/t/ability-to-access-site-params-in-the-front-matter-of-archetypes/9744/6 -->
+<!-- Image processing resolutions -->
+{{ $highRes   := .Scratch.Get "highRes" }}
+{{ $mediumRes := .Scratch.Get "mediumRes" }}
+{{ $lowRes    := .Scratch.Get "lowRes" }}
+
+<!-- Default image path -->
 {{ $imgPath := .Page.Param "imgPath" }}
 
 {{ if $imgPath }}
@@ -10,26 +15,19 @@
 
 {{ with $.Page.Resources.GetMatch $file }}
 
-  {{ $placeholder := (.Resize "800x png") | images.Filter (images.Contrast -100) }}
-  {{ $encodedPlaceholder := printf "image/png;base64,%s" ($placeholder.Content | base64Encode) }}
-  
-  {{ $encodedPixel := "image/gif;base64,R0lGODdhAQABAIABAICAgP///ywAAAAAAQABAAACAkQBADs=" }}
-  
   <!--
-    WARNING
-    For some reason I'm not able to printf the whole data URI
-    The ":" seems to be the culprit
-    Trying to escape it didn't work, for now I'm out of ideas
-    so I'll be simply using "data:[printf]" for now
+    HACK
+    Reduce reflow by generating a placeholder with similar size
   -->
-  {{ $testEncodedPlaceholder := printf "data%cimage/png;base64,%s" "\u003A" ($placeholder.Content | base64Encode) }}
+
+  {{ $encodedPlaceholder := printf "image/png;base64,%s" (((resources.Get "pixel.gif").Resize (printf "%vx%v %s" (.Resize (index $mediumRes 0)).Width (.Resize (index $mediumRes 0)).Height "png")).Content | base64Encode) }}
 
   <img
     class="lazyload cover"
     loading="lazy"
-    data-srcset="{{ (.Resize "1200x").RelPermalink }} 1200w, {{ (.Resize "800x").RelPermalink }} 800w, {{ (.Resize "500x q90").RelPermalink }} 500w"
+    data-srcset="{{ (.Resize (index $highRes 0)).RelPermalink }} {{ index $highRes 1 }}, {{ (.Resize (index $mediumRes 0)).RelPermalink }} {{ index $mediumRes 1 }}, {{ (.Resize (index $lowRes 0)).RelPermalink }} {{ index $lowRes 1 }}"
     src="data:{{ $encodedPlaceholder }}"
-    data-src="{{ (.Resize "800x").RelPermalink }}"
+    data-src="{{ (.Resize (index $mediumRes 0)).RelPermalink }}"
     {{ with $altText }}alt="{{ . }}"{{ end }}
   />
 
@@ -37,7 +35,7 @@
     <img
       class="cover"
       loading="lazy"
-      srcset="{{ (.Resize "1200x").RelPermalink }} 1200w, {{ (.Resize "800x").RelPermalink }} 800w, {{ (.Resize "500x q90").RelPermalink }} 500w"
+      srcset="{{ (.Resize (index $highRes 0)).RelPermalink }} {{ index $highRes 1 }}, {{ (.Resize (index $mediumRes 0)).RelPermalink }} {{ index $mediumRes 1 }}, {{ (.Resize (index $lowRes 0)).RelPermalink }} {{ index $lowRes 1 }}"
       src="data:{{ $encodedPlaceholder }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />

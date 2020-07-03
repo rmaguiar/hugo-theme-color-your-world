@@ -65,8 +65,8 @@
 {{ end }}
 
 
-<!-- Scratch -->
-{{ $.Scratch.Set "currentTitle" $currentTitle }}
+<!-- Set current title -->
+{{ .Scratch.Set "currentTitle" $currentTitle }}
 
 
 
@@ -117,12 +117,10 @@
 {{ end }}
 
 
-
 <!-- Reserved -->
 {{ if or (templates.Exists "partials/custom/head") (templates.Exists "partials/custom/head.html") }}
   {{ partial "custom/head" . }}
 {{ end }}
-
 
 
 <!-- Open Graph / Twitter Card -->
@@ -135,10 +133,16 @@
 {{ end -}}
 
 
-<!-- Generated images for Open Graph, Twitter Cards and also Schema.org -->
 
+<!-- Image processing resolutions -->
+{{ $highRes   := .Scratch.Get "highRes" }}
+{{ $mediumRes := .Scratch.Get "mediumRes" }}
+{{ $lowRes    := .Scratch.Get "lowRes" }}
+
+<!-- Default image path -->
 {{ $imgPath := .Page.Param "imgPath" }}
 
+<!-- Generate images for Open Graph, Twitter Cards and also Schema.org -->
 {{- if .Params.cover }}
 
   {{ $file := .Params.cover }}
@@ -157,7 +161,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="{{ (.Fill "1280x640").Permalink }}">
 
-    {{ $.Scratch.Set "schemaCover" (.Fill "960x540").Permalink }}
+    {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemap_exclude) }}
+      {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630 center").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
+    {{ end }}
+    
   {{ end -}}
 {{ else if .Site.Params.cover }}
   {{ with resources.Get (.Site.Params.cover | default "img/cover.jpg") }}
@@ -169,13 +176,16 @@
     {{ end }}
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="{{ (.Fill "1280x640 center").Permalink }}">
+
+    {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemap_exclude) }}
+      {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630 center").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
+    {{ end }}
     
-    {{ $.Scratch.Set "schemaCover" (.Fill "960x540").Permalink }}
   {{ end }}
 {{ end -}}
 
 <!-- More social crap -->
-{{ if and (.IsPage) (not .Params.sitemap_exclude) }}
+{{ if and (in .Site.Params.mainSections .Section) (.IsPage) (not .Params.sitemap_exclude) }}
   <meta property="og:type" content="article">
   
   {{ if not .Date.IsZero }}
@@ -250,12 +260,13 @@
   The lack of "datePublished" will throw an error,
   but I don't know if leaving it as "0001-01-01" is any better.
   
-  Also, there's something wrong with the Google's validation tool. It's ignoring the "Person" type for https://schema.org/publisher.
+  Also, there's something wrong with the Google's validation tool.
+  It's ignoring the "Person" type for https://schema.org/publisher.
   
   Reference: https://www.drupal.org/project/schema_metatag/issues/3097526
 -->
 
-{{ if and (in .Site.Params.mainSections .Section) (not .Params.sitemap_exclude) }}
+{{ if and (in .Site.Params.mainSections .Section) (.IsPage) (not .Params.sitemap_exclude) }}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -266,7 +277,7 @@
       },
       "headline": {{ $currentTitle }},
       "description": {{ $currentDesc }},
-      {{ with $.Scratch.Get "schemaCover" }}"image": "{{ . }}",{{ end }}
+      {{ with .Scratch.Get "schemaCover" }}"image": {{ . }},{{ end }}
       "url": "{{ .Permalink }}",
       "inLanguage": "{{ .Site.Language.Lang }}",
       "datePublished": "{{ .PublishDate.Format "2006-01-02" | safeHTML }}",
@@ -357,9 +368,7 @@
 
 
 <!-- Should be loaded even if browser has native lazy load support -->
-
 {{ $lazysizes := resources.Get "lazysizes@5.2.2/lazysizes.min.js" | resources.ExecuteAsTemplate "js/lazysizes.min.js" . | minify | resources.Fingerprint "sha512" }}
-
 <script defer src="{{ $lazysizes.RelPermalink }}" integrity="{{ $lazysizes.Data.Integrity }}" crossorigin="anonymous"></script>
 
 

@@ -9,7 +9,7 @@ tags          : [ emoji, markdown, shortcodes, text, extra ]
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc finibus enim quis eros vulputate cursus. Nunc et faucibus felis, eget hendrerit dui. Nullam et enim quis odio molestie aliquet nec vitae ante.
 
-![Golden lion tamarin drawing.](img/golden-lion-tamarin-drawing.png)
+![Golden lion tamarin drawing.](golden-lion-tamarin-drawing.png)
 
 Nunc et lobortis est, vitae hendrerit neque. In eget nisi lacus. Vestibulum ut laoreet magna. Sed lacinia libero dolor, sit amet accumsan mi laoreet vel.
 
