@@ -1,8 +1,8 @@
 <!--
   Usage:
     img "weird_cat.jpg" "Something that can (or not) be a cat."
-    img file="weird_cat.jpg" alt="Something that can (or not) be a cat."
-    img class="border" file="weird_cat.jpg" alt="Something that can (or not) be a cat."
+    img src="weird_cat.jpg" alt="Something that can (or not) be a cat."
+    img class="border" src="weird_cat.jpg" alt="Something that can (or not) be a cat."
     img "weird_cat.jpg" "Something that can (or not) be a cat." "border"
 
   Default available classes:
@@ -10,7 +10,7 @@
     borderless
 -->
 
-{{ $file    := .Get "file"  | default (.Get 0) }}
+{{ $file    := .Get "src"   | default (.Get 0) }}
 {{ $altText := .Get "alt"   | default (.Get 1) }}
 {{ $class   := .Get "class" | default (.Get 2) }}
 

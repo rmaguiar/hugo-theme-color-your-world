@@ -31,7 +31,7 @@ In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquen
 
 Morbi mollis risus in mattis consequat. Donec hendrerit mauris sem, quis accumsan augue feugiat a. Suspendisse eu tempus eros. Pellentesque dignissim, arcu non porttitor dictum, enim orci hendrerit turpis, non venenatis nulla magna non ipsum.
 
-{{< img class="border" file="pono-lopez-qwoW4mdqjWw.jpg" alt="Blue and black Milky Way by Pono Lopez." >}}
+{{< img class="border" src="pono-lopez-qwoW4mdqjWw.jpg" alt="Blue and black Milky Way by Pono Lopez." >}}
 
 Nam ullamcorper orci quam, sed mollis lacus dapibus eget. Curabitur imperdiet arcu augue, sed efficitur felis commodo ac. Cras ornare sollicitudin rhoncus. :milky_way:
 
