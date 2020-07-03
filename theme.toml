@@ -3,7 +3,7 @@
 
 name = "Color Your World"
 license = "MIT"
-licenselink = "https://gitlab.com/rmaguiar/hugo-theme-color-your-world/blob/master/LICENSE.md"
+licenselink = "https://gitlab.com/rmaguiar/hugo-theme-color-your-world/blob/master/LICENSE"
 description = "A minimalist theme for personal blogs with a colored twist."
 homepage = "https://gitlab.com/rmaguiar/hugo-theme-color-your-world"
 tags = [
