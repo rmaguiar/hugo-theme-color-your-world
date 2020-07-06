@@ -2,9 +2,7 @@
 title           : "More KaTeX"
 description     : "Brief explanation of mchem, copy-tex, etc."
 katex           : true
-katexExtensions :
-  - mchem
-  - copy-tex
+katexExtensions : [ mchem, copy-tex ]
 tags            : [ markdown, shortcodes, extra ]
 ---
 
@@ -26,9 +24,7 @@ About how to load the extensions, here's a quick example:
 ---
 title           : "More KaTeX"
 katex           : true
-katexExtensions :
-  - mchem
-  - copy-tex
+katexExtensions : [ mchem, copy-tex ]
 ---
 
 ...

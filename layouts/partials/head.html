@@ -98,10 +98,10 @@
 
 
 <!-- Canon -->
-{{ if and (.IsPage) (not .Params.sitemap_exclude) }}
+{{ if and (.IsPage) (not .Params.sitemapExclude) }}
   {{ if .Params.canonicalURL }}
     <link rel="canonical" href="{{ .Params.canonicalURL }}">
-  {{ else if and (ne .Kind "404") (ne .Params.sitemap_exclude true) }}
+  {{ else if and (ne .Kind "404") (ne .Params.sitemapExclude true) }}
     <link rel="canonical" href="{{ .Permalink }}">
   {{ end }}
 {{ else if (eq .Kind "section") }}
@@ -161,7 +161,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="{{ (.Fill "1280x640").Permalink }}">
 
-    {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemap_exclude) }}
+    {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemapExclude) }}
       {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
     {{ end }}
     
@@ -177,7 +177,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="{{ (.Fill "1280x640").Permalink }}">
 
-    {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemap_exclude) }}
+    {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemapExclude) }}
       {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
     {{ end }}
     
@@ -185,7 +185,7 @@
 {{ end -}}
 
 <!-- More social crap -->
-{{ if and (in .Site.Params.mainSections .Section) (.IsPage) (not .Params.sitemap_exclude) }}
+{{ if and (in .Site.Params.mainSections .Section) (.IsPage) (not .Params.sitemapExclude) }}
   <meta property="og:type" content="article">
   
   {{ if not .Date.IsZero }}
@@ -266,7 +266,7 @@
   Reference: https://www.drupal.org/project/schema_metatag/issues/3097526
 -->
 
-{{ if and (in .Site.Params.mainSections .Section) (.IsPage) (not .Params.sitemap_exclude) }}
+{{ if and (in .Site.Params.mainSections .Section) (.IsPage) (not .Params.sitemapExclude) }}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",

@@ -35,14 +35,14 @@
     Reduce reflow by generating a placeholder with similar size
   -->
   
-  {{ $encodedPlaceholder := printf "image/png;base64,%s" (((resources.Get "pixel.gif").Resize (printf "%vx%v %s" (.Resize (index $mediumRes 0)).Width (.Resize (index $mediumRes 0)).Height "png")).Content | base64Encode) }}
+  {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((resources.Get "pixel.gif").Resize (printf "%vx%v %s" (.Resize (index $mediumRes 0)).Width (.Resize (index $mediumRes 0)).Height "png")).Content | base64Encode)) | safeURL }}
 
   <figure>
     <img
       class="lazyload {{ $class }}"
       loading="lazy"
       data-srcset="{{ (.Resize (index $highRes 0)).RelPermalink }} {{ index $highRes 1 }}, {{ (.Resize (index $mediumRes 0)).RelPermalink }} {{ index $mediumRes 1 }}, {{ (.Resize (index $lowRes 0)).RelPermalink }} {{ index $lowRes 1 }}"
-      src="data:{{ $encodedPlaceholder }}"
+      src="{{ $encodedPlaceholder }}"
       data-src="{{ (.Resize (index $mediumRes 0)).RelPermalink }}"
       {{ with $alt }}alt="{{ . }}"{{ end }}
     />
@@ -52,7 +52,7 @@
         {{ with $class }}class="{{ . }}"{{ end }}
         loading="lazy"
         srcset="{{ (.Resize (index $highRes 0)).RelPermalink }} {{ index $highRes 1 }}, {{ (.Resize (index $mediumRes 0)).RelPermalink }} {{ index $mediumRes 1 }}, {{ (.Resize (index $lowRes 0)).RelPermalink }} {{ index $lowRes 1 }}"
-        src="data:{{ $encodedPlaceholder }}"
+        src="{{ $encodedPlaceholder }}"
         {{ with $alt }}alt="{{ . }}"{{ end }}
       />
     </noscript>
