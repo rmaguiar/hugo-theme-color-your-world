@@ -2,13 +2,8 @@
 title           : "Contato"
 description     : "Veja como entrar em contato comigo."
 cover           : "javier-mazzeo-GTXvpZ2eTdA.jpg"
-coverAlt        : "Brown animal hanging on tree by Javier Mazzeo."
+coverAlt        : "Animal marrom pendurado na árvore por Javier Mazzeo."
 sitemapExclude  : true
-social:
-  centralized:
-    twitter:
-      - 'https://twitter.com/didyounoticeme'
-      - '@didyounoticeme'
 contact:
   messageMinLength: 999999
 ---

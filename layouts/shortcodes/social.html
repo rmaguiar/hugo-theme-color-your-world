@@ -1,256 +1,59 @@
 {{ $icons := (.Page.Scratch.Get "svgBundle").RelPermalink }}
 
 <!-- Reduce repetition... -->
-{{ $centralizedOnPage   := .Page.Params.Social.Centralized }}
-{{ $centralizedOnSite   := .Site.Params.Social.Centralized }}
-{{ $decentralizedOnPage := .Page.Params.Social.Decentralized }}
-{{ $decentralizedOnSite := .Site.Params.Social.Decentralized }}
+{{ $centralizedOnPage   := $.Page.Params.Social.Centralized }}
+{{ $centralizedOnSite   := $.Site.Params.Social.Centralized }}
+{{ $decentralizedOnPage := $.Page.Params.Social.Decentralized }}
+{{ $decentralizedOnSite := $.Site.Params.Social.Decentralized }}
 
 <section class="social">
 
-  {{ with or $centralizedOnPage.facebook $centralizedOnSite.facebook }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "Facebook" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
+  {{ range .Site.Data.social }}
+
+    {{ $currentEntry  := .entry }}
+    {{ $currentLabel  := .label }}
+    {{ $currentBase   := .base }}
+    {{ $currentIcon   := .icon.id }}
+
+    {{ if not .decentralized }}
+
+      {{ with (index (or $centralizedOnPage $centralizedOnSite) $currentEntry) }}
+
+        {{ $url   := printf "%s%s" $currentBase (index . 0) }}
+        {{ $label := $currentLabel }}
+      
+        {{ with (index . 1) }}
+          {{ $label = . }}
+        {{ end }}
+        
+        <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <use xlink:href="{{ printf "%s#%s" $icons $currentIcon }}"/>
+          </svg>
+
+          <p>{{ $label }}</p>
+        </a>
+
+      {{ end }}
+
+    {{ else }}
+
+      {{ if (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
+
+        {{ range (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
+          <a rel="me nofollow" href="{{ index . 0 }}" title="{{ printf "%s (%s)" (index . 1) $currentLabel }}">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <use xlink:href="{{ printf "%s#%s" $icons $currentIcon }}"/>
+            </svg>
+
+            <p>{{ index . 1 | truncate 15 }}</p>
+          </a>
+        {{ end }}
+        
+      {{ end }}
+      
     {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#facebook"/>
-      </svg>
 
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-  
-  {{ with or $centralizedOnPage.github $centralizedOnSite.github }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "GitHub" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#github"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-
-  {{ with or $centralizedOnPage.gitlab $centralizedOnSite.gitlab }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "GitLab" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#gitlab"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-  
-  {{ with or $centralizedOnPage.instagram $centralizedOnSite.instagram }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "Instagram" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#instagram"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-  
-  {{ with or $centralizedOnPage.keybase $centralizedOnSite.keybase }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "Keybase" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#keybase"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-
-  {{ with or $centralizedOnPage.linkedin $centralizedOnSite.linkedin }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "LinkedIn" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#linkedin"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-  
-
-
-  {{ if or $decentralizedOnPage.mastodon $decentralizedOnSite.mastodon }}
-  
-    {{ range or $decentralizedOnPage.mastodon $decentralizedOnSite.mastodon }}
-
-      <a rel="me nofollow" href="{{ index . 0 }}" title="{{ index . 1 }} (Mastodon)">
-        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <use xlink:href="{{ $icons }}#mastodon"/>
-        </svg>
-
-        <p>{{ index . 1 | truncate 15 }}</p>
-      </a>
-    
-    {{ end }}
-    
-  {{ end }}
-  
-  {{ if or $decentralizedOnPage.matrix $decentralizedOnSite.matrix }}
-  
-    {{ range or $decentralizedOnPage.matrix $decentralizedOnSite.matrix }}
-      <a rel="me nofollow" href="{{ index . 0 }}" title="{{ index . 1 }} (Matrix)">
-        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <use xlink:href="{{ $icons }}#matrix"/>
-        </svg>
-
-        <p>{{ index . 1 | truncate 15 }}</p>
-      </a>
-    {{ end }}
-    
-  {{ end }}
-  
-  
-  {{ with or $centralizedOnPage.medium $centralizedOnSite.medium }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "Medium" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#medium"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-  
-  
-  {{ with or $centralizedOnPage.reddit $centralizedOnSite.reddit }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "Reddit" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#reddit"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-  
-  
-  {{ with or $centralizedOnPage.stackOverflow $centralizedOnSite.stackOverflow }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "Stack Overflow" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#stack-overflow"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-  
-
-  {{ with or $centralizedOnPage.telegram $centralizedOnSite.telegram }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "Telegram" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#telegram"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
-  {{ end }}
-  
-  {{ with or $centralizedOnPage.twitter $centralizedOnSite.twitter }}
-  
-    {{ $url   := (index . 0) }}
-    {{ $label := "Twitter" }}
-  
-    {{ with (index . 1) }}
-      {{ $label = . }}
-    {{ end }}
-    
-    <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
-      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <use xlink:href="{{ $icons }}#twitter"/>
-      </svg>
-
-      <p>{{ $label }}</p>
-    </a>
-    
   {{ end }}
 
 </section>
