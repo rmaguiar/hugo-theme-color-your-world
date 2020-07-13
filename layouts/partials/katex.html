@@ -1,20 +1,20 @@
 <!-- KaTeX -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha512-SBL9R0mkYbWGuy/0DLHNxYHPScUMar9Y55t8vrnN42ZYfLZ4SnjXqCFfEhPTnj9pedAs5F+WZkzjq1qGS8+VGg==" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha512-2k+W+3OGhtd3whnGt33ek/oA1M/aqB6Mir+WIcCrSuIC2yD6iTX6IuPf5q1oEJGQT06jma5K6ca7Xqb4u7Urow==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
 
 <!-- mchem extension -->
 {{ if or (in .Params.katexExtensions "mchem") (in .Site.Params.katexExtensions "mchem") }}
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js" integrity="sha512-B4sSu3isYYpaurfStmXsh1wL71s8xKFZyNjCCuUHw8feCh9RlpG03x8+a3egFiZ1VuCoj6463IY18VnrDBbKuA==" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/mhchem.min.js" integrity="sha512-ndr34OWlb/uvrgXcrqKXv4YUB42kRFQi9cJ+s+alNEvNBKYyIlO970xmSWYV3vNKsrT1rwW/leiBEaZxcCwjwA==" crossorigin="anonymous"></script>
 {{ end }}
 
 <!-- copy-tex extension -->
 {{ if or (in .Params.katexExtensions "copy-tex") (in .Site.Params.katexExtensions "copy-tex") }}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.css" integrity="sha512-gLOBccbZVR13Jvu/EZJAGz9C6P8CGD10sCGt/EdH5xHMKU3S9m43i6BX0ZqWIKeRo0JYXJiLi3Lv0gCAxFqz+Q==" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js" integrity="sha512-DJT2Gf9zoglFWNuxgFcMZ3zi9Ra9GPDxpw9/8kyQ6cji+SOaLlV1A49Its53eLZlGfb4WjwRCptEUdNju6Wxgw==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.css" integrity="sha512-z+4JGY4AARx9M0NeGyOGL5W2gnwkPeQDiWPKcUUWOVxPiHFd9l9P0QqKaZiPv+0bWir/J9WIAEWBuRr5j8ZaWA==" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.js" integrity="sha512-DJT2Gf9zoglFWNuxgFcMZ3zi9Ra9GPDxpw9/8kyQ6cji+SOaLlV1A49Its53eLZlGfb4WjwRCptEUdNju6Wxgw==" crossorigin="anonymous"></script>
 {{ end }}
 
 <!-- auto-render extension + tabIndex HACK (see below) -->
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha512-GicGrbLBXJh2kbF+DYD+sCW5hPavoOfVAKSOE7+qgYCgVTcwe+/D4LXegS9JVTY72ovc5Ung4Fml+i1uD3uOyQ==" crossorigin="anonymous" onload="renderMathInElement(document.body);addTabIndex()"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous" onload="renderMathInElement(document.body);addTabIndex()"></script>
 
 <!--
   HACK
