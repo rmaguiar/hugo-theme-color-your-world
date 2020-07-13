@@ -449,9 +449,8 @@ sup.footnote-ref {
 
 
 // Lists in general
-article ol,
-article > ul,
-#error ul {
+ol,
+ul {
   li {
     margin-bottom: .45rem;
   }
@@ -481,7 +480,7 @@ ol {
       color: var(--bg);
       
       margin-right: 12px;
-      padding: 2px 7.5px; // 3px 7.5px;
+      padding: 2px 7.5px;
     }
   }
 }
