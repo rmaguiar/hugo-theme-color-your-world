@@ -4,7 +4,7 @@
 / Accent color palette
 ******************************/
 
-const PALETTE   = document.querySelector('footer input');
+const PALETTE = document.querySelector('footer input');
 
 PALETTE.onchange = function () {
 

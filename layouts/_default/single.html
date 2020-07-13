@@ -40,7 +40,7 @@
         
       </header>
     
-      {{ if and .Params.toc (gt (len .Page.TableOfContents) 32) }}
+      {{ if .Params.toc }}
         <details class="toc" open>
           <summary>{{ T "table_of_contents" }}</summary>
           {{ .Page.TableOfContents }}
@@ -71,11 +71,14 @@
       {{ $improvedTable := printf "<section class=scroll tabindex=0> ${1} </section>" }}
       
       <!-- Replace the footnote return links with a text label -->
-      {{ $footnoteReturnLink := ( printf "${1}%s${2}" (T "return")) }}
+      {{ $footnoteReturnLink := (printf "${1}%s${2}" (T "return")) }}
+      
+      <!-- Replace the inline "padding:0" if not using the custom Chroma -->
+      {{ $highlightPadding := (printf "${1}padding: var(--il-pad)") }}
       
       <!-- OR replace the footnote return links with a SVG icon -->
       {{ if .Site.Params.Style.hasIconAsFootnoteReturnLink }}
-        {{ $footnoteReturnLink = ( printf "${1}<svg transform=\"rotate(180) translate(0 -1)\" aria-hidden=\"true\" ><use xlink:href=\"%s#caret-down\"/></svg>${2}" $icons) }}
+        {{ $footnoteReturnLink = (printf "${1}<svg transform=\"rotate(180) translate(0 -1)\" aria-hidden=\"true\" ><use xlink:href=\"%s#caret-down\"/></svg>${2}" $icons) }}
       {{ end }}
 
       <!--
@@ -84,7 +87,8 @@
         * Adding "tabindex=0" to native table and code fences;
         * Making tables scrollable;
         * Localizing some text;
-        * Adding a "h2" to footnotes.
+        * Adding a "h2" to footnotes;
+        * Changing the default inline style for default Chroma.
       -->
 
       <!--
@@ -92,14 +96,9 @@
         To bypass this, I basically captured everything but the "↩"...
       -->
 
-        {{ .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $improvedTable | replaceRE "(<div class=\"highlight\"><(?:pre|div) class=\"chroma\")(>)" $highlightCodeBlockLabel | replaceRE "(<pre)>(<code>)" $indentedCodeBlockLabel | replaceRE "(class=\"footnote-ref\")" $seeFootnotes | replaceRE "(class=\"footnote-backref\")" $returnToText | replaceRE "(<section class=\"footnotes\" role=\"doc-endnotes\">)" $references | replaceRE "(<a (?:.*) class=\"footnote-backref\" (?:.*)>)(?:.*)(</a>)" $footnoteReturnLink | safeHTML }}
-        
-        
-        
-        
+        {{ .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $improvedTable | replaceRE "(<div class=\"highlight\"><(?:pre|div) class=\"chroma\")(>)" $highlightCodeBlockLabel | replaceRE "(<pre)>(<code>)" $indentedCodeBlockLabel | replaceRE "(class=\"footnote-ref\")" $seeFootnotes | replaceRE "(class=\"footnote-backref\")" $returnToText | replaceRE "(<section class=\"footnotes\" role=\"doc-endnotes\">)" $references | replaceRE "(<a (?:.*) class=\"footnote-backref\" (?:.*)>)(?:.*)(</a>)" $footnoteReturnLink | replaceRE "(?:(<div class=\"highlight\">(?:.|\n)+?<table (?:.*?))(?:padding:0))" $highlightPadding | safeHTML }}
 
     </article>
-    
   </main>
 
 {{ end }}

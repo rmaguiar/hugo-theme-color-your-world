@@ -11,6 +11,8 @@ $change-transition: {{ .Scratch.Get "changeTransition" }};
 
 
 
+
+
 // Default size
 :root {
   font-size: $font-size;
@@ -44,12 +46,11 @@ html {
     
       {{ if (fileExists "static/css/chroma/light.css") }}
         @import '/css/chroma/light.css';
-      {{ else }}
+      {{ else if (resources.Get "scss/colors/chroma/light.scss") }}
         @import 'colors/chroma/light';
       {{ end }}
       
     {{ end }}
-
   }
   
   // Dark mode
@@ -78,19 +79,16 @@ html {
     
     // Custom Chroma stylesheet
     {{ if .Site.Params.Style.useCustomChroma | default true }}
-    
+
       {{ if (fileExists "static/css/chroma/dark.css") }}
         @import '/css/chroma/dark.css';
-      {{ else }}
+      {{ else if (resources.Get "scss/colors/chroma/dark.scss") }}
         @import 'colors/chroma/dark';
       {{ end }}
       
     {{ end }}
-
   }
-  
 }
-
 
 
 body {
@@ -210,7 +208,6 @@ body {
         &::-webkit-color-swatch-wrapper {
           padding: 0;
         }
-        
       }
 
       button {
@@ -338,9 +335,7 @@ code {
 }
 
 
-
-
-
+// If there's no custom header partial, style a default one
 {{ if not (or (templates.Exists "partials/custom/header") (templates.Exists "partials/custom/header.html")) }}
   body > header {
     > a {
@@ -689,7 +684,7 @@ section.scroll {
 // TODO
 // Get rid of this !important
 div.highlight > div table {
-  padding: 0 24px !important;
+  padding: 0 24px;
   max-height: $box-max-height;
 }
 
@@ -700,7 +695,7 @@ div.chroma td:first-of-type {
 article > pre,
 span.katex-display,
 div.highlight > pre {
-  padding: 21px 24px;
+  padding: var(--hl-pad);
 }
 
 article > pre,
@@ -798,7 +793,7 @@ ul.posts {
 }
 
 // Not sure if I like this
-@media (max-width: $mobile-breakpoint) {
+@include respond-below($mobile-breakpoint) {
   ul.posts a {
     flex-direction: column-reverse;
     align-items: unset;
@@ -1241,7 +1236,7 @@ blockquote {
   border-width: 1px 1px 1px 12px;
   color: var(--alt-fg);
 
-  margin: 2.1rem 1.5rem;
+  margin: var(--blk-mg);
   
   padding: 0 30px;
   
@@ -1287,10 +1282,27 @@ article {
 }
 
 
+html {
+  --blk-mg: 1.05rem .75rem;
+  --il-pad: 0 12px;
+  
+  --hl-pad: 15.75px 18px;
+}
+
+@include respond-above($mobile-breakpoint) {
+  html {
+    --blk-mg: 2.1rem 1.5rem;
+    --il-pad: 6px 24px;
+    
+    --hl-pad: 21px 24px;
+  }
+}
+
+
 
 {{ if .Site.Params.Style.hideAnchors }}
 
-  @media (min-width: $mobile-breakpoint) {
+  @include respond-above($mobile-breakpoint) {
     a.anchor:not(:focus) {
       opacity: 0;
     }
@@ -1325,9 +1337,10 @@ p.error {
 // Rich Content
 {{ if (fileExists "static/css/rich-content.css") }}
   @import '/css/rich-content.css';
-{{ else if (fileExists "assets/scss/rich-content.scss") }}
+{{ else if (resources.Get "scss/rich-content.scss") }}
   @import 'rich-content';
 {{ end }}
+
 
 
 // TODO
@@ -1335,6 +1348,6 @@ p.error {
 // This isn't good enough
 {{ if (fileExists "static/css/custom.css") }}
   @import '/css/custom.css';
-{{ else if (fileExists "assets/scss/custom.scss") }}
+{{ else if (resources.Get "scss/custom.scss") }}
   @import 'custom';
 {{ end }}

@@ -79,7 +79,6 @@ function getAccent() {
   };
   
   return currentAccent
-  
 };
 
 var activeAccent = getAccent();
@@ -111,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.transition 
     = document.querySelector('header').style.transition
     = document.querySelector('footer').style.transition
-    = 'background-color {{ $changeTransition }}, color {{ $changeTransition }}'
+    = '{{ printf "background-color %[1]s, color %[1]s" $changeTransition }}'
   };
   
   // Give the user a choice
@@ -135,8 +134,9 @@ document.addEventListener('DOMContentLoaded', function () {
     
     updateAccent()
   };
-  
 
+  
+  // TEST
   // Keyboard shortcut for mode change, here for testing purposes only
   // CTRL + ALT + M
   {{ if .Site.IsServer }}
@@ -148,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }, false);
   {{ end }}
+
 
   // Runs when OS changes light/dark mode. Changes only if you were on default
   // color state (light on light mode, dark on dark mode).

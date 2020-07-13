@@ -2,7 +2,7 @@
 
 **Color Your World** is a [Hugo](https://gohugo.io) theme developed around a single experiment that led me to this:
 
-![HTML color picker.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/color-picker.png)
+![HTML color picker with 12 presets.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/color-picker.png)
 
 It's a HTML color picker. Along with some vanilla JS, it allows anyone to change what I'll be calling here... the **accent color**, a color used mostly in interactive elements.
 
@@ -78,7 +78,7 @@ You can change the default mode and accent colors in the config:
 
 This theme comes with two chroma styles, meant to be used with light and dark mode respectively. These are **Solarized Dark** for light mode and **Monokai** for dark mode.
 
-![Syntax highlighting](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/syntax-highlight.gif)
+![Syntax highlighting in both dark and light modes.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/syntax-highlight.gif)
 
 It's worth noting that I'm not using the original stylesheets, but modified stylesheets based on the [pygments-high-contrast-stylesheets](https://github.com/mpchadwick/pygments-high-contrast-stylesheets) (aka "WCAG AA passing Pygments stylesheets").
 
@@ -147,6 +147,7 @@ Here's an example of config file:
   linkedin      = [ "<username>" ]
   medium        = [ "<username>" ]
   reddit        = [ "<username>" ]
+  soundcloud    = [ "<username>" ]
   stackOverflow = [ "<username>" ]
   strava        = [ "<username>" ]
   telegram      = [ "<username>" ]
@@ -161,10 +162,14 @@ Here's an example of config file:
 
 [params.social.decentralized]
 
+  [params.social.decentralized.funkwhale]
+    1 = [ "https://open.audio/<username>", "open.audio" ]
+    
   [params.social.decentralized.mastodon]
     1 = [ "https://mastodon.social/<username>", "mastodon.social" ]
     2 = [ "https://mastodon.too/<username>", "mastodon.too" ]
     3 = [ "https://yet.another.one/<username>", "yet.another.one" ]
+    
     #entry = [ "full url", "label (required)" ]
 
   [params.social.decentralized.matrix]
@@ -175,6 +180,12 @@ Here's an example of config file:
   [params.social.decentralized.peertube]
     1 = [ "https://peertube.something/accounts/<username>", "peertube.something" ]
     #entry = [ "full url", "label (required)" ]
+  
+  [params.social.decentralized.pixelfed]
+    1 = [ "https://pixelfed.social/<username>", "pixelfed.social" ]
+  
+  [params.social.decentralized.riot]
+    1 = [ "https://riot.im/app/#/user/<username>:matrix.org", "matrix.org" ]
 
   # The "entry" here ISN'T important. It's used for nothing.
 ```
@@ -301,3 +312,13 @@ More possible params for your config file:
     # The default is ".5s ease"
     changeTransition = ".3s ease"
 ```
+
+## Thanks to
+
+* [Font Awesome](https://fontawesome.com/) and [Fork Awesome](https://forkaweso.me/) for the icons;
+* [@nickpunt](https://gist.github.com/nickpunt) and [@regpaq](https://gist.github.com/regpaq) for the [dark/light mode switcher](https://gist.github.com/regpaq/04c67e8aceecbf0fd819945835412d1f) idea;
+* Glenn McComb and [his great article](https://glennmccomb.com/articles/how-to-build-custom-hugo-pagination/) about custom pagination with Hugo;
+* Philip Walton and [his sticky footer solution](https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/) with Flexbox;
+* [lazysizes](https://github.com/aFarkas/lazysizes);
+* [KaTeX](https://katex.org/), "the _**fastest**_ math typesetting library for the web";
+* Hugo and [its community](https://discourse.gohugo.io/).

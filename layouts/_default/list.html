@@ -22,7 +22,7 @@
         {{ range $paginator.Pages }}
           <li>
             <a class="btn" href="{{ .RelPermalink }}">
-              <p>{{ .Title | emojify }}</p>
+              <p>{{ .LinkTitle | emojify }}</p>
               {{ if not .Date.IsZero }}<time datetime="{{ .Date | dateFormat "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
             </a>
           </li>

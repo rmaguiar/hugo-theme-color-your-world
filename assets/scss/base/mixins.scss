@@ -17,3 +17,17 @@
     0 1px 0 $color,
     1px 0 0 $color;
 }
+
+
+// Responsiveness
+@mixin respond-above($breakpoint) {
+  @media (min-width: ($breakpoint + 1)) {
+    @content;
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}

@@ -199,7 +199,7 @@
   {{ end }}
   
   {{ with or .Page.Params.Social.Centralized .Site.Params.Social.Centralized.twitter }}
-    <meta name="twitter:creator" content="{{ (urls.Parse (index . 0)).Path | replaceRE "/" "@" }}">
+    <meta name="twitter:creator" content="{{ printf "@%s" (index . 0) }}">
   {{ end}}
   
 {{ else }}
@@ -207,7 +207,7 @@
 {{ end -}}
 
 {{ with or .Page.Params.Social.Centralized .Site.Params.Social.Centralized.twitter }}
-  <meta name="twitter:site" content="{{ (urls.Parse (index . 0)).Path | replaceRE "/" "@" }}">
+  <meta name="twitter:site" content="{{ printf "@%s" (index . 0) }}">
 {{ end }}
 
 
@@ -238,19 +238,37 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 
-<!-- Social on Schema.org -->
+<!-- Reduce repetition... -->
+{{ $centralizedOnPage   := .Page.Params.Social.Centralized }}
+{{ $centralizedOnSite   := .Site.Params.Social.Centralized }}
+{{ $decentralizedOnPage := .Page.Params.Social.Decentralized }}
+{{ $decentralizedOnSite := .Site.Params.Social.Decentralized }}
+
+<!-- Generate array with social profiles -->
 {{ $sameAs := slice }}
 
-{{ range or .Page.Params.Social.Centralized .Site.Params.Social.Centralized }}
-  {{ $sameAs = $sameAs | append (index . 0) }}
-{{ end }}
+{{ range .Site.Data.social }}
 
-{{ range or .Page.Params.Social.Decentralized .Site.Params.Social.Decentralized }}
-  {{ range . }}
-    {{ $sameAs = $sameAs | append (index . 0) }}
+  {{ $currentEntry  := .entry }}
+  {{ $currentBase   := .base }}
+
+  {{ if not .decentralized }}
+
+    {{ with (index (or $centralizedOnPage $centralizedOnSite) $currentEntry) }}
+      {{ $sameAs = $sameAs | append (printf "%s%s" $currentBase (index . 0)) }}
+    {{ end }}
+    
+  {{ else }}
+  
+    {{ if (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
+      {{ range (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
+        {{ $sameAs = $sameAs | append (index . 0) }}
+      {{ end }}
+    {{ end }}
+    
   {{ end }}
-{{ end }}
 
+{{ end }}
 
 
 <!-- Schema Markup / Structured Data -->
@@ -340,7 +358,7 @@
       --accent: {{ if .Site.Params.Style.isDark }}{{ $darkAccent }}{{ else }}{{ $lightAccent }}{{ end }};
     }
   
-    .js,
+    .req-js,
     img.lazyload {
       display: none;
     }
@@ -385,15 +403,10 @@
   but since it's easy to implement...
 -->
 
-{{ range or .Page.Params.Social.Centralized .Site.Params.Social.Centralized }}
-  <link rel="me" href="{{ index . 0 }}"/> 
+{{ range $sameAs }}
+  <link rel="me" href="{{ . }}"/> 
 {{ end }}
 
-{{ range or .Page.Params.Social.Decentralized .Site.Params.Social.Decentralized }}
-  {{ range . }}
-    <link rel="me" href="{{ index . 0 }}"/> 
-  {{ end }}
-{{ end }}
 
 
 <!--

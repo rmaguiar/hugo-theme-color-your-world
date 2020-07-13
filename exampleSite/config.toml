@@ -143,6 +143,7 @@ paginate = 5
     linkedin      = [ "<username>" ]
     medium        = [ "<username>" ]
     reddit        = [ "<username>" ]
+    soundcloud    = [ "<username>" ]
     stackOverflow = [ "<username>" ]
     strava        = [ "<username>" ]
     telegram      = [ "<username>" ]
@@ -156,11 +157,15 @@ paginate = 5
     # The "entry" here IS important. It's used to load the data.
 
   [params.social.decentralized]
-  
+
+    [params.social.decentralized.funkwhale]
+      1 = [ "https://open.audio/<username>", "open.audio" ]
+      
     [params.social.decentralized.mastodon]
       1 = [ "https://mastodon.social/<username>", "mastodon.social" ]
       2 = [ "https://mastodon.too/<username>", "mastodon.too" ]
       3 = [ "https://yet.another.one/<username>", "yet.another.one" ]
+      
       #entry = [ "full url", "label (required)" ]
 
     [params.social.decentralized.matrix]
@@ -171,6 +176,12 @@ paginate = 5
     [params.social.decentralized.peertube]
       1 = [ "https://peertube.something/accounts/<username>", "peertube.something" ]
       #entry = [ "full url", "label (required)" ]
+    
+    [params.social.decentralized.pixelfed]
+      1 = [ "https://pixelfed.social/<username>", "pixelfed.social" ]
+    
+    [params.social.decentralized.riot]
+      1 = [ "https://riot.im/app/#/user/<username>:matrix.org", "matrix.org" ]
 
     # The "entry" here ISN'T important. It's used for nothing.
 
@@ -213,7 +224,7 @@ paginate = 5
 
   [languages.en]
   
-    languagename = "English"
+    languageName = "English"
 
     [languages.en.menu]
 
@@ -233,8 +244,8 @@ paginate = 5
         url = "contact/"
 
     [languages.pt]
-
-      languagename  = "Português"
+    
+      languageName  = "Português"
       
       copyright = "Copyright © 2008–2020, Steve Francia e os autores do Hugo;\n Todos os direitos reservados."
 

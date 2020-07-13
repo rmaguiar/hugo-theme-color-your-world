@@ -32,7 +32,7 @@
 
 
 <!-- Footer button and color picker -->
-<section class="js">
+<section class="req-js">
   <button title="{{ T "change_mode" }}"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="{{ $icons }}#adjust"/></svg></button><input type="color" list="presets" value="{{ if .Site.Params.Style.isDark }}{{ $darkAccent }}{{ else }}{{ $lightAccent }}{{ end }}" title="{{ T "change_accent" }}" aria-label="{{ T "change_accent" }}"><datalist id="presets"><option value="{{ $lightAccent }}"><option value="{{ $darkAccent }}"><!-- Extra colors -->{{- range .Site.Params.style.presets -}}<option value="{{ . }}">{{ end }}</datalist>
 </section>
 

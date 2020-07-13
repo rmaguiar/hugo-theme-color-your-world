@@ -1,6 +1,6 @@
 <!--
-  Most icons are from FontAwesome 5
-  PeerTube and Matrix are from Fork-Awesome
+  From FontAwesome 5:
+  adjust, angle-right, angle-double-right, caret-down and hashtag.
 -->
 
 <!-- Reduce repetition... -->
@@ -37,7 +37,7 @@
   {{ end }}
   
   
-  
+  <!-- Get icon data from "social.json" -->
   {{ range .Site.Data.social }}
     {{ if and (or (index (or $centralizedOnPage $centralizedOnSite) .entry) (index (or $decentralizedOnPage $decentralizedOnSite) .entry)) .icon }}
       <symbol viewBox="{{ .icon.viewBox }}" id="{{ .icon.id }}">
@@ -45,4 +45,5 @@
       </symbol>
     {{ end }}
   {{ end }}
+  
 </svg>
