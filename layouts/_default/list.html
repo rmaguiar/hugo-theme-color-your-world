@@ -22,8 +22,7 @@
       {{ end }}
     {{ else }}
 
-      {{ $pages := where site.RegularPages "Type" "in" .Site.Params.mainSections }}
-      {{ $paginator := .Paginate .Pages }}
+      {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
 
       <ul class="posts">
         {{ range $paginator.Pages }}

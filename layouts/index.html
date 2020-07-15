@@ -1,14 +1,14 @@
 {{ define "main" }}
 
-  {{ $pages := where site.RegularPages "Type" "in" .Site.Params.mainSections }}
+  {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
 
   <main class="index">
     {{ if .Content }}
-      <h1>{{ .Title | emojify }}</h1>
-      {{ .Content }}
+      <article>
+        <h1>{{ .Title | emojify }}</h1>
+        {{ .Content }}
+      </article>
     {{ else }}
-    
-      {{ $paginator := .Paginate $pages }}
     
       <h1>{{ T "posts" }}</h1>
       

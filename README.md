@@ -22,7 +22,7 @@ I've been working on this theme for so long that there are features I don't even
 * Responsive images via image processing;
 * Basic search functionality via [Fuse.js](https://github.com/krisk/Fuse);
 * Image lazy loading (native + [lazysizes](https://github.com/aFarkas/lazysizes));
-* **noscript** capable to an extent (except KaTeX).
+* **noscript** capable to an extent (except for KaTeX and search functionality).
 
 
 ## Screenshots
@@ -162,25 +162,21 @@ Here's an example of config file:
   # The "entry" here IS important. It's used to load the data.
 
 [params.social.decentralized]
-
   [params.social.decentralized.funkwhale]
     1 = [ "https://open.audio/<username>", "open.audio" ]
+    #entry = [ "full url", "label (required)" ]
     
   [params.social.decentralized.mastodon]
     1 = [ "https://mastodon.social/<username>", "mastodon.social" ]
     2 = [ "https://mastodon.too/<username>", "mastodon.too" ]
     3 = [ "https://yet.another.one/<username>", "yet.another.one" ]
-    
-    #entry = [ "full url", "label (required)" ]
 
   [params.social.decentralized.matrix]
     1 = [ "https://matrix.to/#/<username>:matrix.org", "matrix.org" ]
     2 = [ "https://matrix.to/#/<username>:other.org", "other.org" ]
-    #entry = [ "full url", "label (required)" ]
   
   [params.social.decentralized.peertube]
     1 = [ "https://peertube.something/accounts/<username>", "peertube.something" ]
-    #entry = [ "full url", "label (required)" ]
   
   [params.social.decentralized.pixelfed]
     1 = [ "https://pixelfed.social/<username>", "pixelfed.social" ]

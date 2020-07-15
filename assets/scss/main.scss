@@ -906,15 +906,6 @@ video {
   }
 }
 
-  
-  
-button,
-input[type=color],
-summary {
-  cursor: pointer;
-}
-
-
 
 
 // Table of Contents
@@ -1080,6 +1071,11 @@ input[type=submit] {
   }
 }
 
+button,
+input[type=color],
+summary {
+  cursor: pointer;
+}
 
 
 
@@ -1196,17 +1192,96 @@ ul.pagination {
 }
 
 
+// SEARCH
+section.search-box {
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+  
+  label {
+    color: var(--fg);
+    font-family: $heading-font;
+    font-weight: $heading-weight;
+    flex-basis: 100%;
+    text-align: left;
+    
+    font-size: .9rem;
+    letter-spacing: .5px;
+    line-height: 2rem;
+    text-transform: uppercase;
+  }
+
+  input[name=q] {
+    background: var(--input-bg);
+    border: 1px solid var(--input-bd);
+    color: var(--input-fg);
+    font-family: $body-font;
+    font-size: .9rem;
+    line-height: 1.5rem;
+    padding: 6px 12px;
+    flex: 1;
+    
+    transition:
+      background-color $change-transition,
+      border $change-transition,
+      outline .2s ease-in-out;
+    
+    border-radius: $border-radius 0 0 $border-radius;
+    
+    outline: 2px solid transparent;
+    
+    &:focus {
+      outline-color: var(--accent);
+    }
+  }
+  
+  button {
+    border-radius: 0 $border-radius $border-radius 0;
+    padding: 6px 30px;
+
+    outline: 2px dashed transparent;
+    outline-offset: 2px;
+    
+    &:focus {
+      outline-color: var(--accent);
+    }
+    
+    &:hover {
+      opacity: .75;
+    }
+    
+    svg {
+      @include squared(15px);
+      
+      fill: currentColor;
+      stroke: var(--lpress);
+      stroke-width: 9px;
+    }
+  }
+}
+
+#search-info {
+  margin: 1rem 0 2rem;
+
+  p:first-of-type {
+    font-family: $heading-font;
+    font-size: 1.5rem;
+    font-weight: $heading-weight;
+  }
+  
+  + ul {
+    margin: 0 0 6rem;
+  }
+}
 
 
-
-
-
-
-
-
-
-
-
+p.error {
+  color: var(--err);
+}
 
 mark {
   background: var(--accent);
@@ -1262,7 +1337,6 @@ kbd {
 }
 
 
-
 // RESPONSIVENESS
 main {
   margin: 90px auto;
@@ -1293,7 +1367,6 @@ html {
 }
 
 
-
 {{ if .Site.Params.Style.hideAnchors }}
 
   @include respond-above($mobile-breakpoint) {
@@ -1315,17 +1388,11 @@ html {
   
 {{ end }}
 
-
-p.error {
-  color: var(--err);
-}
-
 {{ if .Site.Params.hasNoscriptNotice }}
   p.noscript {
     font-weight: bold;
   }
 {{ end }}
-
 
 
 // Rich Content
@@ -1336,7 +1403,6 @@ p.error {
 {{ end }}
 
 
-
 // TODO
 // Custom user stuff
 // This isn't good enough
@@ -1345,123 +1411,3 @@ p.error {
 {{ else if (resources.Get "scss/custom.scss") }}
   @import 'custom';
 {{ end }}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// SEARCH
-section.search-box {
-
-  form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
-  }
-  
-  label {
-    color: var(--fg);
-    font-family: $heading-font;
-    font-weight: 700;
-    flex-basis: 100%;
-    text-align: left;
-    
-    font-size: .9rem;
-    letter-spacing: .5px;
-    line-height: 2rem;
-    text-transform: uppercase;
-  }
-
-  input[name=q] {
-    background: var(--input-bg);
-    border: 1px solid var(--input-bd);
-    color: var(--input-fg);
-    font-family: $body-font;
-    font-size: .9rem;
-    line-height: 1.5rem;
-    padding: 6px 12px;
-    flex: 1;
-    
-    transition:
-      background-color .2s ease-in-out,
-      border .2s ease-in-out,
-      outline .2s ease-in-out;
-    
-    border-radius: $border-radius 0 0 $border-radius;
-    
-    outline: 2px solid transparent;
-    
-    &:focus {
-      outline-color: var(--accent);
-    }
-  }
-  
-  button {
-    border-radius: 0 $border-radius $border-radius 0;
-    padding: 6px 30px;
-
-    outline: 2px dashed transparent;
-    outline-offset: 2px;
-    
-    &:focus {
-      outline-color: var(--accent);
-    }
-    
-    &:hover {
-      opacity: .75;
-    }
-    
-    svg {
-      @include squared(15px);
-      
-      fill: currentColor;
-      stroke: var(--lpress);
-      stroke-width: 9px;
-    }
-  }
-}
-
-#search-info {
-  margin: 1rem 0 2rem;
-
-  p:first-of-type {
-    font-family: $heading-font;
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
-  
-  + ul {
-    margin: 0 0 6rem;
-  }
-}
