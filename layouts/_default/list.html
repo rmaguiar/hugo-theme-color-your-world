@@ -2,8 +2,16 @@
   
   {{ $currentTitle := .Scratch.Get "currentTitle" }}
   
-  <main class="list">
+  <!-- Collect pages using the "search" layout -->
+  {{ $searchPages := where .Site.RegularPages "Layout" "eq" "search" }}
   
+  <main class="list">
+
+    <!-- Display search form before listing posts -->
+    {{ if and .Site.Params.Search.enable (gt (len $searchPages) 0) (eq .Kind "section") }}
+      {{ partial "search-form" . }}
+    {{ end }}
+    
     <h1>{{ $currentTitle }}</h1>
     
     {{ if eq .Kind "taxonomyTerm" }}
@@ -15,7 +23,6 @@
     {{ else }}
 
       {{ $pages := where site.RegularPages "Type" "in" .Site.Params.mainSections }}
-      
       {{ $paginator := .Paginate .Pages }}
 
       <ul class="posts">

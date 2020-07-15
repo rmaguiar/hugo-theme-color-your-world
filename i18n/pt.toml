@@ -102,3 +102,30 @@ other = "Marcadores"
 
 [categories]
 other = "Categorias"
+
+[search_label]
+other = "Busca"
+
+[search_no_page_found]
+other = "Nenhuma página encontrada."
+
+[search_results_for]
+other = "Resultados para"
+
+[search_one_page_found]
+other = "Uma página encontrada"
+
+[search_pages_found]
+other = "páginas encontradas"
+
+[search_awaiting_search]
+other = "Aguardando pesquisa."
+
+[search_too_many]
+other = "Muitas páginas encontradas. Por favor, tente repetir a busca usando outro termo."
+
+[search_button_aria_label]
+other = "Executar busca."
+
+[search_input_title]
+other = "Campo de busca. Aceita de 3 até 32 caracteres."

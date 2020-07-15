@@ -20,6 +20,7 @@ I've been working on this theme for so long that there are features I don't even
 * Contact form shortcode (via [Formspree](https://formspree.io));
 * Open Graph, Twitter Cards and Structured Data (schema.org) meta tags;
 * Responsive images via image processing;
+* Basic search functionality via [Fuse.js](https://github.com/krisk/Fuse);
 * Image lazy loading (native + [lazysizes](https://github.com/aFarkas/lazysizes));
 * **noscript** capable to an extent (except KaTeX).
 
@@ -213,7 +214,6 @@ Alternatively, you can have these params in the front matter of any page.
   # It can also be disabled entirely (and it will turn into a text field)
   subject = [ 'Just saying "hi"', "I know what you did last winter", "... Is that a sloth?", "お前はもう死んでいる。" ]
 
-
   # Text placeholders. As usual, comment the lines if you don't want use them
   # The "subject" below will only be used if the "subject" above doesn't exist (ie.: commented/deleted)
   [params.contact.placeholder]
@@ -292,8 +292,27 @@ More possible params for your config file:
   # matter or disable it entirely by commenting the line below
   # ie.: | ❚ - – — • ⚫ 
   titleSeparator = "|"
+  
+  [params.search]
+  
+    # Enable search form (at the post list)
+    # The default value is false
+    enable = true
+  
+    # Limit search results
+    # The default value is 30
+    maxResults = 15
+    
+    # Optional placeholder for search field
+    placeholder = "ie.: lorem ipsum"
+    
+    # Stop word filter list
+    # Can also be set PER PAGE via front matter
+    # There's no default value
+    stopWords = [ "a", "an", "and", "in", "the", "to", "was", "were", "with" ]
 
   [params.style]
+  
     # Use an icon or text for footnote return links
     # The default is false
     hasIconAsFootnoteReturnLink = true
@@ -318,7 +337,10 @@ More possible params for your config file:
 * [Font Awesome](https://fontawesome.com/) and [Fork Awesome](https://forkaweso.me/) for the icons;
 * [@nickpunt](https://gist.github.com/nickpunt) and [@regpaq](https://gist.github.com/regpaq) for the [dark/light mode switcher](https://gist.github.com/regpaq/04c67e8aceecbf0fd819945835412d1f) idea;
 * Glenn McComb and [his great article](https://glennmccomb.com/articles/how-to-build-custom-hugo-pagination/) about custom pagination with Hugo;
+* JeffProd and [his interesting article](https://en.jeffprod.com/blog/2018/build-your-own-hugo-website-search-engine/) about building a custom search engine for Hugo;
+* Many people [on this forked gist](https://gist.github.com/eddiewebb/735feb48f50f0ddd65ae5606a1cb41ae) for their takes on Fuse.js with Hugo;
 * Philip Walton and [his sticky footer solution](https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/) with Flexbox;
 * [lazysizes](https://github.com/aFarkas/lazysizes);
+* [Fuse.js](https://github.com/krisk/Fuse);
 * [KaTeX](https://katex.org/), "the _**fastest**_ math typesetting library for the web";
 * Hugo and [its community](https://discourse.gohugo.io/).

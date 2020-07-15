@@ -1,0 +1,18 @@
+{{ $icons := (.Scratch.Get "svgBundle").RelPermalink }}
+
+<!--
+  Assume that the first page in a collection with pages
+  using the "search" layout is the main search page
+-->
+{{ $searchPage := index (where .Site.RegularPages "Layout" "eq" "search") 0 }}
+
+<section class="req-js search-box">
+  {{ if eq .Layout "search" }}
+    <form role="search">
+  {{ else }}
+    <form role="search" action="{{ $searchPage.RelPermalink }}">
+  {{ end }}
+      <label for="search">{{ T "search_label" }}</label><input type="search" id="search" title='{{ T "search_input_title" }}' name="q" {{ with .Site.Params.Search.placeholder }}placeholder="{{ . }}"{{ end }} minlength="3" maxlength="32" pattern="^[\S].*" required><button aria-label='{{ T "search_button_aria_label" }}' type="submit"><svg aria-hidden="true"><use xlink:href="{{ $icons }}#search"/></svg></button>
+    </form>
+  <hr>
+</section>

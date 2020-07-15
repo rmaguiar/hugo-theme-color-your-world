@@ -1,0 +1,19 @@
+{{ define "main" }}
+
+  <main class="list">
+
+    {{ partial "search-form" . }}
+
+    <section id="search-info">
+      <!-- Info -->
+    </section>
+
+    <ul id="search-results" class="posts">
+      <!-- x-js-template -->
+    </ul>
+    
+    <script id=search-result-template type=text/x-js-template><li><a class=btn href='${link}'><p>${title}</p>${date}</a></li></script>
+  
+  </main>
+
+{{ end }}

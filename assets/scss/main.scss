@@ -11,8 +11,6 @@ $change-transition: {{ .Scratch.Get "changeTransition" }};
 
 
 
-
-
 // Default size
 :root {
   font-size: $font-size;
@@ -31,7 +29,8 @@ html {
     --alt-fg: #{$light-alt-foreground};
     
     --dtl: #{$light-details};
-
+    --err: #{$light-error-color};
+    
     --bgmod: #{$light-bg-modifier};
 
     --input-bg: #{$light-input-background};
@@ -62,6 +61,7 @@ html {
     --alt-fg: #{$dark-alt-foreground};
     
     --dtl: #{$dark-details};
+    --err: #{$dark-error-color};
 
     --bgmod: #{$dark-bg-modifier};
 
@@ -228,9 +228,7 @@ body {
       button {
         margin: 0 7.5px;
         outline: 2px dashed transparent;
-        
-        cursor: pointer;
-        
+
         transition:
           outline .2s ease-in-out,
           transform .2s ease-in-out;
@@ -441,6 +439,7 @@ a.anchor {
 
 
 // Avoid accidental selection
+label,
 span.lnt,
 summary,
 sup.footnote-ref {
@@ -449,15 +448,14 @@ sup.footnote-ref {
 
 
 // Lists in general
-ol,
-ul {
+article ol,
+article ul,
+main.index ol,
+main.index ul {
   li {
     margin-bottom: .45rem;
   }
 }
-
-
-
 
 
 ol {
@@ -786,7 +784,7 @@ ul.posts {
       font-size: .85rem;
       
       margin-left: 1.8rem;
-      padding: 0 6px 2px;
+      padding: 0 9px 2px;
     }
   }
 }
@@ -910,13 +908,11 @@ video {
 
   
   
-  
-
-
-
-
-
-
+button,
+input[type=color],
+summary {
+  cursor: pointer;
+}
 
 
 
@@ -948,8 +944,6 @@ details.toc {
     outline-offset: 3px;
     
     @include letterpress(var(--lpress));
-
-    cursor: pointer;
 
     transition:
       color $change-transition,
@@ -1060,6 +1054,7 @@ article > ul {
 // BUTTONS
 a.btn,
 a.footnote-backref,
+section.search-box button,
 section.social a,
 input[type=submit] {
   background: var(--accent);
@@ -1322,7 +1317,7 @@ html {
 
 
 p.error {
-  color: $error-color;
+  color: var(--err);
 }
 
 {{ if .Site.Params.hasNoscriptNotice }}
@@ -1350,3 +1345,123 @@ p.error {
 {{ else if (resources.Get "scss/custom.scss") }}
   @import 'custom';
 {{ end }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// SEARCH
+section.search-box {
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+  
+  label {
+    color: var(--fg);
+    font-family: $heading-font;
+    font-weight: 700;
+    flex-basis: 100%;
+    text-align: left;
+    
+    font-size: .9rem;
+    letter-spacing: .5px;
+    line-height: 2rem;
+    text-transform: uppercase;
+  }
+
+  input[name=q] {
+    background: var(--input-bg);
+    border: 1px solid var(--input-bd);
+    color: var(--input-fg);
+    font-family: $body-font;
+    font-size: .9rem;
+    line-height: 1.5rem;
+    padding: 6px 12px;
+    flex: 1;
+    
+    transition:
+      background-color .2s ease-in-out,
+      border .2s ease-in-out,
+      outline .2s ease-in-out;
+    
+    border-radius: $border-radius 0 0 $border-radius;
+    
+    outline: 2px solid transparent;
+    
+    &:focus {
+      outline-color: var(--accent);
+    }
+  }
+  
+  button {
+    border-radius: 0 $border-radius $border-radius 0;
+    padding: 6px 30px;
+
+    outline: 2px dashed transparent;
+    outline-offset: 2px;
+    
+    &:focus {
+      outline-color: var(--accent);
+    }
+    
+    &:hover {
+      opacity: .75;
+    }
+    
+    svg {
+      @include squared(15px);
+      
+      fill: currentColor;
+      stroke: var(--lpress);
+      stroke-width: 9px;
+    }
+  }
+}
+
+#search-info {
+  margin: 1rem 0 2rem;
+
+  p:first-of-type {
+    font-family: $heading-font;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  + ul {
+    margin: 0 0 6rem;
+  }
+}

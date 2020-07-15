@@ -1,0 +1,82 @@
+{{- $stopWords := or .Params.stopWords .Site.Params.Search.stopWords -}}
+
+{{- $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections -}}
+
+{{- $lastIndex := (sub (len $pages) 1) -}}
+
+{{- $.Scratch.Add "index" slice -}}
+
+{{- range $index, $page := $pages -}}
+
+  {{- $.Scratch.Delete "date" -}}
+  {{- $.Scratch.Delete "description" -}}
+  {{- $.Scratch.Delete "tags" -}}
+
+  {{- if not .Date.IsZero -}}
+    {{- $.Scratch.Set "date" (.Date.Format "2006-01-02") -}}
+  {{- end -}}
+
+  {{- if .Description -}}
+    {{- $.Scratch.Set "description" (.Description | emojify) -}}
+  {{- end -}}
+
+  {{- if .Params.tags -}}
+    {{- $.Scratch.Set "tags" .Params.tags -}}
+  {{- end -}}
+
+  {{- $scratch := newScratch -}}
+  
+  {{- $content := (.Content | replaceRE "(?s)<div class=\"highlight\".*?</div>" "" ) -}}
+  {{- $content := ($content | replaceRE "(?s)<p class=\"error\".*?</p>" "" ) -}}
+  {{- $content := ($content | replaceRE "<code.*?</code>" "" ) -}}
+  {{- $content := ($content | replaceRE "(http|https)\\S+" "" ) -}}
+  {{- $content := ($content | replaceRE "<!--(.|\n)+?-->" "" ) -}}
+  {{- $content := ($content | plainify | emojify | lower) -}}
+  {{- $content := (replaceRE "\"" "" $content) -}}
+  {{- $content := (replaceRE "&ldquo;" "" $content) -}}
+  {{- $content := (replaceRE "&rdquo;" "" $content) -}}
+  {{- $content := (replaceRE "\n+" " " $content) -}}
+  {{- $content := (replaceRE "\r+" " " $content) -}}
+  {{- $content := (replaceRE "\t+" " " $content) -}}
+  {{- $content := (replaceRE "&lt;" "" $content) -}}
+  {{- $content := (replaceRE "&gt;" "" $content) -}}
+  {{- $content := (replaceRE "&hellip;" "" $content) -}}
+  {{- $content := (replaceRE "\\(" "" $content) -}}
+  {{- $content := (replaceRE "\\)" "" $content) -}}
+  {{- $content := (replaceRE "\\. " " " $content) -}}
+  {{- $content := (replaceRE "\\," "" $content) -}}
+  {{- $content := (replaceRE "\\:" "" $content) -}}
+  {{- $content := (replaceRE "\\;" "" $content) -}}
+  {{- $content := (replaceRE "\\!" "" $content) -}}
+  {{- $content := (replaceRE "\\?" "" $content) -}}
+  {{- $content := (replaceRE "\\/" " " $content) -}}
+  {{- $content := (replaceRE " +" " " $content) -}}
+  {{- $content := (trim $content " ") -}}
+  {{- $words := (split $content " ") -}}
+
+
+  {{- range $words -}}
+    {{- $word := (.) -}}
+    {{- if and (not (in ($scratch.Get "seenWords") $word)) (ne (substr $word 0 1) $word) (not (in $stopWords $word)) -}}
+      {{- $.Scratch.Add "currentWords" (slice $word) -}}
+    {{- end -}}
+    {{- $scratch.Add "seenWords" (slice $word) -}}
+  {{- end -}}
+  
+  {{- $scratch.Delete "seenWords" -}}
+  
+  
+  {{- $filtered := ($.Scratch.Get "currentWords") -}}
+  
+  {{- if $filtered -}}
+    {{- $.Scratch.Set "uniqueContent" (delimit $filtered " ") -}}
+  {{- end -}}
+  
+  
+  {{- $.Scratch.Add "index" (dict "title" (.Title | emojify) "date" ($.Scratch.Get "date") "description" ($.Scratch.Get "description") "content" ($.Scratch.Get "uniqueContent") "permalink" .Permalink "tags" ($.Scratch.Get "tags")) -}}
+  
+  {{- $.Scratch.Delete "currentWords" -}}
+
+{{- end -}}
+
+{{- $.Scratch.Get "index" | jsonify -}}

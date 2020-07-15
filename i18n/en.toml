@@ -102,3 +102,30 @@ other = "Tags"
 
 [categories]
 other = "Categories"
+
+[search_label]
+other = "Search"
+
+[search_no_page_found]
+other = "No pages found."
+
+[search_results_for]
+other = "Results for"
+
+[search_one_page_found]
+other = "One page found"
+
+[search_pages_found]
+other = "pages found"
+
+[search_awaiting_search]
+other = "Awaiting search."
+
+[search_too_many]
+other = "Too many pages found. Please try to repeat the search using another term."
+
+[search_button_aria_label]
+other = "Run search."
+
+[search_input_title]
+other = "Search field. Accepts from 3 to 32 characters."

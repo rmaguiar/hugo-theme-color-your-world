@@ -6,6 +6,7 @@ $light-alt-background:    #d6d6d6;
 $light-alt-foreground:    #333;
   
 $light-details:           #fdfdfd;
+$light-error-color:       #c70000;
 
 $light-bg-modifier:       rgba(0,0,0,.3);
 
@@ -24,6 +25,7 @@ $dark-alt-background:     #1c1c1c;
 $dark-alt-foreground:     #ddd;
   
 $dark-details:            #1a1a1a;
+$dark-error-color:        #ff3131;
 
 $dark-bg-modifier:        rgba(255,255,255,.3);
 
@@ -32,6 +34,7 @@ $dark-input-foreground:   #f0f0f0;
 $dark-input-border:       #262626;
 
 $dark-letterpress:        rgba(255,255,255,.2);
+
 
 // Lazy way to deter images that can be too bright
 $img-filter:
@@ -44,4 +47,3 @@ $img-filter:
 $box-border:    #222;
 $error-color:   red;
 $selected-fg:   #f0f0f0;
-

@@ -79,7 +79,6 @@ paginate = 5
     # It can also be disabled entirely (and it will turn into a text field)
     subject = [ 'Just saying "hi"', "I know what you did last winter", "... Is that a sloth?", "お前はもう死んでいる。" ]
 
-
     # Text placeholders. As usual, comment the lines if you don't want use them
     # The "subject" below will only be used if the "subject" above doesn't exist (ie.: commented/deleted)
     [params.contact.placeholder]
@@ -87,6 +86,21 @@ paginate = 5
       email   = "janedoe@example.com"
       subject = 'Just saying "hi"'
       message = "Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla nullam quis risus."
+
+
+  [params.search]
+  
+    # Enable search form (at the post list)
+    # The default value is false
+    enable = true
+  
+    # Limit search results
+    # The default value is 30
+    maxResults = 15
+    
+    # Optional placeholder for search field
+    placeholder = "ie.: lorem ipsum"
+    
 
   [params.style]
   
@@ -259,6 +273,10 @@ paginate = 5
           title         = "Página não encontrada"
           description   = "Essa página não foi encontrada."
           text          = "Nada a se ver aqui, colega."
+        
+        [languages.pt.params.search]
+          enable = true
+          placeholder = "exemplo: lorem ipsum"
 
       [languages.pt.menu]
 
