@@ -1,5 +1,3 @@
-{{ $icons := (.Page.Scratch.Get "svgBundle").RelPermalink }}
-
 <!-- Reduce repetition... -->
 {{ $centralizedOnPage   := $.Page.Params.Social.Centralized }}
 {{ $centralizedOnSite   := $.Site.Params.Social.Centralized }}
@@ -28,7 +26,7 @@
         
         <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <use xlink:href="{{ printf "%s#%s" $icons $currentIcon }}"/>
+            <use xlink:href="#{{ $currentIcon }}"/>
           </svg>
 
           <p>{{ $label }}</p>
@@ -43,7 +41,7 @@
         {{ range (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
           <a rel="me nofollow" href="{{ index . 0 }}" title="{{ printf "%s (%s)" (index . 1) $currentLabel }}">
             <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <use xlink:href="{{ printf "%s#%s" $icons $currentIcon }}"/>
+              <use xlink:href="#{{ $currentIcon }}"/>
             </svg>
 
             <p>{{ index . 1 | truncate 15 }}</p>

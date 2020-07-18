@@ -1,8 +1,8 @@
 'use strict';
 
-/******************************
-/ Accent color palette
-******************************/
+// =================================================
+// Accent color palette
+// =================================================
 
 const PALETTE = document.querySelector('footer input');
 
@@ -21,23 +21,22 @@ PALETTE.onchange = function () {
   updateAccent()
 };
 
-/******************************
-/ Basic search via Fuse.js
-******************************/
-
-{{ $fuseJS := resources.Get "/fuse.js@6.4.0/dist/fuse.basic.min.js" }}
+// =================================================
+// Basic search functionality via Fuse.js
+// Based on: https://gist.github.com/eddiewebb/735feb48f50f0ddd65ae5606a1cb41ae#gistcomment-2987774
+// =================================================
 
 {{ if eq .Layout "search" }}
 
   // Get Fuse.js
-  {{ $fuseJS.Content | safeJS }}
-  
+  {{ (resources.Get "libs/fuse.js@6.4.0/dist/fuse.basic.min.js").Content | safeJS }}
+
   const fuseOptions = {
     shouldSort: true,
     threshold: 0,
-    distance: -1,
-    maxPatternLength: 32,
-    minMatchCharLength: 3,
+    ignoreLocation: true,
+    maxPatternLength: {{ .Site.Params.Search.maxLength | default .Site.Data.default.search.maxLength }},
+    minMatchCharLength: {{ .Site.Params.Search.minLength | default .Site.Data.default.search.minLength }},
     keys: [
       { name: 'title',        weight: .4 },
       { name: 'tags',         weight: .3 },
@@ -82,7 +81,6 @@ PALETTE.onchange = function () {
   };
 
   function executeSearch(searchQuery) {
-
     getJSON('index.json', function (data) {
       
       // Limit results and throw an error if too many pages are found
@@ -100,25 +98,18 @@ PALETTE.onchange = function () {
       if (result.length > 0) {
         if (result.length == 1) {
           info.innerHTML += '<p>{{ T "search_one_page_found" }}.</p>'
-          
         } else if (1 < result.length && result.length < limit + 1) {
-
           info.innerHTML += '<p>' + result.length + ' {{ T "search_pages_found" }}.</p>'
-          
         } else {
-
           info.innerHTML += '<p class=error>{{ T "search_too_many" }}</p>'
         }
-
       } else {
-
         info.innerHTML += '<p class=error>{{ T "search_no_page_found" }}</p>'
       };
       
       if (0 < result.length && result.length < limit + 1) {
         populateResults(result)
       }
-      
     })
   };
 
@@ -170,7 +161,7 @@ PALETTE.onchange = function () {
     return templateString
   };
 
-  
+
   function htmlToElement(html) {
     const template = document.createElement('template');
     html = html.trim(); // Never return a text node of whitespace as the result

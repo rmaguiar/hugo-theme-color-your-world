@@ -1,17 +1,10 @@
 <!--
-  Generate and set SVG bundle
-  Also set image processing options
+  HACK
+  Set image processing options for render hooks
   Currently here to avoid certain priority issues...
 -->
 
-{{- $svgBundle := resources.Get "bundle.svg" | resources.ExecuteAsTemplate "img/bundle.svg" . | minify | resources.Fingerprint "md5" -}}
-{{- .Scratch.Set "svgBundle" $svgBundle -}}
-
-{{- .Scratch.Set "highRes"    (.Site.Params.imageProc.highRes   | default (slice "1280x" "1280w")) -}}
-{{- .Scratch.Set "mediumRes"  (.Site.Params.imageProc.mediumRes | default (slice "960x" "960w")) -}}
-{{- .Scratch.Set "lowRes"     (.Site.Params.imageProc.lowRes    | default (slice "640x q90" "640w")) -}}
-
-{{- .Scratch.Set "markupAutoResizeWidth" (.Site.Params.imageProc.markupAutoResizeWidth | default 1280) -}}
+{{- .Scratch.Set "imageProc" (dict "highRes" (.Site.Params.imageProc.highRes | default .Site.Data.default.imageProc.highRes) "mediumRes" (.Site.Params.imageProc.mediumRes | default .Site.Data.default.imageProc.mediumRes) "lowRes" (.Site.Params.imageProc.lowRes | default .Site.Data.default.imageProc.lowRes) "markupAutoResizeWidth" (.Site.Params.imageProc.markupAutoResizeWidth | default .Site.Data.default.imageProc.markupAutoResizeWidth)) }}
 
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}" data-mode="{{ if .Site.Params.Style.isDark }}dark{{ else }}light{{ end }}">
@@ -34,6 +27,48 @@
     <footer>
       {{ partial "footer" . }}
     </footer>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true">
+    
+      <symbol viewBox="0 0 512 512" id="adjust">
+        <path d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705 0 184 82.311 184 184 0 101.705-82.311 184-184 184z"/>
+      </symbol>
+      
+      {{ if or (eq .Kind "section") (eq .Layout "search") }}
+        <symbol viewBox="0 0 512 512" id="search">
+          <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/>
+        </symbol>
+      {{ end }}
+      
+      {{ block "svg-extra" . }}
+        <!-- Additional symbols -->
+      {{ end }}
+      
+      {{ if .HasShortcode "social" }}
+      
+        <!-- Reduce repetition... -->
+        {{ $centralizedOnPage   := $.Page.Params.Social.Centralized }}
+        {{ $centralizedOnSite   := $.Site.Params.Social.Centralized }}
+        {{ $decentralizedOnPage := $.Page.Params.Social.Decentralized }}
+        {{ $decentralizedOnSite := $.Site.Params.Social.Decentralized }}
+      
+        <!-- Get info about social platform and icon id from "social.json" -->
+        {{ range .Site.Data.social }}
+          {{ if and (or (index (or $centralizedOnPage $centralizedOnSite) .entry) (index (or $decentralizedOnPage $decentralizedOnSite) .entry)) .icon }}
+            {{ $iconId        := .icon.id }}
+            {{ $svgEssential  := `(?:<svg (?:.*?)(viewBox="(?:.*?)")(?:.*?)>((?:.|\n)+?)(?:</svg>))` }}
+            {{ $asSymbol      := printf `<symbol ${1} id="%s">${2}</symbol>` $iconId }}
+            
+            <!-- Get the required SVG file and insert here as a symbol -->
+            {{ with (resources.Get (printf "svg/%s.svg" $iconId)) }}
+              {{ .Content | replaceRE $svgEssential $asSymbol | safeHTML }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      
+      {{ end }}
+      
+    </svg>
 
     <!--
       Remnant JavaScript

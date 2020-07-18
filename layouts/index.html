@@ -6,7 +6,8 @@
     {{ if .Content }}
       <article>
         <h1>{{ .Title | emojify }}</h1>
-        {{ .Content }}
+        
+        {{ partial "processed-content" . }}
       </article>
     {{ else }}
     

@@ -3,6 +3,10 @@
         '../fonts/variables';
 
 
+// Get transition for color changes
+$change-transition: {{ .Site.Params.Style.changeTransition | default .Site.Data.default.style.changeTransition }};
+
+
 
 #contact {
 
@@ -83,6 +87,7 @@
     outline-offset: 2px;
     
     transition:
+      background-color $change-transition,
       border .2s ease-in-out,
       outline .2s ease-in-out,
       opacity .2s ease-in-out;

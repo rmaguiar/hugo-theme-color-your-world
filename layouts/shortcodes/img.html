@@ -14,10 +14,8 @@
 {{ $altText := .Get "alt"   | default (.Get 1) }}
 {{ $class   := .Get "class" | default (.Get 2) }}
 
-<!-- Image processing resolutions -->
-{{ $highRes   := .Page.Scratch.Get "highRes" }}
-{{ $mediumRes := .Page.Scratch.Get "mediumRes" }}
-{{ $lowRes    := .Page.Scratch.Get "lowRes" }}
+<!-- Image processing options -->
+{{ $imageProc := (dict "highRes" (.Site.Params.imageProc.highRes | default .Site.Data.default.imageProc.highRes) "mediumRes" (.Site.Params.imageProc.mediumRes | default .Site.Data.default.imageProc.mediumRes) "lowRes" (.Site.Params.imageProc.lowRes | default .Site.Data.default.imageProc.lowRes)) }}
 
 <!-- Default image path -->
 {{ $imgPath := .Page.Param "imgPath" }}
@@ -33,14 +31,23 @@
     Reduce reflow by generating a placeholder with similar size
   -->
   
-    {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((resources.Get "pixel.gif").Resize (printf "%vx%v %s" (.Resize (index $mediumRes 0)).Width (.Resize (index $mediumRes 0)).Height "png")).Content | base64Encode)) | safeURL }}
+  {{ $mediumRes := (index $imageProc.mediumRes 0) }}
+
+  {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((resources.Get "img/pixel.gif").Resize (printf "%vx%v %s" (.Resize $mediumRes).Width (.Resize $mediumRes).Height "png")).Content | base64Encode)) | safeURL }}
+  
+  {{ $outputSet := slice }}
+  {{ $inputFile := . }}
+  
+  {{ range $imageProc }}
+    {{ $outputSet = $outputSet | append (printf "%s %s" (($inputFile.Resize (index . 0)).RelPermalink) (index . 1)) }}
+  {{ end }}
 
   <img
     class="lazyload {{ $class }}"
     loading="lazy"
-    data-srcset="{{ (.Resize (index $highRes 0)).RelPermalink }} {{ index $highRes 1 }}, {{ (.Resize (index $mediumRes 0)).RelPermalink }} {{ index $mediumRes 1 }}, {{ (.Resize (index $lowRes 0)).RelPermalink }} {{ index $lowRes 1 }}"
+    data-srcset='{{ delimit $outputSet ", " }}'
     src="{{ $encodedPlaceholder }}"
-    data-src="{{ (.Resize (index $mediumRes 0)).RelPermalink }}"
+    data-src="{{ (.Resize $mediumRes).RelPermalink }}"
     {{ with $altText }}alt="{{ . }}"{{ end }}
   />
 
@@ -48,7 +55,7 @@
     <img
       {{ with $class }}class="{{ . }}"{{ end }}
       loading="lazy"
-      srcset="{{ (.Resize (index $highRes 0)).RelPermalink }} {{ index $highRes 1 }}, {{ (.Resize (index $mediumRes 0)).RelPermalink }} {{ index $mediumRes 1 }}, {{ (.Resize (index $lowRes 0)).RelPermalink }} {{ index $lowRes 1 }}"
+      srcset='{{ delimit $outputSet ", " }}'
       src="{{ $encodedPlaceholder }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />

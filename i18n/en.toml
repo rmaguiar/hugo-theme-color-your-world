@@ -106,6 +106,9 @@ other = "Categories"
 [search_label]
 other = "Search"
 
+[search_title]
+other = "Results"
+
 [search_no_page_found]
 other = "No pages found."
 
@@ -128,4 +131,4 @@ other = "Too many pages found. Please try to repeat the search using another ter
 other = "Run search."
 
 [search_input_title]
-other = "Search field. Accepts from 3 to 32 characters."
+other = "Search field. Accepts from {{ .minLength }} to {{ .maxLength }} characters."

@@ -106,6 +106,9 @@ other = "Categorias"
 [search_label]
 other = "Busca"
 
+[search_title]
+other = "Resultados"
+
 [search_no_page_found]
 other = "Nenhuma página encontrada."
 
@@ -128,4 +131,4 @@ other = "Muitas páginas encontradas. Por favor, tente repetir a busca usando ou
 other = "Executar busca."
 
 [search_input_title]
-other = "Campo de busca. Aceita de 3 até 32 caracteres."
+other = "Campo de busca. Aceita de {{ .minLength }} até {{ .maxLength }} caracteres."

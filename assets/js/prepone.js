@@ -1,16 +1,16 @@
 'use strict';
 
 // Get default accent colors
-{{ $darkAccent  := .Scratch.Get "darkAccent" }}
-{{ $lightAccent := .Scratch.Get "lightAccent" }}
+{{ $darkAccent   := .Site.Params.Style.darkAccent   | default .Site.Data.default.style.darkAccent }}
+{{ $lightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
 
 // Get CSS transition
-{{ $changeTransition := .Scratch.Get "changeTransition" }}
+{{ $changeTransition := .Site.Params.Style.changeTransition | default .Site.Data.default.style.changeTransition }}
 
-/******************************
-/ Mode switcher + Custom accent color
-/ Based on: https://gist.github.com/regpaq/04c67e8aceecbf0fd819945835412d1f
-******************************/
+// =================================================
+// Mode switcher + Custom accent color
+// Based on: https://gist.github.com/regpaq/04c67e8aceecbf0fd819945835412d1f
+// =================================================
 
 // New prefers-color-scheme media query to detect OS light/dark mode setting
 const PREFERS_LIGHT = window.matchMedia('(prefers-color-scheme: light)');

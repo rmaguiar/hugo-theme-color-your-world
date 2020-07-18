@@ -98,6 +98,10 @@ paginate = 5
     # The default value is 30
     maxResults = 15
     
+    # Limit seach field input and pattern matching
+    minLength = 2   # Default is 3
+    maxLength = 42  # Default is 32
+    
     # Optional placeholder for search field
     placeholder = "ie.: lorem ipsum"
     
@@ -145,7 +149,7 @@ paginate = 5
   [params.notFound]
     title         = "Page not found"
     description   = "This page was not found."
-    text          = "Nothing to see here, buddy."
+    paragraph     = "Nothing to see here, buddy."
     
   [params.social.centralized]
     facebook      = [ "<username>", "Zuckerburg" ]
@@ -225,11 +229,6 @@ paginate = 5
 
 
 
-[_build]
-  publishResources = false
-
-
-
 [languages]
 
   [languages.en]
@@ -268,7 +267,7 @@ paginate = 5
         [languages.pt.params.notFound]
           title         = "Página não encontrada"
           description   = "Essa página não foi encontrada."
-          text          = "Nada a se ver aqui, colega."
+          paragraph     = "Nada a se ver aqui, colega."
         
         [languages.pt.params.search]
           enable = true

@@ -239,10 +239,10 @@ A **really** basic 404 page can be generated via config file by using:
 
 ### Custom partials
 
-* The site title can be replaced by creating a file named `layouts/partials/custom/header.html`;
+* The site title can be replaced by creating a file named `layouts/partials/custom/site-title.html`;
 * Custom favicons can be used by creating a file named `layouts/partials/custom/head.html`;
 * Custom CSS can be imported into the main CSS file by creating a file named `static/css/custom.css` or `assets/scss/custom.scss`;
-* The `copyright` param can be replaced by creating a file named `layouts/partials/custom/footer.html`.
+* The `copyright` param can be replaced by creating a file named `layouts/partials/custom/copyright.html`.
 
 ### More config
 
@@ -259,7 +259,7 @@ More possible params for your config file:
   authorDesc  = "Some indescribable horror."
   
   # Site cover, for Open Graph, Twitter Cards and Schema.org
-  # It will be used if the current page doesn't have a image cover
+  # It will be used if the current page doesn't have an image cover
   # File will be picked from the "assets" directory
   # Comment the lines if you don't want to use it
   cover     = "img/cover.jpg"
@@ -298,6 +298,10 @@ More possible params for your config file:
     # Limit search results
     # The default value is 30
     maxResults = 15
+    
+    # Limit seach field input and pattern matching
+    minLength = 2   # Default is 3
+    maxLength = 42  # Default is 32
     
     # Optional placeholder for search field
     placeholder = "ie.: lorem ipsum"

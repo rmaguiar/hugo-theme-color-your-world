@@ -1,0 +1,21 @@
+# File dedicated to storing some default values
+
+[search]
+  minLength = 3
+  maxLength = 32
+
+[imageProc]
+  highRes   = [ "1280x", "1280w" ]
+  mediumRes = [ "960x", "960w" ]
+  lowRes    = [ "640x q90", "640w" ]
+  
+[style]
+  lightAccent  = "#225670"
+  darkAccent   = "#dd587c"
+  
+  changeTransition = ".3s ease"
+
+[notFound]
+  title         = "Page not found"
+  description   = "This page was not found."
+  paragraph     = "Nothing to see here, buddy."

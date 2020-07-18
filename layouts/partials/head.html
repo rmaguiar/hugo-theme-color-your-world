@@ -12,7 +12,7 @@
 {{ if (eq .Kind "404") }}
 
   <!-- If 404 page -->
-  {{ $currentTitle = .Site.Params.notFound.title }}
+  {{ $currentTitle = .Site.Params.notFound.title | default .Site.Data.default.notFound.title }}
   
 {{ else if (eq .Kind "section") }}
 
@@ -61,7 +61,7 @@
 {{ else if eq .Kind "taxonomyTerm" }}
   {{ $currentDesc = printf "%s %s." (T "page_containing") ($currentTitle | lower) }}
 {{ else if (eq .Kind "404") }}
-  {{ $currentDesc = .Site.Params.notFound.description }}
+  {{ $currentDesc = .Site.Params.notFound.description | default .Site.Data.default.notFound.description }}
 {{ end }}
 
 
@@ -134,10 +134,8 @@
 
 
 
-<!-- Image processing resolutions -->
-{{ $highRes   := .Scratch.Get "highRes" }}
-{{ $mediumRes := .Scratch.Get "mediumRes" }}
-{{ $lowRes    := .Scratch.Get "lowRes" }}
+<!-- Image processing options -->
+{{ $highRes := .Site.Params.imageProc.highRes | default .Site.Data.default.imageProc.highRes }}
 
 <!-- Default image path -->
 {{ $imgPath := .Page.Param "imgPath" }}
@@ -328,11 +326,6 @@
 {{ end }}
 
 
-<!-- Set as scratch to be used in CSS and JS -->
-{{ $changeTransition := .Site.Params.Style.changeTransition | default ".5s ease" }}
-{{ .Scratch.Set "changeTransition" $changeTransition }}
-
-
 <!-- Main CSS -->
 {{ $main := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "css/main.scss" . | toCSS | minify | resources.Fingerprint "sha512" }}
 <link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}">
@@ -341,12 +334,8 @@
 <!-- If JS is disabled -->
 <noscript>
 
-  {{ $darkAccent   := .Site.Params.Style.darkAccent   | default "#dd587c" }}
-  {{ $lightAccent  := .Site.Params.Style.lightAccent  | default "#225670" }}
-  
-  <!-- Set default accent colors -->
-  {{ .Scratch.Set "darkAccent"  $darkAccent }}
-  {{ .Scratch.Set "lightAccent" $lightAccent }}
+  {{ $darkAccent   := .Site.Params.Style.darkAccent   | default .Site.Data.default.style.darkAccent }}
+  {{ $lightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
 
   <!-- Not properly tested? -->
   <meta name="theme-color" content="{{ $darkAccent }}" {{ if not .Site.Params.Style.isDark }}media="(prefers-color-scheme: dark)"{{ end }}>
@@ -386,13 +375,12 @@
 
 
 <!-- Should be loaded even if browser has native lazy load support -->
-{{ $lazysizes := resources.Get "lazysizes@5.2.2/lazysizes.min.js" | resources.ExecuteAsTemplate "js/lazysizes.min.js" . | minify | resources.Fingerprint "sha512" }}
+{{ $lazysizes := resources.Get "libs/lazysizes@5.2.2/lazysizes.min.js" | resources.ExecuteAsTemplate "js/lazysizes.min.js" . | minify | resources.Fingerprint "sha512" }}
 <script defer src="{{ $lazysizes.RelPermalink }}" integrity="{{ $lazysizes.Data.Integrity }}" crossorigin="anonymous"></script>
 
 
-<!-- KaTeX -->
+<!-- Preconnect for KaTeX -->
 {{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}
-  <!-- Preconnect -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 {{ end }}
 
@@ -406,7 +394,6 @@
 {{ range $sameAs }}
   <link rel="me" href="{{ . }}"/> 
 {{ end }}
-
 
 
 <!--
