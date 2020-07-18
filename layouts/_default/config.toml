@@ -1,5 +1,0 @@
-  # For a simple 404
-  [params.notFound]
-    title         = "Page not found"
-    description   = "This page was not found."
-    text          = "Nothing to see here, buddy." 
