@@ -2,7 +2,7 @@
 {{ $darkAccent   := .Site.Params.Style.darkAccent   | default .Site.Data.default.style.darkAccent }}
 {{ $lightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
 
-<!-- Custom footer or default copyright -->
+<!-- Custom or default copyright -->
 {{ if or (templates.Exists "partials/custom/copyright") (templates.Exists "partials/custom/copyright.html") }}
   {{ partial "custom/copyright" . }}
 {{ else }}

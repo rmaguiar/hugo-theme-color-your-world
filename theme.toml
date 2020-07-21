@@ -7,14 +7,16 @@ licenselink = "https://gitlab.com/rmaguiar/hugo-theme-color-your-world/blob/mast
 description = "A minimalist theme for personal blogs with a colored twist."
 homepage = "https://gitlab.com/rmaguiar/hugo-theme-color-your-world"
 tags = [
+  "accessible",
   "blog",
   "contact form",
   "dark",
   "fast",
   "highlighting",
   "light",
-  "multilingual",
   "minimalist",
+  "modern",
+  "multilingual",
   "personal",
   "responsive",
   "search",

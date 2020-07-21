@@ -1,6 +1,6 @@
-<!-- Site title -->
+<!-- Custom or default site title -->
 {{ if or (templates.Exists "partials/custom/site-title") (templates.Exists "partials/custom/site-title.html") }}
-  {{ partialCached "custom/site-title" . }}
+  {{ partial "custom/site-title" . }}
 {{ else }}
   <a href="{{ .Site.BaseURL | relLangURL }}">{{ .Site.Title }}</a>
 {{ end }}

@@ -162,28 +162,29 @@ Here's an example of config file:
   # The "entry" here IS important. It's used to load the data.
 
 [params.social.decentralized]
+
+  [params.social.decentralized.element]
+    1 = [ "https://app.element.io/#/user/<username>:matrix.org", "matrix.org" ]
+    #entry = [ "full url", "label (required)" ]
+    
   [params.social.decentralized.funkwhale]
     1 = [ "https://open.audio/<username>", "open.audio" ]
-    #entry = [ "full url", "label (required)" ]
     
   [params.social.decentralized.mastodon]
     1 = [ "https://mastodon.social/<username>", "mastodon.social" ]
     2 = [ "https://mastodon.too/<username>", "mastodon.too" ]
     3 = [ "https://yet.another.one/<username>", "yet.another.one" ]
-
+    
   [params.social.decentralized.matrix]
     1 = [ "https://matrix.to/#/<username>:matrix.org", "matrix.org" ]
     2 = [ "https://matrix.to/#/<username>:other.org", "other.org" ]
-  
+    
   [params.social.decentralized.peertube]
     1 = [ "https://peertube.something/accounts/<username>", "peertube.something" ]
-  
+    
   [params.social.decentralized.pixelfed]
     1 = [ "https://pixelfed.social/<username>", "pixelfed.social" ]
-  
-  [params.social.decentralized.riot]
-    1 = [ "https://riot.im/app/#/user/<username>:matrix.org", "matrix.org" ]
-
+    
   # The "entry" here ISN'T important. It's used for nothing.
 ```
 

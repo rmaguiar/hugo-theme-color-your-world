@@ -9,6 +9,8 @@
   mediumRes = [ "960x", "960w" ]
   lowRes    = [ "640x q90", "640w" ]
   
+  markupAutoResizeWidth = 1280
+  
 [style]
   lightAccent  = "#225670"
   darkAccent   = "#dd587c"

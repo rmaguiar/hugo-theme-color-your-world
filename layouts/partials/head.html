@@ -374,14 +374,18 @@
 {{ end }}
 
 
+<!-- Preload fonts -->
+{{ range (readDir "/public/fonts") }}
+  <link rel="preload" href="{{ printf "/fonts/%s" .Name | relURL }}" as="font" crossorigin="anonymous">
+{{ end }}
+
 <!-- Should be loaded even if browser has native lazy load support -->
 {{ $lazysizes := resources.Get "libs/lazysizes@5.2.2/lazysizes.min.js" | resources.ExecuteAsTemplate "js/lazysizes.min.js" . | minify | resources.Fingerprint "sha512" }}
-<script defer src="{{ $lazysizes.RelPermalink }}" integrity="{{ $lazysizes.Data.Integrity }}" crossorigin="anonymous"></script>
-
+<script defer src="{{ $lazysizes.RelPermalink }}" crossorigin="anonymous"></script>
 
 <!-- Preconnect for KaTeX -->
 {{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="anonymous">
 {{ end }}
 
 
@@ -392,7 +396,7 @@
 -->
 
 {{ range $sameAs }}
-  <link rel="me" href="{{ . }}"/> 
+  <link rel="me" href="{{ . }}"> 
 {{ end }}
 
 

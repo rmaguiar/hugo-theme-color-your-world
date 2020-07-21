@@ -126,12 +126,12 @@
     }
   },
   {
-    "entry": "riot",
-    "label": "Riot",
+    "entry": "element",
+    "label": "Element",
     "decentralized": true,
     "icon": {
-      "id": "riot",
-      "source": "Fork-Awesome"
+      "id": "element-logo",
+      "source": "Element"
     }
   },
   {

@@ -124,7 +124,7 @@ body {
   background: var(--bg);
   color: var(--fg);
   
-  // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
+  // Sticky footer
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -138,20 +138,19 @@ body {
   }
   
   > header {
-  
-    padding: 0 2rem 1rem;
+
+    padding: 0 1.5rem 1rem;
 
     nav {
       margin: .5rem 0 0;
       
       ul {
         margin: 0;
+        padding: 0;
         
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        
-        padding: 0;
         
         a {
           display: block;
@@ -170,11 +169,11 @@ body {
   }
   
   > footer {
-    padding: 18px 45px;
+    padding: 1rem 3rem;
     
     p {
       line-height: 1.8rem;
-      margin: 15px 0;
+      margin: .75rem 0;
       
       // HACK
       // Render "\n" as a line break in the copyright (from config)
@@ -281,7 +280,7 @@ hr {
   text-shadow: none;
 }
 
-// Sticky Footer
+// Sticky footer
 div.filler {
   flex: 1;
 
@@ -333,8 +332,8 @@ code {
 }
 
 
-// If there's no custom header partial, style a default one
-{{ if not (or (templates.Exists "partials/custom/header") (templates.Exists "partials/custom/header.html")) }}
+// If there's no "custom/site-title" partial, style a default one
+{{ if not (or (templates.Exists "partials/custom/site-title") (templates.Exists "partials/custom/site-title.html")) }}
   body > header {
     > a {
       font-family: $heading-font;
@@ -360,7 +359,6 @@ article > header {
   margin: 0 0 2rem;
 
   h1 {
-    //margin: 1.5rem 0; // 30px 0 15px;
     margin: 9px 0;
   }
   
@@ -369,8 +367,7 @@ article > header {
   }
 }
 
-article,
-main.index {
+article {
   
   h2,
   h3 {
@@ -449,9 +446,7 @@ sup.footnote-ref {
 
 // Lists in general
 article ol,
-article ul,
-main.index ol,
-main.index ul {
+article ul {
   li {
     margin-bottom: .45rem;
   }
@@ -510,14 +505,7 @@ section.footnotes {
   
   ol li p:first-of-type {
     display: inline;
-    
-    // BUG
-    // For some reason, here there's <p> inside the <li> since 0.60
-    // Maybe it's there to allow multiline footnotes?
-    // The problem is, Chrome is complaining about a11y issues
-    // No idea about what to do about it or even what to blame
-    // Lighthouse? Goldmark? Something I did?
-    
+
     // HACK
     // This should be useless out of development if using minification (that should strip the white space)
     {{ if .Site.IsServer }}
@@ -525,11 +513,11 @@ section.footnotes {
     {{ end }}
   }
   
-  // BUG
-  // For some reason, this will be rendered differently in different browsers and platforms
-  // The "↩" symbol can be centered inside the button or not
-  // I can't really find a pattern (between browsers and/or platforms)
-  // Kind of solved by replacing the "↩" symbol with a SVG (or plain text)
+  // HACK
+  // The default "↩" symbol will be rendered differently in
+  // different browsers and platforms
+  // Solved right now by replacing the "↩" symbol with a
+  // SVG (or plain text if it's the user wish)
   a.footnote-backref {
     margin: 0 0 0 9px;
     
@@ -583,9 +571,6 @@ sup {
     }
   }
 }
-
-
-
 
 
 // For mode change animation
@@ -677,9 +662,6 @@ section.scroll {
 }
 
 
-
-// TODO
-// Get rid of this !important
 div.highlight > div table {
   padding: 0 24px;
   max-height: $box-max-height;
@@ -778,7 +760,10 @@ ul.posts {
     time {
       // HACK
       // Using a background-image as an overlay...
-      background-image: linear-gradient(0deg, var(--bgmod), 100%, transparent);
+      background-image:
+        linear-gradient(0deg, var(--bgmod),
+                        100%, transparent);
+      
       border-radius: $border-radius;
       
       font-size: .85rem;
@@ -813,8 +798,6 @@ span.katex-display {
     border: 1px solid $box-border;
   }
 }
-
-
 
 
 
@@ -1017,7 +1000,7 @@ article > ul {
 
   li:before {
     content: '';
-    margin-right: 12px; // 9px or 12px
+    margin-right: 12px;
 
     background: var(--fg);
     border-radius: $border-radius;
@@ -1027,7 +1010,7 @@ article > ul {
     display: inline-block;
     
     // HACK
-    // Good grief
+    // Cheap vertical align
     margin-bottom: -3px;
   }
 }
@@ -1079,13 +1062,8 @@ summary {
 
 
 
-
-
-
-
-
+// Categories
 {{ if .Site.Taxonomies.categories }}
-  // Categories
   li.cats a {
     font-weight: bold;
   }
@@ -1111,21 +1089,20 @@ ul.tags {
     word-break: keep-all;
     
     span {
-      background-image: linear-gradient(0deg, var(--bgmod), 100%, transparent);
-
+      background-image:
+        linear-gradient(
+          0deg, var(--bgmod),
+          100%, transparent);
+      
+      border-radius: $border-radius;
+      
       margin-left: .45rem;
       padding: 0 6px 1px;
       
       font-size: .85rem;
-
-      border-radius: $border-radius;
     }
   }
 }
-
-
-
-
 
 
 
@@ -1164,14 +1141,13 @@ ul.pagination {
     &.current p {
       background: var(--alt-bg);
       border: 1px solid rgba(0,0,0,.45);
+      border-radius: $border-radius;
       color: var(--alt-fg);
       
       line-height: inherit;
       
       user-select: none;
 
-      border-radius: $border-radius;
-      
       @include button-like;
 
       @include letterpress(var(--lpress));
@@ -1186,7 +1162,7 @@ ul.pagination {
     display: inline-block;
     
     // HACK
-    // SVG vertical align
+    // Cheap vertical align
     margin: auto auto -2px;
   }
 }
@@ -1300,7 +1276,6 @@ blockquote {
   color: var(--alt-fg);
 
   margin: var(--blk-mg);
-  
   padding: 0 30px;
   
   p {
@@ -1310,8 +1285,8 @@ blockquote {
 
 kbd {
   background-color: #eee;
-  border-radius: $border-radius;
   border: 1px solid #b4b4b4;
+  border-radius: $border-radius;
   
   box-shadow:
     0 1px 1px rgba(0, 0, 0, .2),
@@ -1334,9 +1309,9 @@ kbd {
 // RESPONSIVENESS
 main {
   margin: 90px auto;
-  max-width: 660px;
-  
   padding: 0 15px;
+  
+  max-width: 660px;
 }
 
 article {
