@@ -357,7 +357,7 @@
 
 
 <!-- Preload fonts -->
-{{ with (readDir "/public/fonts") }}
+{{ with (readDir "/static/fonts") }}
   {{ range . }}
     <link rel="preload" href="{{ printf "/fonts/%s" .Name | relURL }}" as="font" crossorigin="anonymous">
   {{ end }}
