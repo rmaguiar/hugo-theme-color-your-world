@@ -375,8 +375,10 @@
 
 
 <!-- Preload fonts -->
-{{ range (readDir "/public/fonts") }}
-  <link rel="preload" href="{{ printf "/fonts/%s" .Name | relURL }}" as="font" crossorigin="anonymous">
+{{ with (readDir "/public/fonts") }}
+  {{ range . }}
+    <link rel="preload" href="{{ printf "/fonts/%s" .Name | relURL }}" as="font" crossorigin="anonymous">
+  {{ end }}
 {{ end }}
 
 <!-- Should be loaded even if browser has native lazy load support -->

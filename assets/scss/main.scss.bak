@@ -107,7 +107,8 @@ body {
     
     transition:
       opacity .2s ease-in-out,
-      outline .2s ease-in-out;
+      outline .2s ease-in-out,
+      padding .2s ease-in-out;
     
     &:focus {
       outline-color: var(--accent);
@@ -182,6 +183,7 @@ body {
     a {
       transition:
         opacity .2s ease-in-out,
+        padding .2s ease-in-out,
         outline-color $change-transition;
 
       &:hover {
@@ -216,7 +218,7 @@ body {
         svg {
           fill: var(--fg);
           
-          stroke: var(--lpress);
+          stroke: var(--fg);
           stroke-width: .6rem;
         }
       }
@@ -686,16 +688,24 @@ div.highlight > div.chroma {
 }
 
 
+
 mark,
 p code,
 li code {
   border-radius: 2px;
   padding: 1px 3px;
+
+  word-break: break-all;
+}
+
+p code {
+  word-break: break-word;
 }
 
 li a {
   word-break: break-all;
 }
+
 
 
 article > header {
@@ -751,10 +761,8 @@ ul.posts {
       // HACK
       // Using a background-image as an overlay...
       background-image:
-        linear-gradient(
-          0deg, var(--bgmod),
-          100%, transparent
-        );
+        linear-gradient(0deg, var(--bgmod),
+                        100%, transparent);
       
       border-radius: $border-radius;
       
@@ -914,7 +922,7 @@ details.toc {
     transition:
       color $change-transition,
       opacity .2s ease,
-      outline-color .3s ease,
+      outline-color .2s ease,
       padding .2s ease;
 
     &:hover {
@@ -1018,8 +1026,10 @@ article > ul {
 
 
 // BUTTONS
-.btn,
+a.btn,
 a.footnote-backref,
+section.search-box button,
+section.social a,
 input[type=submit] {
   background: var(--accent);
   border: 1px solid rgba(0,0,0,.3);
@@ -1082,8 +1092,7 @@ ul.tags {
       background-image:
         linear-gradient(
           0deg, var(--bgmod),
-          100%, transparent
-        );
+          100%, transparent);
       
       border-radius: $border-radius;
       
@@ -1103,7 +1112,8 @@ ul.pagination {
   text-align: center;
   
   margin: 3rem auto 1rem;
-
+  padding: 0; // override?
+  
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1158,44 +1168,6 @@ ul.pagination {
 }
 
 
-
-
-.label-form {
-  margin-top: 1rem;
-  
-  font-family: $heading-font;
-  font-weight: $heading-weight;
-  font-size: .9rem;
-  
-  letter-spacing: .5px;
-  text-transform: uppercase;
-  
-  user-select: none;
-}
-
-.input-text {
-  background: var(--input-bg);
-  border: 1px solid var(--input-bd);
-  color: var(--input-fg);
-  font-family: $body-font;
-  font-size: .9rem;
-  line-height: 1.5rem;
-  
-  transition:
-    background-color $change-transition,
-    border $change-transition,
-    outline .2s ease-in-out;
-  
-  outline: 2px solid transparent;
-  
-  &:focus {
-    outline-color: var(--accent);
-  }
-}
-
-
-
-
 // SEARCH
 section.search-box {
 
@@ -1207,15 +1179,40 @@ section.search-box {
   }
   
   label {
+    color: var(--fg);
+    font-family: $heading-font;
+    font-weight: $heading-weight;
     flex-basis: 100%;
+    text-align: left;
+    
+    font-size: .9rem;
+    letter-spacing: .5px;
     line-height: 2rem;
+    text-transform: uppercase;
   }
 
   input[name=q] {
+    background: var(--input-bg);
+    border: 1px solid var(--input-bd);
+    color: var(--input-fg);
+    font-family: $body-font;
+    font-size: .9rem;
+    line-height: 1.5rem;
     padding: 6px 12px;
     flex: 1;
-
+    
+    transition:
+      background-color $change-transition,
+      border $change-transition,
+      outline .2s ease-in-out;
+    
     border-radius: $border-radius 0 0 $border-radius;
+    
+    outline: 2px solid transparent;
+    
+    &:focus {
+      outline-color: var(--accent);
+    }
   }
   
   button {

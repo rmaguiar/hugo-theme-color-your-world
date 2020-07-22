@@ -14,16 +14,7 @@ $change-transition: {{ .Site.Params.Style.changeTransition | default .Site.Data.
 
   label {
     display: block;
-    margin-top: 1rem;
-    
-    font-family: $heading-font;
-    font-size: .9rem;
-    
-    letter-spacing: .5px;
     line-height: 1.8rem;
-    text-transform: uppercase;
-    
-    user-select: none;
   }
 
   input[name=name],
@@ -31,26 +22,10 @@ $change-transition: {{ .Site.Params.Style.changeTransition | default .Site.Data.
   input[name=_subject],
   select,
   textarea {
-    background: var(--input-bg);
-    border: 1px solid var(--input-bd);
-    color: var(--input-fg);
-    
-    font-family: $body-font;
-    font-size: .9rem;
-    line-height: 1.5rem;
-  
     display: block;
     
     margin: 3px 0;
     max-width: 100%;
-    
-    transition: outline .2s ease-in-out;
-    
-    outline: 2px solid transparent;
-
-    &:focus {
-      outline-color: var(--accent);
-    }
   }
   
   input[name=name],
@@ -89,6 +64,7 @@ $change-transition: {{ .Site.Params.Style.changeTransition | default .Site.Data.
     transition:
       background-color $change-transition,
       border .2s ease-in-out,
+      color $change-transition,
       outline .2s ease-in-out,
       opacity .2s ease-in-out;
     

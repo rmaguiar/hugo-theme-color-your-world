@@ -24,7 +24,7 @@
           {{ $label = . }}
         {{ end }}
         
-        <a rel="me nofollow" href="{{ $url }}" title="{{ $label }}">
+        <a class="btn" href="{{ $url }}" rel="me nofollow" title="{{ $label }}">
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <use xlink:href="#{{ $currentIcon }}"/>
           </svg>
@@ -39,7 +39,7 @@
       {{ if (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
 
         {{ range (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
-          <a rel="me nofollow" href="{{ index . 0 }}" title="{{ printf "%s (%s)" (index . 1) $currentLabel }}">
+          <a class="btn" href="{{ index . 0 }}" rel="me nofollow" title="{{ printf "%s (%s)" (index . 1) $currentLabel }}">
             <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <use xlink:href="#{{ $currentIcon }}"/>
             </svg>

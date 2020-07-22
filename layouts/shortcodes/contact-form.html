@@ -6,16 +6,16 @@
 
 
 <form id="contact" action="https://formspree.io/{{ or .Page.Params.Contact.formspreeFormId .Site.Params.Contact.formspreeFormId }}" method="post" accept-charset="utf-8">
-  <label>{{ T "name" }}
-    <input aria-label="{{ T "name" }}" type="text" name="name" minlength="3" {{ with or .Page.Params.Contact.Placeholder.name .Site.Params.Contact.Placeholder.name }}placeholder="{{ . }}"{{ end }} autocomplete="{{ $autoComplete }}" required>
+  <label class="label-form">{{ T "name" }}
+    <input aria-label="{{ T "name" }}" class="input-text" type="text" name="name" minlength="3" {{ with or .Page.Params.Contact.Placeholder.name .Site.Params.Contact.Placeholder.name }}placeholder="{{ . }}"{{ end }} autocomplete="{{ $autoComplete }}" required>
   </label>
   
-  <label>Email<input aria-label="Email" type="email" name="_replyto" {{ with or .Page.Params.Contact.Placeholder.email .Site.Params.Contact.Placeholder.email }}placeholder="{{ . }}"{{ end }} autocomplete="{{ $autoComplete }}" required></label>
+  <label class="label-form">Email<input aria-label="Email" class="input-text" type="email" name="_replyto" {{ with or .Page.Params.Contact.Placeholder.email .Site.Params.Contact.Placeholder.email }}placeholder="{{ . }}"{{ end }} autocomplete="{{ $autoComplete }}" required></label>
   
   {{ with or .Page.Params.Contact.subject .Site.Params.Contact.subject }}
     {{ if gt (len .) 1 }}
-      <label>{{ T "subject" }}
-        <select aria-label="{{ T "subject" }}" name="_subject">
+      <label class="label-form">{{ T "subject" }}
+        <select aria-label="{{ T "subject" }}" class="input-text" name="_subject">
     
           {{ range . }}
             <option>{{ . }}</option>
@@ -29,15 +29,15 @@
   {{ else }}
   
     {{ with or .Page.Params.Contact.Placeholder.subject .Site.Params.Contact.Placeholder.subject }}
-      <label>{{ T "subject" }}
-        <input aria-label="{{ T "subject" }}" type="text" name="_subject" minlength="6" placeholder="{{ . }}" autocomplete="{{ $autoComplete }}" required>
+      <label class="label-form">{{ T "subject" }}
+        <input aria-label="{{ T "subject" }}" class="input-text" type="text" name="_subject" minlength="6" placeholder="{{ . }}" autocomplete="{{ $autoComplete }}" required>
       </label>
     {{ end }}
   
   {{ end }}
   
   
-  <label>{{ T "message" }}<textarea id="message" aria-label="{{ T "message" }}" rows="6" name="message" {{ with or .Page.Params.Contact.messageMinLength .Site.Params.Contact.messageMinLength | default 140 }}minlength="{{ . }}"{{ end }} {{ with or .Page.Params.Contact.Placeholder.message .Site.Params.Contact.Placeholder.message }}placeholder="{{ . }}"{{ end }} required></textarea></label>
+  <label class="label-form">{{ T "message" }}<textarea id="message" aria-label="{{ T "message" }}" class="input-text" rows="6" name="message" {{ with or .Page.Params.Contact.messageMinLength .Site.Params.Contact.messageMinLength | default 140 }}minlength="{{ . }}"{{ end }} {{ with or .Page.Params.Contact.Placeholder.message .Site.Params.Contact.Placeholder.message }}placeholder="{{ . }}"{{ end }} required></textarea></label>
   
   <input type="text" name="_gotcha" style="display:none">
   
