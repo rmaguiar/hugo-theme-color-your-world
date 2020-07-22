@@ -1251,6 +1251,155 @@ section.search-box {
   }
 }
 
+section.social {
+  
+  {{ if .Site.Params.Style.socialIsFlex }}
+  
+    display: flex;
+    flex-wrap: wrap;
+    
+  {{ else }}
+  
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  {{ end }}
+  
+  a {
+    display: flex;
+    
+    {{ if .Site.Params.Style.socialIsFlex }}
+      flex: 1;
+    {{ end }}
+    
+    align-items: center;
+    
+    margin: 0 9px 9px 0;
+    min-width: 150px;
+    padding: 15px 21px;
+    
+    text-align: center;
+
+    svg {
+      fill: currentColor;
+      
+      stroke: var(--lpress);
+      stroke-width: 9px;
+      
+      @include squared(36px);
+    }
+    
+    p {
+      flex: 1;
+      
+      margin: 0 12px;
+      
+      font-size: .75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      
+      line-height: 1rem;
+
+      user-select: none;
+    }
+    
+    &:hover {
+      opacity: .75;
+    }
+  }
+}
+
+
+// CONTACT FORM
+#contact {
+
+  margin: 1.5rem 0;
+
+  label {
+    display: block;
+    line-height: 1.8rem;
+  }
+
+  input[name=name],
+  input[name=_replyto],
+  input[name=_subject],
+  select,
+  textarea {
+    display: block;
+    
+    margin: 3px 0;
+    max-width: 100%;
+  }
+  
+  input[name=name],
+  input[name=_replyto],
+  input[name=_subject] {
+    min-width: 240px;
+    padding: 6px 12px;
+  }
+  
+  select {
+    min-width: 210px;
+    padding: 6px;
+  }
+  
+  textarea {
+    padding: 9px 15px;
+    
+    width: 90%;
+    height: auto;
+  }
+
+  input[type=submit] {
+    cursor: pointer;
+    
+    font-family: $heading-font;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .05rem;
+    
+    margin-top: 1.2rem;
+    padding: 12px 42px 15px;
+
+    outline: 2px dashed transparent;
+    outline-offset: 2px;
+    
+    transition:
+      background-color $change-transition,
+      border .2s ease-in-out,
+      color $change-transition,
+      outline .2s ease-in-out,
+      opacity .2s ease-in-out;
+    
+    &:focus {
+      outline-color: var(--accent);
+    }
+    
+    &:hover {
+      opacity: .75;
+    }
+
+    // HACK
+    // Override Firefox unnecessary extra inner outline
+    &::-moz-focus-inner {
+      border: 0;
+    }
+  }
+}
+
+// HACK
+// Override Firefox unnecessary extra inner outline
+// https://stackoverflow.com/a/11603104
+// https://stackoverflow.com/a/52903457
+@supports (-moz-appearance: meterbar) {
+  #contact select {
+    color: var(--fg);
+    color: rgba(0,0,0,0);
+    text-shadow: 0 0 0 var(--fg);
+  }
+}
+
+
 
 p.error {
   color: var(--err);
