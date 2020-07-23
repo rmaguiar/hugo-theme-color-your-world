@@ -1,7 +1,5 @@
 {{ define "main" }}
 
-  {{ $icons := (.Scratch.Get "svgBundle").RelPermalink }}
-
   <main>
     <article>
       <header>
@@ -9,18 +7,19 @@
         <h1>{{ .Title }}</h1>
 
         {{ if or .Params.categories .Params.tags }}
-          <section class="tags">
+          <section class="terms">
             <ul>
-            {{- with .Params.categories -}}
-                {{- range sort . -}}
-                  <li class="cats"><a class="btn" href="/categories/{{ . | urlize }}">{{ . }}</a></li>
-                {{- end -}}
-            {{- end -}}
-            {{- with .Params.tags -}}
-                {{- range sort . -}}
-                  <li><a class="btn" href="/tags/{{ . | urlize }}">{{ . }}</a></li>
-                {{- end -}}
-            {{ end }}
+              {{- with .Params.categories -}}
+                  {{- range sort . -}}
+                    <li class="category"><a class="btn" href="/categories/{{ . | urlize }}">{{ . }}</a></li>
+                  {{- end -}}
+              {{- end -}}
+              {{- with .Params.tags -}}
+                  {{- range sort . -}}
+                    <li><a class="btn" href="/tags/{{ . | urlize }}">{{ . }}</a></li>
+                  {{- end -}}
+              {{- end -}}
+            </ul>
           </section>
         {{- end -}}
         
@@ -42,7 +41,7 @@
     
       {{ if .Params.toc }}
         <details class="toc" open>
-          <summary>{{ T "table_of_contents" }}</summary>
+          <summary class="outline-dashed">{{ T "table_of_contents" }}</summary>
           {{ .Page.TableOfContents }}
         </details>
       {{ end }}
@@ -64,5 +63,4 @@
       <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"/>
     </symbol>
   {{ end }}
-  
 {{ end }}

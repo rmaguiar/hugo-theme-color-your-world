@@ -1,4 +1,4 @@
-baseURL = "https://example.com"
+baseURL = "https://example.com/"
 languageCode = "en"
 title = "Color Your World"
 theme = "color-your-world"

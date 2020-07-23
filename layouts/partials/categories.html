@@ -1,4 +1,4 @@
-<ul class="labels">
+<ul class="terms">
   {{ range .Site.Taxonomies.categories }}
     <li><a class="btn" href="{{ .Page.RelPermalink }}" aria-label="{{ .Page.Title }} ({{ .Count }})">{{ .Page.Title }}</a></li>
   {{ end }}

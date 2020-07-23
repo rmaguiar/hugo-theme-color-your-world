@@ -1,5 +1,7 @@
 # Color Your World
 
+[Live demo (on Netlify)](https://color-your-world-demo.netlify.app/)
+
 **Color Your World** is a [Hugo](https://gohugo.io) theme developed around a single experiment that led me to this:
 
 ![HTML color picker with 12 presets.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/color-picker.png)
@@ -40,7 +42,7 @@ I've been working on this theme for so long that there are features I don't even
 
 If you have git installed, you can do the following at the CLI within the Hugo directory:
 
-```
+```bash
 git clone https://gitlab.com/rmaguiar/hugo-theme-color-your-world.git themes/color-your-world
 ```
 
@@ -333,15 +335,21 @@ More possible params for your config file:
     changeTransition = ".3s ease"
 ```
 
-## Thanks to
+## Acknowledgements
 
 * [Font Awesome](https://fontawesome.com/) and [Fork Awesome](https://forkaweso.me/) for the icons;
 * [@nickpunt](https://gist.github.com/nickpunt) and [@regpaq](https://gist.github.com/regpaq) for the [dark/light mode switcher](https://gist.github.com/regpaq/04c67e8aceecbf0fd819945835412d1f) idea;
-* Glenn McComb and [his great article](https://glennmccomb.com/articles/how-to-build-custom-hugo-pagination/) about custom pagination with Hugo;
-* JeffProd and [his interesting article](https://en.jeffprod.com/blog/2018/build-your-own-hugo-website-search-engine/) about building a custom search engine for Hugo;
-* Many people [on this forked gist](https://gist.github.com/eddiewebb/735feb48f50f0ddd65ae5606a1cb41ae) for their takes on Fuse.js with Hugo;
+* Glenn McComb and [his article](https://glennmccomb.com/articles/how-to-build-custom-hugo-pagination/) about custom pagination with Hugo;
+* JeffProd and [his article](https://en.jeffprod.com/blog/2018/build-your-own-hugo-website-search-engine/) about building a custom search engine for Hugo;
+* Many people [on this forked gist](https://gist.github.com/eddiewebb/735feb48f50f0ddd65ae5606a1cb41ae) for their takes on Fuse.js + Hugo;
 * Philip Walton and [his sticky footer solution](https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/) with Flexbox;
 * [lazysizes](https://github.com/aFarkas/lazysizes);
 * [Fuse.js](https://github.com/krisk/Fuse);
-* [KaTeX](https://katex.org/), "the _**fastest**_ math typesetting library for the web";
+* [KaTeX](https://katex.org/);
 * Hugo and [its community](https://discourse.gohugo.io/).
+
+## Sponsoring
+
+If this repo was useful or helpful to you in any way, please consider buying me a coffee:
+
+<a href="https://www.buymeacoffee.com/rmaguiar" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;"></a>

@@ -1,0 +1,10 @@
+[build]
+  command = "hugo --gc --minify --themesDir ../../"
+  base    = "exampleSite"
+  publish = "exampleSite/public"
+
+[build.environment]
+  HUGO_BASEURL        = "https://color-your-world-demo.netlify.app"
+  HUGO_THEME          = "repo"
+  HUGO_VERSION        = "0.71.0"
+  HUGO_ENABLEGITINFO  = "true"

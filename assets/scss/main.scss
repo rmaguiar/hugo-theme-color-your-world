@@ -11,11 +11,10 @@ $change-transition: {{ .Site.Params.Style.changeTransition | default .Site.Data.
 
 
 
-// Default size
+// Default font size
 :root {
   font-size: $font-size;
 }
-
 
 html {
   scroll-behavior: smooth;
@@ -91,6 +90,7 @@ html {
 }
 
 
+
 body {
   
   // Some reset
@@ -101,23 +101,18 @@ body {
 
   a {
     color: var(--accent);
-
-    outline: 2px dashed transparent;
-    outline-offset: 2px;
     
+    outline-offset: 2px;
+
     transition:
       opacity .2s ease-in-out,
-      outline .2s ease-in-out;
-    
-    &:focus {
-      outline-color: var(--accent);
-    }
+      outline-color .2s ease-in-out;
+
+    word-break: break-word;
     
     &:hover {
       opacity: .75;
     }
-    
-    word-break: break-word;
   }
   
   background: var(--bg);
@@ -224,20 +219,15 @@ body {
       input,
       button {
         margin: 0 7.5px;
-        outline: 2px dashed transparent;
 
         transition:
-          outline .2s ease-in-out,
+          outline-color .2s ease-in-out,
           transform .2s ease-in-out;
-          
-        &:focus {
-          outline-color: var(--accent);
-        }
-        
+
         &:hover {
           transform: scale(1.2);
         }
-
+        
         // HACK
         // Override Firefox unnecessary extra inner outline
         &::-moz-focus-inner {
@@ -250,6 +240,21 @@ body {
         @include squared(42px);
       }
     }
+  }
+}
+
+
+// footer button,
+// footer input,
+// input[type=submit],
+// .search-box button,
+// .toc summary,
+body a,
+.outline-dashed {
+  outline: 2px dashed transparent;
+
+  &:focus {
+    outline-color: var(--accent);
   }
 }
 
@@ -279,7 +284,7 @@ hr {
 }
 
 // Sticky footer
-div.filler {
+.filler {
   flex: 1;
 
   align-items: center;
@@ -366,7 +371,6 @@ article > header {
 }
 
 article {
-  
   h2,
   h3 {
     margin: 2rem 0 1rem;
@@ -405,7 +409,7 @@ video {
 
 
 // ANCHOR LINKS
-a.anchor {
+.anchor {
   background-image: none;
 
   svg {
@@ -422,7 +426,7 @@ a.anchor {
 // Also minor spacing ajustment
 @for $i from 2 through 6 {
   h#{$i} {
-    a.anchor {
+    .anchor {
       margin: 0 0 0 (.25rem + .1 * (6 - $i));
       
       svg {
@@ -435,9 +439,9 @@ a.anchor {
 
 // Avoid accidental selection
 label,
-span.lnt,
 summary,
-sup.footnote-ref {
+.footnote-ref,
+.lnt {
   user-select: none;
 }
 
@@ -483,7 +487,7 @@ ol {
 
 
 // FOOTNOTES
-section.footnotes {
+.footnotes {
   border-top: 2px solid var(--fg);
   
   // HACK
@@ -516,7 +520,7 @@ section.footnotes {
   // different browsers and platforms
   // Solved right now by replacing the "↩" symbol with a
   // SVG (or plain text if it's the user wish)
-  a.footnote-backref {
+  .footnote-backref {
     margin: 0 0 0 9px;
     
     {{ if .Site.Params.Style.hasIconAsFootnoteReturnLink }}
@@ -557,7 +561,7 @@ section.footnotes {
 sup {
   line-height: 0;
 
-  a.footnote-ref {
+  .footnote-ref {
     text-decoration: none;
     
     &::before {
@@ -573,8 +577,7 @@ sup {
 
 // For mode change animation
 code,
-.chroma,
-.chroma span {
+.chroma {
   transition:
     background-color $change-transition,
     color $change-transition;
@@ -582,10 +585,10 @@ code,
 
 
 article > pre,
-section.scroll,
-span.katex-display,
-div.highlight > pre,
-div.highlight > div {
+.scroll,
+.katex-display,
+.highlight > pre,
+.highlight > div {
 
   overflow-x: auto;
   
@@ -603,7 +606,7 @@ div.highlight > div {
 
 
 // TABLE
-section.scroll {
+.scroll {
   
   border: 1px solid var(--fg);
   
@@ -660,25 +663,25 @@ section.scroll {
 }
 
 
-div.highlight > div table {
+.highlight > div table {
   padding: 0 24px;
   max-height: $box-max-height;
 }
 
-div.chroma td:first-of-type {
+.chroma td:first-of-type {
   padding: 0 18px 0 0;
 }
 
 article > pre,
-span.katex-display,
-div.highlight > pre {
+.katex-display,
+.highlight > pre {
   padding: var(--hl-pad);
 }
 
 article > pre,
-span.katex-display,
-div.highlight > pre,
-div.highlight > div.chroma {
+.katex-display,
+.highlight > pre,
+.highlight > .chroma {
   border: 1px solid $box-border;
 
   line-height: 1.5rem;
@@ -699,7 +702,7 @@ li a {
 
 
 article > header {
-  section.tags {
+  .terms {
     
     margin: .9rem 0 .6rem;
     
@@ -722,7 +725,7 @@ article > header {
 
 
 
-ul.posts {
+.posts {
   padding: 0;
   
   li {
@@ -768,7 +771,7 @@ ul.posts {
 
 // Not sure if I like this
 @include respond-below($mobile-breakpoint) {
-  ul.posts a {
+  .posts a {
     flex-direction: column-reverse;
     align-items: unset;
     
@@ -780,7 +783,7 @@ ul.posts {
 
 
 
-span.katex-display {
+.katex-display {
   border: 1px dashed var(--alt-fg);
   
   overflow-x: auto;
@@ -884,7 +887,7 @@ video {
 
 
 // Table of Contents
-details.toc {
+.toc {
   
   background: var(--alt-bg);
   color: var(--dtl);
@@ -897,18 +900,15 @@ details.toc {
   summary {
     background: var(--accent);
     border: 1px solid rgba(0,0,0,.3);
-
     border-radius: $border-radius;
-    
-    @include button-like;
 
     font-family: $heading-font;
     
+    outline-offset: 2px;
+    
     padding: 15px 30px 18.5px;
-    
-    outline: 2px dashed transparent;
-    outline-offset: 3px;
-    
+
+    @include button-like;
     @include letterpress(var(--lpress));
 
     transition:
@@ -916,15 +916,10 @@ details.toc {
       opacity .2s ease,
       outline-color .3s ease,
       padding .2s ease;
-
+    
     &:hover {
       opacity: .75;
     }
-    
-    &:focus {
-      outline-color: var(--accent);
-    }
-    
   }
   
   &[open] summary {
@@ -969,14 +964,14 @@ details.toc {
 }
 
 #TableOfContents,
-section.footnotes ol,
+.footnotes ol,
 article > ul,
 article > ol {
   line-height: 1.5rem;
 }
 
 #TableOfContents ul,
-section.footnotes ol {
+.footnotes ol {
   padding-left: 24px;
 }
 
@@ -1019,24 +1014,22 @@ article > ul {
 
 // BUTTONS
 .btn,
-a.footnote-backref,
+.footnote-backref,
 input[type=submit] {
   background: var(--accent);
   border: 1px solid rgba(0,0,0,.3);
+  border-radius: $border-radius;
   color: var(--dtl);
+  
+  text-decoration: none;
   
   transition:
     background-color $change-transition,
     color $change-transition,
     opacity .2s ease-in-out,
     outline-color .3s ease;
-  
-  border-radius: $border-radius;
 
   @include button-like;
-
-  text-decoration: none;
-  
   @include letterpress(var(--lpress));
   
   &:hover {
@@ -1054,14 +1047,14 @@ summary {
 
 // Categories
 {{ if .Site.Taxonomies.categories }}
-  li.cats a {
+  .category a {
     font-weight: bold;
   }
 {{ end }}
 
 
 
-ul.tags {
+.terms {
   display: flex;
   flex-wrap: wrap;
 
@@ -1097,7 +1090,7 @@ ul.tags {
 
 
 
-ul.pagination { 
+.pagination { 
   font-family: $body-font;
   font-weight: $body-bold-weight;
   text-align: center;
@@ -1139,18 +1132,17 @@ ul.pagination {
       user-select: none;
 
       @include button-like;
-
       @include letterpress(var(--lpress));
     }
   }
   
   svg {
+    display: inline-block;
+    
     fill: currentColor;
 
     @include squared(18px);
-    
-    display: inline-block;
-    
+
     // HACK
     // Cheap vertical align
     margin: auto auto -2px;
@@ -1164,13 +1156,11 @@ ul.pagination {
   margin-top: 1rem;
   
   font-family: $heading-font;
-  font-weight: $heading-weight;
   font-size: .9rem;
+  font-weight: $heading-weight;
   
   letter-spacing: .5px;
   text-transform: uppercase;
-  
-  user-select: none;
 }
 
 .input-text {
@@ -1184,7 +1174,7 @@ ul.pagination {
   transition:
     background-color $change-transition,
     border $change-transition,
-    outline .2s ease-in-out;
+    outline-color .2s ease-in-out;
   
   outline: 2px solid transparent;
   
@@ -1197,7 +1187,7 @@ ul.pagination {
 
 
 // SEARCH
-section.search-box {
+.search-box {
 
   form {
     display: flex;
@@ -1220,19 +1210,11 @@ section.search-box {
   
   button {
     border-radius: 0 $border-radius $border-radius 0;
+    
     padding: 6px 30px;
-
-    outline: 2px dashed transparent;
+    
     outline-offset: 2px;
-    
-    &:focus {
-      outline-color: var(--accent);
-    }
-    
-    &:hover {
-      opacity: .75;
-    }
-    
+
     svg {
       @include squared(15px);
       
@@ -1251,7 +1233,7 @@ section.search-box {
   }
 }
 
-section.social {
+.social {
   
   {{ if .Site.Params.Style.socialIsFlex }}
   
@@ -1299,8 +1281,6 @@ section.social {
       text-transform: uppercase;
       
       line-height: 1rem;
-
-      user-select: none;
     }
     
     &:hover {
@@ -1360,24 +1340,15 @@ section.social {
     
     margin-top: 1.2rem;
     padding: 12px 42px 15px;
-
-    outline: 2px dashed transparent;
-    outline-offset: 2px;
     
+    outline-offset: 2px;
+
     transition:
       background-color $change-transition,
       border .2s ease-in-out,
       color $change-transition,
-      outline .2s ease-in-out,
+      outline-color .2s ease-in-out,
       opacity .2s ease-in-out;
-    
-    &:focus {
-      outline-color: var(--accent);
-    }
-    
-    &:hover {
-      opacity: .75;
-    }
 
     // HACK
     // Override Firefox unnecessary extra inner outline
@@ -1401,7 +1372,7 @@ section.social {
 
 
 
-p.error {
+.error {
   color: var(--err);
 }
 
@@ -1510,7 +1481,7 @@ html {
 {{ end }}
 
 {{ if .Site.Params.hasNoscriptNotice }}
-  p.noscript {
+  .noscript {
     font-weight: bold;
   }
 {{ end }}

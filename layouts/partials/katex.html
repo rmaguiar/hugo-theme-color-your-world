@@ -2,8 +2,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
 
-<!-- mchem extension -->
-{{ if or (in .Params.katexExtensions "mchem") (in .Site.Params.katexExtensions "mchem") }}
+<!-- mhchem extension -->
+{{ if or (in .Params.katexExtensions "mhchem") (in .Site.Params.katexExtensions "mhchem") }}
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/mhchem.min.js" integrity="sha512-ndr34OWlb/uvrgXcrqKXv4YUB42kRFQi9cJ+s+alNEvNBKYyIlO970xmSWYV3vNKsrT1rwW/leiBEaZxcCwjwA==" crossorigin="anonymous"></script>
 {{ end }}
 

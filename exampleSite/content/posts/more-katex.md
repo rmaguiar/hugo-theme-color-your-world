@@ -1,14 +1,14 @@
 ---
 title           : "More KaTeX"
-description     : "Brief explanation of mchem, copy-tex, etc."
+description     : "Brief explanation of mhchem, copy-tex, etc."
 katex           : true
-katexExtensions : [ mchem, copy-tex ]
+katexExtensions : [ mhchem, copy-tex ]
 tags            : [ markdown, shortcodes, extra ]
 ---
 
-The extensions `mchem` and `copy-tex` are also included (along the necessary `auto-render`).
+The extensions `mhchem` and `copy-tex` are also included (along the necessary `auto-render`).
 
-The `mchem` extension allows chemistry notation, like {{< math.inline >}} \(\ce{H2O}\) {{< /math.inline >}} or:
+The `mhchem` extension allows chemistry notation, like {{< math.inline >}} \(\ce{H2O}\) {{< /math.inline >}} or:
 
 $$
   \ce{x Na(NH4)HPO4 ->[\Delta] (NaPO3)_x + x NH3 ^ + x H2O}
@@ -24,7 +24,7 @@ About how to load the extensions, here's a quick example:
 ---
 title           : "More KaTeX"
 katex           : true
-katexExtensions : [ mchem, copy-tex ]
+katexExtensions : [ mhchem, copy-tex ]
 ---
 
 ...
