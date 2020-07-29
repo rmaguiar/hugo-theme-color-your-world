@@ -28,8 +28,8 @@ PALETTE.onchange = function () {
 
 {{ if eq .Layout "search" }}
 
-  // Get Fuse.js
-  {{ (resources.Get "libs/fuse.js@6.4.0/dist/fuse.basic.min.js").Content | safeJS }}
+  // Get latest Fuse.js (basic build) available
+  {{ (index (last 1 (resources.Match "libs/fuse.js@*/dist/fuse.basic.min.js")) 0).Content | safeJS }}
 
   const fuseOptions = {
     shouldSort: true,

@@ -1,4 +1,7 @@
-# Color Your World
+---
+title: "Read Me"
+description: "A copy of the README.md file."
+---
 
 [Live demo (on Netlify)](https://color-your-world-demo.netlify.app/) | [Demo (on Hugo Themes)](https://themes.gohugo.io/theme/hugo-theme-color-your-world/)
 
