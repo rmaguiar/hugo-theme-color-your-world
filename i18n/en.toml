@@ -1,50 +1,49 @@
-[main_menu]
+# Header & Footer
+
+[ariaMainMenu]
 other = "Main menu."
 
-[change_accent]
+[changeAccent]
 other = "Change accent color."
 
-[change_mode]
+[changeMode]
 other = "Change to light/dark mode."
 
 [noscript]
 other = "Unable to execute JavaScript. Some features were disabled."
 
-[also_available]
-other = "Also available in"
 
-[anchor_for]
+# Pages
+
+[anchorFor]
 other = "Anchor for"
 
-[missing_codec]
-other = "Your browser doesn't support HTML5 audio/video."
-
-[table_of_contents]
+[tableOfContents]
 other = "Contents"
+
+[publishedOn]
+other = "Published on"
+
+[lastUpdatedOn]
+other = "Last updated on"
+
+
+# Footnotes
 
 [references]
 other = "References"
 
-[see_footnotes]
+[seeFootnotes]
 other = "See footnotes."
 
 [return]
 other = "Return"
 
-[return_to_text]
+[returnToText]
 other = "Return to text."
 
-[box_containing_code]
-other = "Box containing code sample."
 
-[box_containing_expression]
-other = "Box containing expression."
-
-[published_on]
-other = "Published on"
-
-[last_updated_on]
-other = "Last updated on"
+# Contact form
 
 [name]
 other = "Name"
@@ -58,41 +57,8 @@ other = "Message"
 [submit]
 other = "Submit"
 
-[go_to_pag]
-other = "Go to page {{ .PageNumber }}."
 
-[go_to_first]
-other = "Go to first page."
-
-[go_to_next]
-other = "Go to next page."
-
-[go_to_prev]
-other = "Go to previous page."
-
-[go_to_last]
-other = "Go to last page."
-
-[page]
-other = "page"
-
-[of]
-other = "of"
-
-[posts]
-other = "Posts"
-
-[and]
-other = " and "
-
-[posts_under_tag]
-other = "Posts under the \"{{ .Title }}\" tag."
-
-[posts_under_category]
-other = "Posts under the \"{{ .Title }}\" category."
-
-[page_containing]
-other = "Page containing"
+# List (layout)
 
 [tag]
 other = "Tag"
@@ -103,32 +69,95 @@ other = "Tags"
 [categories]
 other = "Categories"
 
-[search_label]
+[ariaPagination]
+other = "Pagination navigation."
+
+[ariaGoToPage]
+other = "Go to page {{ .PageNumber }}."
+
+[ariaGoToFirst]
+other = "Go to first page."
+
+[ariaGoToNext]
+other = "Go to next page."
+
+[ariaGoToPrev]
+other = "Go to previous page."
+
+[ariaGoToLast]
+other = "Go to last page."
+
+
+# List (meta tags)
+
+[page]
+other = "page"
+
+[of]
+other = "of"
+
+[posts]
+other = "Posts"
+
+[postsUnderTag]
+other = "Posts under the \"{{ .Title }}\" tag."
+
+[postsUnderCategory]
+other = "Posts under the \"{{ .Title }}\" category."
+
+[pageContaining]
+other = "Page containing"
+
+
+# Search form
+
+[searchLabel]
 other = "Search"
 
-[search_title]
-other = "Results"
-
-[search_no_page_found]
-other = "No pages found."
-
-[search_results_for]
-other = "Results for"
-
-[search_one_page_found]
-other = "One page found"
-
-[search_pages_found]
-other = "pages found"
-
-[search_awaiting_search]
-other = "Awaiting search."
-
-[search_too_many]
-other = "Too many pages found. Please try to repeat the search using another term."
-
-[search_button_aria_label]
+[searchAriaButton]
 other = "Run search."
 
-[search_input_title]
+[searchInput]
 other = "Search field. Accepts from {{ .minLength }} to {{ .maxLength }} characters."
+
+
+# Search results page
+
+[searchNoPageFound]
+other = "No pages found."
+
+[searchResultsFor]
+other = "Results for"
+
+[searchOnePageFound]
+other = "One page found"
+
+[searchPagesFound]
+other = "pages found"
+
+[searchAwaitingSearch]
+other = "Awaiting search."
+
+[searchTooMany]
+other = "Too many pages found. Please try to repeat the search using another term."
+
+
+# Translations
+
+[alsoAvailable]
+other = "Also available in"
+
+[and]
+other = " and "
+
+
+# Misc
+
+[missingCodec]
+other = "Your browser doesn't support HTML5 audio/video."
+
+[boxContainingCode]
+other = "Box containing code sample."
+
+[boxContainingExpression]
+other = "Box containing expression."

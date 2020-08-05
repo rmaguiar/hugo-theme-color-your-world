@@ -192,8 +192,6 @@ Here's an example of config file:
 
 This information will also be used to generate social meta tags (ie.: rel="me" and Schema.org).
 
-Alternatively, you can have these params in the front matter of any page.
-
 ### Contact form
 
 ```toml

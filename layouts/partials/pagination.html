@@ -16,13 +16,13 @@
 <!-- If there's more than one page. -->
 {{ if gt $pag.TotalPages 1 }}
 
-  <nav>
+  <nav aria-label="{{ T "ariaPagination" }}">
     <ul class="pagination">
       
       <!-- First page. -->
       {{ if ne $pag.PageNumber 1 }}
       <li>
-        <a class="btn" href="{{ $pag.First.URL }}" aria-label="{{ T "go_to_first" }}">
+        <a class="btn" href="{{ $pag.First.URL }}" aria-label="{{ T "ariaGoToFirst" }}">
           <svg aria-hidden="true">
             <use transform="rotate(180) translate(-18 -18)" xlink:href="#angle-double-right"/>
           </svg>
@@ -33,7 +33,7 @@
       <!-- Previous page. -->
       {{ if $pag.HasPrev }}
       <li>
-        <a class="btn" href="{{ $pag.Prev.URL }}" aria-label="{{ T "go_to_prev" }}">
+        <a class="btn" href="{{ $pag.Prev.URL }}" aria-label="{{ T "ariaGoToPrev" }}">
           <svg transform="rotate(180)" aria-hidden="true">
             <use xlink:href="#angle-right"/>
           </svg>
@@ -92,7 +92,7 @@
           {{ if eq . $pag }}
             <p>{{ .PageNumber }}</p>
           {{ else }}
-            <a class="btn" href="{{ .URL }}" aria-label="{{ T "go_to_pag" . }}" >{{ .PageNumber }}</a>
+            <a class="btn" href="{{ .URL }}" aria-label="{{ T "ariaGoToPage" . }}" >{{ .PageNumber }}</a>
           {{ end }}
           </li>
         {{ end }}
@@ -102,7 +102,7 @@
       <!-- Next page. -->
       {{ if $pag.HasNext }}
       <li>
-        <a class="btn" href="{{ $pag.Next.URL }}" aria-label="{{ T "go_to_next" }}">
+        <a class="btn" href="{{ $pag.Next.URL }}" aria-label="{{ T "ariaGoToNext" }}">
           <svg aria-hidden="true">
             <use xlink:href="#angle-right"/>
           </svg>
@@ -113,7 +113,7 @@
       <!-- Last page. -->
       {{ if ne $pag.PageNumber $pag.TotalPages }}
       <li>
-        <a class="btn" href="{{ $pag.Last.URL }}" aria-label="{{ T "go_to_last" }}">
+        <a class="btn" href="{{ $pag.Last.URL }}" aria-label="{{ T "ariaGoToLast" }}">
           <svg aria-hidden="true">
             <use xlink:href="#angle-double-right"/>
           </svg>

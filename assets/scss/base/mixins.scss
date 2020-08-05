@@ -18,6 +18,11 @@
     1px 0 0 $color;
 }
 
+// Heading scaling
+@mixin heading-scaling($level) {
+  font-size: 1rem + $heading-scaling-factor * (6 - $level);
+}
+
 
 // Responsiveness
 @mixin respond-above($breakpoint) {

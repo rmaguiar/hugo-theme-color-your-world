@@ -64,7 +64,7 @@ PALETTE.onchange = function () {
     
     executeSearch(searchQuery);
   } else {
-    info.innerHTML = '<p>{{ T "search_awaiting_search" }}</p>'
+    info.innerHTML = '<p>{{ T "searchAwaitingSearch" }}</p>'
   };
   
 
@@ -93,18 +93,18 @@ PALETTE.onchange = function () {
       // Reset info regarding the search
       info.innerHTML = '';
       
-      info.innerHTML = '<p>{{ T "search_results_for" }}: ' + searchQuery + '</p>';
+      info.innerHTML = '<p>{{ T "searchResultsFor" }}: ' + searchQuery + '</p>';
       
       if (result.length > 0) {
         if (result.length == 1) {
-          info.innerHTML += '<p>{{ T "search_one_page_found" }}.</p>'
+          info.innerHTML += '<p>{{ T "searchOnePageFound" }}.</p>'
         } else if (1 < result.length && result.length < limit + 1) {
-          info.innerHTML += '<p>' + result.length + ' {{ T "search_pages_found" }}.</p>'
+          info.innerHTML += '<p>' + result.length + ' {{ T "searchPagesFound" }}.</p>'
         } else {
-          info.innerHTML += '<p class=error>{{ T "search_too_many" }}</p>'
+          info.innerHTML += '<p class=error>{{ T "searchTooMany" }}</p>'
         }
       } else {
-        info.innerHTML += '<p class=error>{{ T "search_no_page_found" }}</p>'
+        info.innerHTML += '<p class=error>{{ T "searchNoPageFound" }}</p>'
       };
       
       if (0 < result.length && result.length < limit + 1) {

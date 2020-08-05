@@ -1,8 +1,6 @@
 <!-- Reduce repetition... -->
-{{ $centralizedOnPage   := $.Page.Params.Social.Centralized }}
-{{ $centralizedOnSite   := $.Site.Params.Social.Centralized }}
-{{ $decentralizedOnPage := $.Page.Params.Social.Decentralized }}
-{{ $decentralizedOnSite := $.Site.Params.Social.Decentralized }}
+{{ $centralized   := $.Site.Params.Social.Centralized }}
+{{ $decentralized := $.Site.Params.Social.Decentralized }}
 
 <section class="social">
 
@@ -15,7 +13,7 @@
 
     {{ if not .decentralized }}
 
-      {{ with (index (or $centralizedOnPage $centralizedOnSite) $currentEntry) }}
+      {{ with (index $centralized $currentEntry) }}
 
         {{ $url   := printf "%s%s" $currentBase (index . 0) }}
         {{ $label := $currentLabel }}
@@ -36,9 +34,9 @@
 
     {{ else }}
 
-      {{ if (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
+      {{ if (index $decentralized $currentEntry) }}
 
-        {{ range (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
+        {{ range (index $decentralized $currentEntry) }}
           <a class="btn" href="{{ index . 0 }}" rel="me nofollow" title="{{ printf "%s (%s)" (index . 1) $currentLabel }}">
             <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <use xlink:href="#{{ $currentIcon }}"/>

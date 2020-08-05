@@ -5,19 +5,19 @@
       <header>
         
         <h1>{{ .Title }}</h1>
+        
+        {{ range .Data.Terms }}
+          {{ .Name }}
+        {{ end }}
 
         {{ if or .Params.categories .Params.tags }}
           <section class="terms">
             <ul>
-              {{- with .Params.categories -}}
-                  {{- range sort . -}}
-                    <li class="category"><a class="btn" href="/categories/{{ . | urlize }}">{{ . }}</a></li>
-                  {{- end -}}
+              {{- range sort (.GetTerms "categories") ".LinkTitle" "asc" -}}
+                <li class="category"><a class="btn" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
               {{- end -}}
-              {{- with .Params.tags -}}
-                  {{- range sort . -}}
-                    <li><a class="btn" href="/tags/{{ . | urlize }}">{{ . }}</a></li>
-                  {{- end -}}
+              {{- range sort (.GetTerms "tags") ".LinkTitle" "asc" -}}
+                <li><a class="btn" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
               {{- end -}}
             </ul>
           </section>
@@ -26,9 +26,9 @@
         {{ if not .Date.IsZero }}
           <p>
             {{ if eq .PublishDate .Lastmod }}
-              {{ T "published_on" }} <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "2006-01-02" }}</time>
+              {{ T "publishedOn" }} <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "2006-01-02" }}</time>
             {{ else }}
-              {{ T "last_updated_on" }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time>
+              {{ T "lastUpdatedOn" }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time>
             {{ end }}
           </p>
         {{ end }}
@@ -41,7 +41,7 @@
     
       {{ if .Params.toc }}
         <details class="toc" open>
-          <summary class="outline-dashed">{{ T "table_of_contents" }}</summary>
+          <summary class="outline-dashed">{{ T "tableOfContents" }}</summary>
           {{ .Page.TableOfContents }}
         </details>
       {{ end }}

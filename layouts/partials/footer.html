@@ -23,14 +23,14 @@
     {{ $processedKeys = $processedKeys | append $currentKey }}
   {{ end }}
 
-  <p>{{ T "also_available" }}: {{ delimit $processedKeys ", " (T "and") }}.</p>
+  <p>{{ T "alsoAvailable" }}: {{ delimit $processedKeys ", " (T "and") }}.</p>
 
 {{ end }}
 
 
 <!-- Footer button and color picker -->
 <section class="req-js">
-  <button class="outline-dashed" title="{{ T "change_mode" }}"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="{{ if .Site.Params.Style.isDark }}{{ $darkAccent }}{{ else }}{{ $lightAccent }}{{ end }}" title="{{ T "change_accent" }}" aria-label="{{ T "change_accent" }}"><datalist id="presets"><option value="{{ $lightAccent }}"><option value="{{ $darkAccent }}"><!-- Extra colors -->{{- range .Site.Params.style.presets -}}<option value="{{ . }}">{{ end }}</datalist>
+  <button class="outline-dashed" title="{{ T "changeMode" }}"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="{{ if .Site.Params.Style.isDark }}{{ $darkAccent }}{{ else }}{{ $lightAccent }}{{ end }}" title="{{ T "changeAccent" }}" aria-label="{{ T "changeAccent" }}"><datalist id="presets"><option value="{{ $lightAccent }}"><option value="{{ $darkAccent }}"><!-- Extra colors -->{{- range .Site.Params.style.presets -}}<option value="{{ . }}">{{ end }}</datalist>
 </section>
 
 <!-- noscript notice -->

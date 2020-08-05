@@ -265,7 +265,7 @@ ul {
 }
 
 
-// Heading 1
+// Main heading
 h1 {
   @include letterpress(var(--rlpress));
 }
@@ -319,7 +319,7 @@ article > header {
   h#{$i} {
     @extend %heading-base;
     
-    font-size: 1rem + $heading-scaling * (6 - $i);
+    @include heading-scaling($i);
   }
 }
 
@@ -332,6 +332,8 @@ main {
 
 code {
   font-family: $code-font;
+  
+  overflow-wrap: break-word;
 }
 
 
@@ -339,15 +341,14 @@ code {
 {{ if not (or (templates.Exists "partials/custom/site-title") (templates.Exists "partials/custom/site-title.html")) }}
   body > header {
     > a {
-      font-family: $heading-font;
-      font-size: 2.1rem;
-      font-weight: $heading-weight;
+      @extend %heading-base;
       
       transition:
         color $change-transition,
         opacity .2s ease-in-out,
         outline-color $change-transition;
       
+      @include heading-scaling(1);
       @include letterpress(var(--rlpress));
       
       display: inline-block;
@@ -902,11 +903,11 @@ video {
     border: 1px solid rgba(0,0,0,.3);
     border-radius: $border-radius;
 
-    font-family: $heading-font;
-    
     outline-offset: 2px;
     
     padding: 15px 30px 18.5px;
+    
+    @extend %heading-base;
 
     @include button-like;
     @include letterpress(var(--lpress));
@@ -1039,6 +1040,7 @@ input[type=submit] {
 
 button,
 input[type=color],
+input[type=submit],
 summary {
   cursor: pointer;
 }
@@ -1155,12 +1157,12 @@ summary {
 .label-form {
   margin-top: 1rem;
   
-  font-family: $heading-font;
   font-size: .9rem;
-  font-weight: $heading-weight;
   
   letter-spacing: .5px;
   text-transform: uppercase;
+  
+  @extend %heading-base;
 }
 
 .input-text {
@@ -1331,9 +1333,6 @@ summary {
   }
 
   input[type=submit] {
-    cursor: pointer;
-    
-    font-family: $heading-font;
     font-size: .75rem;
     text-transform: uppercase;
     letter-spacing: .05rem;
@@ -1349,6 +1348,8 @@ summary {
       color $change-transition,
       outline-color .2s ease-in-out,
       opacity .2s ease-in-out;
+    
+    @extend %heading-base;
 
     // HACK
     // Override Firefox unnecessary extra inner outline

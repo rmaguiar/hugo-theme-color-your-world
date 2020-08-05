@@ -44,16 +44,10 @@
       {{ end }}
       
       {{ if .HasShortcode "social" }}
-      
-        <!-- Reduce repetition... -->
-        {{ $centralizedOnPage   := $.Page.Params.Social.Centralized }}
-        {{ $centralizedOnSite   := $.Site.Params.Social.Centralized }}
-        {{ $decentralizedOnPage := $.Page.Params.Social.Decentralized }}
-        {{ $decentralizedOnSite := $.Site.Params.Social.Decentralized }}
-      
+
         <!-- Get info about social platform and icon id from "social.json" -->
         {{ range .Site.Data.social }}
-          {{ if and (or (index (or $centralizedOnPage $centralizedOnSite) .entry) (index (or $decentralizedOnPage $decentralizedOnSite) .entry)) .icon }}
+          {{ if and (or (index $.Site.Params.Social.Centralized .entry) (index $.Site.Params.Social.Decentralized .entry)) .icon }}
             {{ $iconId        := .icon.id }}
             {{ $svgEssential  := `(?:<svg (?:.*?)(viewBox="(?:.*?)")(?:.*?)>((?:.|\n)+?)(?:</svg>))` }}
             {{ $asSymbol      := printf `<symbol ${1} id="%s">${2}</symbol>` $iconId }}

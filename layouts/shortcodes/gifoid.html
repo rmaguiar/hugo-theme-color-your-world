@@ -37,5 +37,5 @@
 <video class="gifoid {{ $class }}" autoplay loop muted playsinline {{ with $title }}title="{{ . }}"{{ end }}>
   <source src="{{ $filePath }}.mp4" type="video/mp4">
   <source src="{{ $filePath }}.webm" type="video/webm">
-  <p class="error">{{ T "missing_codec" }}</p>
+  <p class="error">{{ T "missingCodec" }}</p>
 </video>

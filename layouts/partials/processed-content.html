@@ -18,12 +18,12 @@
 
 <!-- i18n -->
 {{ $references    := (printf "${1}<h2>%s</h2>" (T "references")) }}
-{{ $seeFootnotes  := (printf "${1} title=\"%s\"" (T "see_footnotes")) }}
-{{ $returnToText  := (printf "${1} title=\"%s\"" (T "return_to_text")) }}
+{{ $seeFootnotes  := (printf "${1} title=\"%s\"" (T "seeFootnotes")) }}
+{{ $returnToText  := (printf "${1} title=\"%s\"" (T "returnToText")) }}
 
 <!-- More i18n and also a11y, kind of -->
-{{ $highlightCodeBlockLabel := (printf "${1} aria-label=\"%s\" tabindex=0${2}" (T "box_containing_code")) }}
-{{ $indentedCodeBlockLabel  := (printf "${1} aria-label=\"%s\" tabindex=0>${2}" (T "box_containing_code")) }}
+{{ $highlightCodeBlockLabel := (printf "${1} aria-label=\"%s\" tabindex=0${2}" (T "boxContainingCode")) }}
+{{ $indentedCodeBlockLabel  := (printf "${1} aria-label=\"%s\" tabindex=0>${2}" (T "boxContainingCode")) }}
 
 <!-- Wrap tables to make use of overflow-x property (plus the tabindex thing) -->
 {{ $improvedTable := printf "<section class=scroll tabindex=0> ${1} </section>" }}

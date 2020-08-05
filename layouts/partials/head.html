@@ -55,11 +55,11 @@
 {{ if .IsHome }}
   {{ $currentDesc = (.Site.Params.description | emojify) }}
 {{ else if and (ne .Kind "taxonomyTerm") (eq .Type "tags") (not .Params.description) }}
-  {{ $currentDesc = (T "posts_under_tag" .) }}
+  {{ $currentDesc = (T "postsUnderTag" .) }}
 {{ else if and (ne .Kind "taxonomyTerm") (eq .Type "categories") (not .Params.description) }}
-  {{ $currentDesc = (T "posts_under_category" .) }}
+  {{ $currentDesc = (T "postsUnderCategory" .) }}
 {{ else if eq .Kind "taxonomyTerm" }}
-  {{ $currentDesc = printf "%s %s." (T "page_containing") ($currentTitle | lower) }}
+  {{ $currentDesc = printf "%s %s." (T "pageContaining") ($currentTitle | lower) }}
 {{ else if (eq .Kind "404") }}
   {{ $currentDesc = .Site.Params.notFound.description | default .Site.Data.default.notFound.description }}
 {{ end }}
@@ -196,7 +196,7 @@
     <meta property="article:author" content="{{ . }}">
   {{ end }}
   
-  {{ with or .Page.Params.Social.Centralized .Site.Params.Social.Centralized.twitter }}
+  {{ with .Site.Params.Social.Centralized.twitter }}
     <meta name="twitter:creator" content="{{ printf "@%s" (index . 0) }}">
   {{ end}}
   
@@ -204,7 +204,7 @@
   <meta property="og:type" content="website">
 {{ end -}}
 
-{{ with or .Page.Params.Social.Centralized .Site.Params.Social.Centralized.twitter }}
+{{ with .Site.Params.Social.Centralized.twitter }}
   <meta name="twitter:site" content="{{ printf "@%s" (index . 0) }}">
 {{ end }}
 
@@ -237,10 +237,8 @@
 
 
 <!-- Reduce repetition... -->
-{{ $centralizedOnPage   := .Page.Params.Social.Centralized }}
-{{ $centralizedOnSite   := .Site.Params.Social.Centralized }}
-{{ $decentralizedOnPage := .Page.Params.Social.Decentralized }}
-{{ $decentralizedOnSite := .Site.Params.Social.Decentralized }}
+{{ $centralized   := .Site.Params.Social.Centralized }}
+{{ $decentralized := .Site.Params.Social.Decentralized }}
 
 <!-- Generate array with social profiles -->
 {{ $sameAs := slice }}
@@ -252,14 +250,14 @@
 
   {{ if not .decentralized }}
 
-    {{ with (index (or $centralizedOnPage $centralizedOnSite) $currentEntry) }}
+    {{ with (index $centralized $currentEntry) }}
       {{ $sameAs = $sameAs | append (printf "%s%s" $currentBase (index . 0)) }}
     {{ end }}
     
   {{ else }}
   
-    {{ if (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
-      {{ range (index (or $decentralizedOnPage $decentralizedOnSite) $currentEntry) }}
+    {{ if (index $decentralized $currentEntry) }}
+      {{ range (index $decentralized $currentEntry) }}
         {{ $sameAs = $sameAs | append (index . 0) }}
       {{ end }}
     {{ end }}
