@@ -1504,3 +1504,40 @@ html {
 {{ else if (resources.Get "scss/custom.scss") }}
   @import 'custom';
 {{ end }}
+
+
+// TEST
+// Non-standard
+pre,
+.chroma,
+.highlight,
+.scroll {
+  &::-webkit-scrollbar {
+    @include squared(12px);
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--input-bg);
+    
+    &:horizontal {
+      border-top: 1px solid var(--input-bd);
+    }
+    
+    &:vertical {
+      border-left: 1px solid var(--input-bd);
+    }
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border: 1px solid rgba(0,0,0,.3);
+  }
+  
+  &::-webkit-scrollbar-corner {
+    background: var(--input-bg);
+    
+    border-color: var(--input-bd);
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+  }
+}
