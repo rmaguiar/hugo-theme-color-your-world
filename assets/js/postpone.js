@@ -119,17 +119,20 @@ PALETTE.onchange = function () {
       const content = value.item.content;
       
       // Date as it should be rendered if not null
-      const formatedDate = '<time datetime=' + value.item.date + '>' + value.item.date + '</time>';
+      const spanDate = '<time datetime=' + value.item.date + '>' + value.item.date + '</time>';
+      const titleDate = ' (' + value.item.date + ')';
 
       // Pull template from hugo template definition
       const templateDefinition = document.getElementById('search-result-template').innerHTML;
 
       // Replace values
       const output = render(templateDefinition, {
-        link  : value.item.permalink,
-        date  : value.item.date ? formatedDate : '',
-        title : value.item.title
+        link      : value.item.permalink,
+        spanDate  : value.item.date ? spanDate : '',
+        title     : value.item.title,
+        titleDate : value.item.date ? titleDate : ''
       });
+      
       document.getElementById('search-results').appendChild(htmlToElement(output))
     })
   };

@@ -9,7 +9,7 @@
 
     <!-- Display search form before listing posts -->
     {{ if and .Site.Params.Search.enable (gt (len $searchPages) 0) (eq .Kind "section") }}
-      {{ partial "search-form" . }}
+      {{ partialCached "search-form" . }}
     {{ end }}
     
     <h1>{{ $currentTitle }}</h1>
@@ -22,25 +22,13 @@
       {{ end }}
     {{ else }}
 
-      {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
-
-      <ul class="posts">
-        {{ range $paginator.Pages }}
-          <li>
-            <a class="btn" href="{{ .RelPermalink }}">
-              <p>{{ .LinkTitle | emojify }}</p>
-              {{ if not .Date.IsZero }}<time datetime="{{ .Date | dateFormat "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
-            </a>
-          </li>
-        {{ end }}
-      </ul>
-      
+      {{ partial "post-list" . }}
       {{ partial "pagination" . }}
 
       {{ partialCached "tag-list" . }}
 
     {{ end }}
-    
+
   </main>
   
 {{ end }}

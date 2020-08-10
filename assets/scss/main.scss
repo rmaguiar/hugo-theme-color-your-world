@@ -603,6 +603,9 @@ article > pre,
   &:focus {
     outline-color: var(--accent);
   }
+  
+  // TEST
+  @extend %webkit-scrollbar;
 }
 
 
@@ -628,9 +631,11 @@ article > pre,
       border-top: 1px solid var(--fg);
     }
 
+    /*
     tr:not(:first-child):last-of-type {
       border-bottom: 1px solid var(--fg);
     }
+    */
 
     td,
     th {
@@ -1506,12 +1511,10 @@ html {
 {{ end }}
 
 
+
 // TEST
 // Non-standard
-pre,
-.chroma,
-.highlight,
-.scroll {
+%webkit-scrollbar {
   &::-webkit-scrollbar {
     @include squared(12px);
   }

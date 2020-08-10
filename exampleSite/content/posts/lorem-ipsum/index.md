@@ -19,7 +19,7 @@ Donec quis blandit urna. Mauris eros augue, aliquet ut consequat sed, egestas at
 
 {{< figure "sgr-s23xDAYQBCo.jpg" "Coral in **Nagoya Aquarium**, Japan by [SGR](https://unsplash.com/@sgr)." "border" >}}
 
-Etiam enim purus, **maximus** quis augue at, rutrum consectetur nisi. Phasellus ornare *justo vitae* enim semper sodales. Aliquam dapibus dapibus lobortis. Donec [commodo hendrerit](#) dolor id ornare.
+Etiam enim purus, **maximus** quis augue at, rutrum consectetur nisi. Phasellus ornare *justo vitae* enim semper sodales. Aliquam dapibus dapibus lobortis. Donec [commodo hendrerit](#), dolor id ornare.
 
 ## Inceptos himenaeos
 

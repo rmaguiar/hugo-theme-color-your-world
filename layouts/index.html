@@ -3,6 +3,7 @@
   {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
 
   <main class="index">
+
     {{ if .Content }}
       <article>
         <h1>{{ .Title | emojify }}</h1>
@@ -13,21 +14,11 @@
     
       <h1>{{ T "posts" }}</h1>
       
-      <ul class="posts">
-       {{ range $paginator.Pages }}
-          <li>
-            <a class="btn" href="{{ .Permalink }}">
-              <p>{{ .LinkTitle | emojify }}</p>
-              {{ if not .Date.IsZero }}<time datetime="{{ .Date | dateFormat "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
-            </a>
-          </li>
-        {{ end }}
-      </ul>
-      
+      {{ partial "post-list" . }}
       {{ partial "pagination" . }}
       
     {{ end }}
-    
+
   </main>
 
 {{ end }}
