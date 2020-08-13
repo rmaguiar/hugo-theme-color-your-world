@@ -109,9 +109,14 @@ paginate = 5
   [params.style]
   
     # Dark mode as default
+    # User preferences (site/system settings) will still have priority over it
     # The default is false
     isDark = true
-  
+
+    # Disable the use of system settings (prefers-color-scheme)
+    # The default is false
+    ignoreSystemSettings = true
+
     # Accent colors for light and dark mode respectively
     lightAccent  = "#225670" # Default is "#225670"
     darkAccent   = "#dd587c" # Default is "#dd587c"
@@ -161,6 +166,7 @@ paginate = 5
     linkedin      = [ "<username>" ]
     medium        = [ "<username>" ]
     reddit        = [ "<username>" ]
+    snapchat      = [ "<username>" ]
     soundcloud    = [ "<username>" ]
     stackOverflow = [ "<username>" ]
     strava        = [ "<username>" ]
@@ -169,6 +175,7 @@ paginate = 5
     twitter       = [ "<username>", "@birb" ]
     vimeo         = [ "<username>" ]
     whatsapp      = [ "<number>" ]
+    xing          = [ "<username>" ]
     youtube       = [ "<channelid>" ]
     #entry         = [ "username", "label (optional)" ]
     

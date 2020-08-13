@@ -67,6 +67,7 @@ You can change the default mode and accent colors in the config:
 [params.style]
 
   # Dark mode as default
+  # User preferences (site/system settings) will still have priority over it
   # The default is false
   isDark = true
 
@@ -153,6 +154,7 @@ Here's an example of config file:
   linkedin      = [ "<username>" ]
   medium        = [ "<username>" ]
   reddit        = [ "<username>" ]
+  snapchat      = [ "<username>" ]
   soundcloud    = [ "<username>" ]
   stackOverflow = [ "<username>" ]
   strava        = [ "<username>" ]
@@ -161,6 +163,7 @@ Here's an example of config file:
   twitter       = [ "<username>", "@birb" ]
   vimeo         = [ "<username>" ]
   whatsapp      = [ "<number>" ]
+  xing          = [ "<username>" ]
   youtube       = [ "<channelid>" ]
   #entry         = [ "username", "label (optional)" ]
   
@@ -316,6 +319,10 @@ More possible params for your config file:
     stopWords = [ "a", "an", "and", "in", "the", "to", "was", "were", "with" ]
 
   [params.style]
+  
+    # Disable the use of system settings (prefers-color-scheme)
+    # The default is false
+    ignoreSystemSettings = true
   
     # Use an icon or text for footnote return links
     # The default is false

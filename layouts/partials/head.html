@@ -335,9 +335,18 @@
   {{ $darkAccent   := .Site.Params.Style.darkAccent   | default .Site.Data.default.style.darkAccent }}
   {{ $lightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
 
-  <!-- Not properly tested? -->
-  <meta name="theme-color" content="{{ $darkAccent }}" {{ if not .Site.Params.Style.isDark }}media="(prefers-color-scheme: dark)"{{ end }}>
-  <meta name="theme-color" content="{{ $lightAccent }}" {{ if .Site.Params.Style.isDark }}media="(prefers-color-scheme: light)"{{ end }}>
+  {{ if .Site.Params.Style.ignoreSystemSettings }}
+  
+    {{ if .Site.Params.Style.isDark }}
+      <meta name="theme-color" content="{{ $darkAccent }}">
+    {{ else }}
+      <meta name="theme-color" content="{{ $lightAccent }}">
+    {{ end }}
+
+  {{ else }}
+    <meta name="theme-color" content="{{ $darkAccent }}" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="{{ $lightAccent }}" media="(prefers-color-scheme: light)">
+  {{ end }}
 
   <style>
   

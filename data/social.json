@@ -135,6 +135,15 @@
     }
   },
   {
+    "entry": "snapchat",
+    "label": "Snapchat",
+    "base": "https://www.snapchat.com/add/",
+    "icon": {
+      "id": "snapchat",
+      "source": "Font-Awesome"
+    }
+  },
+  {
     "entry": "soundcloud",
     "label": "SoundCloud",
     "base": "https://soundcloud.com/",
@@ -203,6 +212,15 @@
     "base": "https://wa.me/",
     "icon": {
       "id": "whatsapp",
+      "source": "Font-Awesome"
+    }
+  },
+  {
+    "entry": "xing",
+    "label": "XING",
+    "base": "https://www.xing.com/profile/",
+    "icon": {
+      "id": "xing",
       "source": "Font-Awesome"
     }
   },

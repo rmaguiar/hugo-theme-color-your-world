@@ -12,9 +12,12 @@
 // Based on: https://gist.github.com/regpaq/04c67e8aceecbf0fd819945835412d1f
 // =================================================
 
-// New prefers-color-scheme media query to detect OS light/dark mode setting
-const PREFERS_LIGHT = window.matchMedia('(prefers-color-scheme: light)');
-const PREFERS_DARK = window.matchMedia('(prefers-color-scheme: dark)');
+{{ if not .Site.Params.Style.ignoreSystemSettings }}
+  // New prefers-color-scheme media query to detect OS light/dark mode setting
+  const PREFERS_LIGHT = window.matchMedia('(prefers-color-scheme: light)');
+  const PREFERS_DARK = window.matchMedia('(prefers-color-scheme: dark)');
+{{ end }}
+
 const ROOT = document.documentElement;
 
 const SHEET = document.documentElement.style;
@@ -34,12 +37,16 @@ function setLight() {
 // And yes, I know 'true' here is a string
 if(localStorage.getItem('isDark') == 'true') {
   setDark()
-} else if(localStorage.getItem('isDark') === null) {
+} else if(localStorage.getItem('isDark') == 'false') {
   setLight()
-} else if(PREFERS_DARK.matches) {
-  setDark()
-} else if(PREFERS_LIGHT.matches) {
-  setLight()
+
+  {{ if not .Site.Params.Style.ignoreSystemSettings }}
+    } else if(PREFERS_DARK.matches) {
+      setDark()
+    } else if(PREFERS_LIGHT.matches) {
+      setLight()
+  {{ end }}
+
 };
 
 console.log('Light/dark mode loaded.');
@@ -126,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
       
     } else {
       setLight();
-      localStorage.removeItem('isDark')
+      localStorage.setItem('isDark', 'false')
       
       console.log("Mode changed to 'light' by the user.");
       
@@ -150,32 +157,35 @@ document.addEventListener('DOMContentLoaded', function () {
   {{ end }}
 
 
-  // Runs when OS changes light/dark mode. Changes only if you were on default
-  // color state (light on light mode, dark on dark mode).
-  function OSModeChange() {
+  {{ if not .Site.Params.Style.ignoreSystemSettings }}
   
-    smoothTransition();
+    // Runs when OS changes light/dark mode. Changes only if you were on default
+    // color state (light on light mode, dark on dark mode).
+    function OSModeChange() {
     
-    if (PREFERS_LIGHT.matches) {
-      setLight();
-      localStorage.removeItem('isDark')
+      smoothTransition();
+      
+      if (PREFERS_LIGHT.matches) {
+        setLight();
+        localStorage.setItem('isDark', 'false')
 
-      console.log("Mode changed to 'light' in OS level.");
+        console.log("Mode changed to 'light' in OS level.");
+        
+      } else if (PREFERS_DARK.matches) {
+        setDark();
+        localStorage.setItem('isDark', 'true')
+        
+        console.log("Mode changed to 'dark' in OS level.");
+      };
       
-    } else if (PREFERS_DARK.matches) {
-      setDark();
-      localStorage.setItem('isDark', 'true')
-      
-      console.log("Mode changed to 'dark' in OS level.");
+      updateAccent()
     };
-    
-    updateAccent()
-  };
 
-  // Listeners for when you change OS setting for light/dark mode
-  PREFERS_LIGHT.addListener(OSModeChange);
-  PREFERS_DARK.addListener(OSModeChange);
+    // Listeners for when you change OS setting for light/dark mode
+    PREFERS_LIGHT.addListener(OSModeChange);
+    PREFERS_DARK.addListener(OSModeChange);
   
+  {{ end }}
   
   // Mode change button
   document.querySelector('footer button')
