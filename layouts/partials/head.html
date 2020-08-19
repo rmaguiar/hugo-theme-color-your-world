@@ -16,35 +16,42 @@
   
 {{ else if (eq .Kind "section") }}
 
-  <!-- If it's a post list -->
+  <!-- If post list -->
   {{ if gt .Paginator.TotalPages 1 }}
     {{ $mainTitle = printf "%s, %s %s %s %s" .Title (T "page") (string .Paginator.PageNumber) (T "of") (string .Paginator.TotalPages) }}
   {{ end }}
   
-{{ else if (and (ne .Kind "taxonomyTerm") (eq .Type "tags")) }}
+{{ else if eq .Kind "term" }}
 
-  <!-- If it's a post list for a tag -->
-  {{ $currentTitle = printf "%s: \"%s\"" (T "tag") .Title }}
+  {{ $currentTerm := "" }}
 
-  {{ if gt .Paginator.TotalPages 1 }}
-    {{ $mainTitle = printf "%s: \"%s\", %s %s %s %s" (T "tag") .Title (T "page") (string .Paginator.PageNumber) (T "of") (string .Paginator.TotalPages) }}
+  {{ if eq .Type "tags" }}
+    {{ $currentTerm = (T "tag") }}
   {{ else }}
-    {{ $mainTitle = printf "%s: \"%s\"" (T "tag") .Title }}
+    {{ $currentTerm = (T "category") }}
+  {{ end }}
+  
+  {{ $currentTitle = printf "%s: \"%s\"" $currentTerm .Title }}
+  
+  {{ with .Paginator }}
+    {{ if gt .TotalPages 1 }}
+      {{ $mainTitle = printf "%s: \"%s\", %s %s %s %s" $currentTerm $.Title (T "page") (string .PageNumber) (T "of") (string .TotalPages) }}
+    {{ else }}
+      {{ $mainTitle = printf "%s: \"%s\"" $currentTerm $.Title }}
+    {{ end }}
   {{ end }}
 
-{{ else if (and (eq .Kind "taxonomyTerm") (eq .Type "tags")) }}
+{{ else if eq .Kind "taxonomy" }}
 
-  <!-- /categories/ page -->
-  {{ $currentTitle = (T "tags") }}
+  {{ if eq .Type "tags" }}
+    {{ $currentTitle = (T "tags") }}
+  {{ else }}
+    {{ $currentTitle = (T "categories") }}
+  {{ end }}
 
-{{ else if (and (eq .Kind "taxonomyTerm") (eq .Type "categories")) }}
-
-  <!-- /tags/ page -->
-  {{ $currentTitle = (T "categories") }}
-  
 {{ else if and (.IsHome) (not .Content) }}
 
-  <!-- If it's the home page without content -->
+  <!-- If home page without content -->
   {{ $currentTitle = (.Site.Title | emojify) }}
 
 {{ end }}
@@ -54,11 +61,11 @@
 
 {{ if .IsHome }}
   {{ $currentDesc = (.Site.Params.description | emojify) }}
-{{ else if and (ne .Kind "taxonomyTerm") (eq .Type "tags") (not .Params.description) }}
+{{ else if and (ne .Kind "taxonomy") (eq .Type "tags") (not .Params.description) }}
   {{ $currentDesc = (T "postsUnderTag" .) }}
-{{ else if and (ne .Kind "taxonomyTerm") (eq .Type "categories") (not .Params.description) }}
+{{ else if and (ne .Kind "taxonomy") (eq .Type "categories") (not .Params.description) }}
   {{ $currentDesc = (T "postsUnderCategory" .) }}
-{{ else if eq .Kind "taxonomyTerm" }}
+{{ else if eq .Kind "taxonomy" }}
   {{ $currentDesc = printf "%s %s." (T "pageContaining") ($currentTitle | lower) }}
 {{ else if (eq .Kind "404") }}
   {{ $currentDesc = .Site.Params.notFound.description | default .Site.Data.default.notFound.description }}
@@ -117,9 +124,9 @@
 {{ end }}
 
 
-<!-- Reserved -->
-{{ if or (templates.Exists "partials/custom/head") (templates.Exists "partials/custom/head.html") }}
-  {{ partial "custom/head" . }}
+<!-- If the user wants to add something (custom favicons, fonts, scripts, etc) -->
+{{ if or (templates.Exists "partials/custom/head-append") (templates.Exists "partials/custom/head-append.html") }}
+  {{ partial "custom/head-append" . }}
 {{ end }}
 
 
@@ -324,44 +331,8 @@
 {{ end }}
 
 
-<!-- Main CSS -->
-{{ $main := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "css/main.scss" . | toCSS | minify | resources.Fingerprint "sha512" }}
-<link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}">
-
-
-<!-- If JS is disabled -->
-<noscript>
-
-  {{ $darkAccent   := .Site.Params.Style.darkAccent   | default .Site.Data.default.style.darkAccent }}
-  {{ $lightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
-
-  {{ if .Site.Params.Style.ignoreSystemSettings }}
-  
-    {{ if .Site.Params.Style.isDark }}
-      <meta name="theme-color" content="{{ $darkAccent }}">
-    {{ else }}
-      <meta name="theme-color" content="{{ $lightAccent }}">
-    {{ end }}
-
-  {{ else }}
-    <meta name="theme-color" content="{{ $darkAccent }}" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="{{ $lightAccent }}" media="(prefers-color-scheme: light)">
-  {{ end }}
-
-  <style>
-  
-    html {
-      --accent: {{ if .Site.Params.Style.isDark }}{{ $darkAccent }}{{ else }}{{ $lightAccent }}{{ end }};
-    }
-  
-    .req-js,
-    img.lazyload {
-      display: none;
-    }
-    
-  </style>
-</noscript>
-
+<!-- Cached style -->
+{{ partialCached "head-style" . }}
 
 <!-- Preload fonts -->
 {{ partialCached "font-preload" . }}

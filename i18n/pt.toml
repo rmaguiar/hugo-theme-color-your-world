@@ -66,6 +66,9 @@ other = "Marcador"
 [tags]
 other = "Marcadores"
 
+[category]
+other = "Categoria"
+
 [categories]
 other = "Categorias"
 

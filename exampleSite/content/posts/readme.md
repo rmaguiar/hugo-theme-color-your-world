@@ -1,6 +1,7 @@
 ---
-title: "Read Me"
-description: "A copy of the README.md file."
+title       : "Read Me"
+description : "A copy of the README.md file."
+tags        : [ extra, markdown ]
 ---
 
 [Live demo (on Netlify)](https://color-your-world-demo.netlify.app/) | [Demo (on Hugo Themes)](https://themes.gohugo.io/theme/hugo-theme-color-your-world/)
@@ -247,7 +248,7 @@ A **really** basic 404 page can be generated via config file by using:
 ### Custom partials
 
 * The site title can be replaced by creating a file named `layouts/partials/custom/site-title.html`;
-* Custom favicons can be used by creating a file named `layouts/partials/custom/head.html`;
+* Custom favicons can be used by creating a file named `layouts/partials/custom/head-append.html`;
 * Custom CSS can be imported into the main CSS file by creating a file named `static/css/custom.css` or `assets/scss/custom.scss`;
 * The `copyright` param can be replaced by creating a file named `layouts/partials/custom/copyright.html`.
 
@@ -321,6 +322,8 @@ More possible params for your config file:
   [params.style]
   
     # Disable the use of system settings (prefers-color-scheme)
+    # Can be used as a workaround for Chrome on Linux
+    # (Issue 998903: Dark Gtk theme does not affect prefers-color-scheme media query)
     # The default is false
     ignoreSystemSettings = true
   
@@ -360,4 +363,4 @@ More possible params for your config file:
 
 If this repo was useful or helpful to you in any way, please consider buying me a coffee:
 
-<a href="https://www.buymeacoffee.com/rmaguiar" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;"></a>
+<a href="https://www.buymeacoffee.com/rmaguiar" target="_blank" rel="noopener noreferrer"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;"></a>

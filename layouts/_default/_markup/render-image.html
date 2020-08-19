@@ -53,14 +53,14 @@
       Reduce reflow by creating a placeholder with similar size
     -->
 
-    {{ $placeholder := (.Resize (printf "%vx %s" .Width "png")) | images.Filter (images.Contrast -100) }}
-    {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" ($placeholder.Content | base64Encode)) | safeURL }}
+    {{ $processed := (.Resize (printf "%vx" .Width)) }}
+    {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((.Resize (printf "%vx %s" .Width "png")) | images.Filter (images.Contrast -100)).Content | base64Encode)) | safeURL }}
 
     <img
       class="lazyload {{ $class }}"
       loading="lazy"
       src="{{ $encodedPlaceholder }}"
-      data-src="{{ .RelPermalink }}"
+      data-src="{{ $processed.RelPermalink }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />
 
@@ -68,7 +68,7 @@
       <img
         {{ with $class }}class="{{ . }}"{{ end }}
         loading="lazy"
-        src="{{ .RelPermalink }}"
+        src="{{ $processed.RelPermalink }}"
         {{ with $altText }}alt="{{ . }}"{{ end }}
       />
     </noscript>

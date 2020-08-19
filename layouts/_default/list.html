@@ -14,7 +14,7 @@
     
     <h1>{{ $currentTitle }}</h1>
     
-    {{ if eq .Kind "taxonomyTerm" }}
+    {{ if eq .Kind "taxonomy" }}
       {{ if eq .Type "categories" }}
         {{ partial "categories" . }}
       {{ else if eq .Type "tags" }}
