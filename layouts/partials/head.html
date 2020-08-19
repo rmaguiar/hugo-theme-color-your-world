@@ -250,29 +250,30 @@
 <!-- Generate array with social profiles -->
 {{ $sameAs := slice }}
 
-{{ range .Site.Data.social }}
+{{ if .Site.Params.Social }}
+  {{ range .Site.Data.social }}
 
-  {{ $currentEntry  := .entry }}
-  {{ $currentBase   := .base }}
+    {{ $currentEntry  := .entry }}
+    {{ $currentBase   := .base }}
 
-  {{ if not .decentralized }}
+    {{ if not .decentralized }}
 
-    {{ with (index $centralized $currentEntry) }}
-      {{ $sameAs = $sameAs | append (printf "%s%s" $currentBase (index . 0)) }}
-    {{ end }}
-    
-  {{ else }}
-  
-    {{ if (index $decentralized $currentEntry) }}
-      {{ range (index $decentralized $currentEntry) }}
-        {{ $sameAs = $sameAs | append (index . 0) }}
+      {{ with (index $centralized $currentEntry) }}
+        {{ $sameAs = $sameAs | append (printf "%s%s" $currentBase (index . 0)) }}
       {{ end }}
-    {{ end }}
+      
+    {{ else }}
     
+      {{ if (index $decentralized $currentEntry) }}
+        {{ range (index $decentralized $currentEntry) }}
+          {{ $sameAs = $sameAs | append (index . 0) }}
+        {{ end }}
+      {{ end }}
+      
+    {{ end }}
+
   {{ end }}
-
 {{ end }}
-
 
 <!-- Schema Markup / Structured Data -->
 

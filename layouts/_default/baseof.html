@@ -43,7 +43,7 @@
         <!-- Additional symbols -->
       {{ end }}
       
-      {{ if .HasShortcode "social" }}
+      {{ if and (.HasShortcode "social") .Site.Params.Social }}
 
         <!-- Get info about social platform and icon id from "social.json" -->
         {{ range .Site.Data.social }}
