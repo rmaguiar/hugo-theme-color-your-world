@@ -1,5 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo {{ hugo.Version }} -- gohugo.io / Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
 
 <!-- I'm 99% sure there's a smarter way of doing it but whatever -->
 {{ $currentTitle  := (.Title | emojify) }}
@@ -225,8 +226,12 @@
   <meta name="twitter:dnt" content="on">
 {{ end }}
 
+
 <!-- Feed -->
-<link rel="alternate" type="application/rss+xml" href="{{ "index.xml" | relURL }}" title="{{ .Site.Title }}">
+{{ with .OutputFormats.Get "RSS" }}
+  <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
+{{ end }}
+
 
 <!-- i18n -->
 {{ if .IsTranslated }}

@@ -22,3 +22,9 @@
   </main>
 
 {{ end }}
+
+{{ define "svg-extra" }}
+  {{ if .Content }}
+    {{ partial "content-svg" . }}
+  {{ end }}
+{{ end }}
