@@ -1,8 +1,10 @@
 <!-- Custom or default copyright -->
-{{ if or (templates.Exists "partials/custom/copyright") (templates.Exists "partials/custom/copyright.html") }}
+{{ if (templates.Exists "partials/custom/copyright.html") }}
   {{ partial "custom/copyright" . }}
 {{ else }}
-  <p>{{ .Site.Copyright | markdownify | emojify }}</p>
+  {{ with .Site.Copyright }}
+    <p>{{ . | markdownify | emojify }}</p>
+  {{ end }}
 {{ end }}
 
 <!--

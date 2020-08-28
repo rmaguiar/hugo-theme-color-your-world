@@ -3,8 +3,8 @@
 <meta name="generator" content="Hugo {{ hugo.Version }} -- gohugo.io / Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
 
 <!-- I'm 99% sure there's a smarter way of doing it but whatever -->
-{{ $currentTitle  := (.Title | emojify) }}
-{{ $mainTitle     := .Params.mainTitle }}
+{{ $currentTitle  := .Title | emojify }}
+{{ $mainTitle     := .Params.mainTitle | emojify }}
 
 
 {{ $titleSeparator := .Site.Params.titleSeparator }}
@@ -13,7 +13,7 @@
 {{ if (eq .Kind "404") }}
 
   <!-- If 404 page -->
-  {{ $currentTitle = .Site.Params.notFound.title | default .Site.Data.default.notFound.title }}
+  {{ $currentTitle = .Site.Params.notFound.title | emojify | default .Site.Data.default.notFound.title }}
   
 {{ else if (eq .Kind "section") }}
 
@@ -53,15 +53,15 @@
 {{ else if and (.IsHome) (not .Content) }}
 
   <!-- If home page without content -->
-  {{ $currentTitle = (.Site.Title | emojify) }}
+  {{ $currentTitle = .Site.Title | emojify }}
 
 {{ end }}
 
 
-{{ $currentDesc := (.Params.Description | emojify) }}
+{{ $currentDesc := .Params.Description | emojify }}
 
 {{ if .IsHome }}
-  {{ $currentDesc = (.Site.Params.description | emojify) }}
+  {{ $currentDesc = .Site.Params.description | emojify }}
 {{ else if and (ne .Kind "taxonomy") (eq .Type "tags") (not .Params.description) }}
   {{ $currentDesc = (T "postsUnderTag" .) }}
 {{ else if and (ne .Kind "taxonomy") (eq .Type "categories") (not .Params.description) }}
@@ -69,7 +69,7 @@
 {{ else if eq .Kind "taxonomy" }}
   {{ $currentDesc = printf "%s %s." (T "pageContaining") ($currentTitle | lower) }}
 {{ else if (eq .Kind "404") }}
-  {{ $currentDesc = .Site.Params.notFound.description | default .Site.Data.default.notFound.description }}
+  {{ $currentDesc = .Site.Params.notFound.description | emojify | default .Site.Data.default.notFound.description }}
 {{ end }}
 
 
@@ -126,7 +126,7 @@
 
 
 <!-- If the user wants to add something (custom favicons, fonts, scripts, etc) -->
-{{ if or (templates.Exists "partials/custom/head-append") (templates.Exists "partials/custom/head-append.html") }}
+{{ if (templates.Exists "partials/custom/head-append.html") }}
   {{ partial "custom/head-append" . }}
 {{ end }}
 

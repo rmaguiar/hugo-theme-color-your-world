@@ -4,7 +4,7 @@
   Currently here to avoid certain priority issues...
 -->
 
-{{- .Scratch.Set "imageProc" (dict "highRes" (.Site.Params.imageProc.highRes | default .Site.Data.default.imageProc.highRes) "mediumRes" (.Site.Params.imageProc.mediumRes | default .Site.Data.default.imageProc.mediumRes) "lowRes" (.Site.Params.imageProc.lowRes | default .Site.Data.default.imageProc.lowRes) "markupAutoResizeWidth" (.Site.Params.imageProc.markupAutoResizeWidth | default .Site.Data.default.imageProc.markupAutoResizeWidth)) }}
+{{- .Scratch.Set "imageProc" (dict "highRes" (.Site.Params.imageProc.highRes | default .Site.Data.default.imageProc.highRes) "mediumRes" (.Site.Params.imageProc.mediumRes | default .Site.Data.default.imageProc.mediumRes) "lowRes" (.Site.Params.imageProc.lowRes | default .Site.Data.default.imageProc.lowRes) "markupAutoResizeWidth" (.Site.Params.imageProc.markupAutoResizeWidth | default .Site.Data.default.imageProc.markupAutoResizeWidth)) -}}
 
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}" data-mode="{{ if .Site.Params.Style.isDark }}dark{{ else }}light{{ end }}">
@@ -82,7 +82,7 @@
     
     <!-- KaTeX -->
     {{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}
-      {{ partial "katex.html" . }}
+      {{ partial "katex" . }}
     {{ end }}
 
   </body>

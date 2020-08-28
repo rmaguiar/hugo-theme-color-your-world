@@ -57,9 +57,9 @@ paginate = 5
   markupImgClass = ""
   
   # This will append a separator (of your choice) along the site title to your <title>
+  # ie.: | ❚ - – — • ⚫ 
   # You can disabled it PER PAGE by using "disableTitleSeparator" at front
   # matter or disable it entirely by commenting the line below
-  # ie.: | ❚ - – — • ⚫ 
   titleSeparator = "|"
   
   

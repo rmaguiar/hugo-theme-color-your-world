@@ -6,9 +6,20 @@
 
     {{ if .Content }}
       <article>
-        <h1>{{ .Title | emojify }}</h1>
+      
+        <header>
         
+          <h1>{{ .Title | emojify }}</h1>
+          
+          {{ if .Params.cover }}
+            {{ partial "cover" . }}
+          {{ end }}
+          
+        </header>
+        
+        {{ partial "table-of-contents" . }}
         {{ partial "processed-content" . }}
+        
       </article>
     {{ else }}
     

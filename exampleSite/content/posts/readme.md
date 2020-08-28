@@ -2,6 +2,7 @@
 title       : "Read Me"
 description : "A copy of the README.md file."
 tags        : [ extra, markdown ]
+toc         : true
 ---
 
 [Live demo (on Netlify)](https://color-your-world-demo.netlify.app/) | [Demo (on Hugo Themes)](https://themes.gohugo.io/theme/hugo-theme-color-your-world/)
@@ -245,6 +246,12 @@ A **really** basic 404 page can be generated via config file by using:
   paragraph     = "Nothing to see here, buddy."
 ```
 
+### Custom front matter params
+
+* `mainTitle` (string): Can be used to replace the `<title>` meta tag, if you wish it to be different from the `<h1>` (which will still use the `title` param);
+* `sitemapExclude` (true|false): Can be used to exclude a page/section from the sitemap;
+* `noindex` (true|false): Similar to the above. Can be used to exclude a page/section from being indexed (by bots or your own site). It will change the meta tag `robots` to `noindex` and the page(s) will not be added to the site's search index.
+
 ### Custom partials
 
 * The site title can be replaced by creating a file named `layouts/partials/custom/site-title.html`;
@@ -252,9 +259,9 @@ A **really** basic 404 page can be generated via config file by using:
 * Custom CSS can be imported into the main CSS file by creating a file named `static/css/custom.css` or `assets/scss/custom.scss`;
 * The `copyright` param can be replaced by creating a file named `layouts/partials/custom/copyright.html`.
 
-### More config
+### More params
 
-More possible params for your config file:
+More possible params for your config file (or front matter):
 
 ```toml
 [params]
@@ -292,9 +299,9 @@ More possible params for your config file:
   markupImgClass = "borderless"
   
   # This will append a separator (of your choice) along the site title to your <title>
+  # ie.: | ❚ - – — • ⚫
   # You can disabled it PER PAGE by using "disableTitleSeparator" at front
   # matter or disable it entirely by commenting the line below
-  # ie.: | ❚ - – — • ⚫ 
   titleSeparator = "|"
   
   [params.search]

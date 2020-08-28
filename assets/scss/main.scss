@@ -338,7 +338,7 @@ code {
 
 
 // If there's no "custom/site-title" partial, style a default one
-{{ if not (or (templates.Exists "partials/custom/site-title") (templates.Exists "partials/custom/site-title.html")) }}
+{{ if not (templates.Exists "partials/custom/site-title.html") }}
   body > header {
     > a {
       @extend %heading-base;
