@@ -409,29 +409,55 @@ video {
 }
 
 
+
+
+
+
+
+
+$anchor-size: 24px;
+
 // ANCHOR LINKS
 .anchor {
   background-image: none;
+  
+  position: relative;
+  transform: none;
+  float: right;
 
   svg {
     fill: var(--accent);
     
     vertical-align: middle;
     
-    @include squared(24px);
+    @include squared($anchor-size);
   }
 }
-
 
 // Resize the anchor SVG depending on the heading level
 // Also minor spacing ajustment
 @for $i from 2 through 6 {
   h#{$i} {
     .anchor {
-      margin: 0 0 0 (.25rem + .1 * (6 - $i));
+      margin: 0 (.25rem + .1 * (6 - $i)) 0 1.5rem;
       
       svg {
         transform: scale(1 + .175 * (6 - $i));
+      }
+    }
+  }
+}
+
+@include respond-above($mobile-breakpoint + $anchor-size) {
+  .anchor {
+    position: absolute;
+    transform: translate(-150%);
+  }
+  
+  @for $i from 2 through 6 {
+    h#{$i} {
+      .anchor {
+        margin: 0 0 0 (.15rem - .1 * (6 - $i));
       }
     }
   }
@@ -496,7 +522,7 @@ ol {
   display: block;
   
   margin-top: 2.4rem;
-  padding: 1rem 1rem 1.8rem;
+  padding: 1rem 0 1.8rem;
   
   h2 {
     margin: 0 0 2rem;
@@ -985,6 +1011,7 @@ article > ul,
 article > ul ul,
 article > ol,
 article > ol ol {
+  //margin: 1.8rem 0;
   padding: 0 24px 0;
 }
 
@@ -1242,6 +1269,8 @@ summary {
 
 .social {
   
+  margin: 1.5rem 0;
+  
   {{ if .Site.Params.Style.socialIsFlex }}
   
     display: flex;
@@ -1462,28 +1491,28 @@ html {
     
     --hl-pad: 21px 24px;
   }
+  
+  .footnotes {
+    padding: 1rem .5rem 1.8rem;
+  }
 }
 
 
 {{ if .Site.Params.Style.hideAnchors }}
-
-  @include respond-above($mobile-breakpoint) {
-    a.anchor:not(:focus) {
-      opacity: 0;
-    }
-    
-    %visible {
-      opacity: 1;
-    }
-    
-    @for $i from 2 through 6 {
-      h#{$i} > a:focus + a.anchor,
-      h#{$i}:hover > a.anchor {
-        @extend %visible;
-      }
-    }
+  a.anchor:not(:focus) {
+    opacity: 0;
   }
   
+  %visible {
+    opacity: 1;
+  }
+  
+  @for $i from 2 through 6 {
+    h#{$i} > a:focus + a.anchor,
+    h#{$i}:hover > a.anchor {
+      @extend %visible;
+    }
+  }
 {{ end }}
 
 {{ if .Site.Params.hasNoscriptNotice }}

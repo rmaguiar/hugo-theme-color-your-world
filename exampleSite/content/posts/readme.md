@@ -41,7 +41,7 @@ I've been working on this theme for so long that there are features I don't even
 ## Requirements
 
 * Hugo Extended
-* Minimum version: 0.71.0
+* Minimum version: 0.73.0
 
 ## Installation
 
@@ -344,7 +344,6 @@ More possible params for your config file (or front matter):
     socialIsFlex = true
     
     # Keep anchor links hidden until it's focused/hovered
-    # They will always be visible in mobile devices, regardless the option
     # The default is false
     hideAnchors = true
 

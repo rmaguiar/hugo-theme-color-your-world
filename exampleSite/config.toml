@@ -136,7 +136,6 @@ paginate = 5
     socialIsFlex = true
     
     # Keep anchor links hidden until it's focused/hovered
-    # They will always be visible in mobile devices, regardless the option
     # The default is false
     hideAnchors = true
     

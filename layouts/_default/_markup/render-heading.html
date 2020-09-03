@@ -11,7 +11,7 @@
 {{ $anchoredLinkLevels := seq 2 6 }}
 
 {{ if in $anchoredLinkLevels .Level }}
-  <h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ .Text | safeHTML }} {{ printf "<a class=\"anchor\" href=\"#%s\" title='%s \"%s\".'><svg aria-hidden=\"true\"><use xlink:href=\"#hashtag\"/></svg></a>" (.Anchor | safeURL) (T "anchorFor") (.Text | plainify | safeHTML) | safeHTML }}</h{{ .Level }}> 
+  <h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ printf "<a class=\"anchor\" href=\"#%s\" title='%s \"%s\".'><svg aria-hidden=\"true\"><use xlink:href=\"#hashtag\"/></svg></a>" (.Anchor | safeURL) (T "anchorFor") (.Text | plainify | safeHTML) | safeHTML }} {{ .Text | safeHTML }}</h{{ .Level }}> 
 {{ else }}
   <h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ .Text | safeHTML }}</h{{ .Level }}> 
 {{ end }}
