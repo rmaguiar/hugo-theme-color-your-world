@@ -20,7 +20,7 @@
 
   <!-- If post list -->
   {{ if gt .Paginator.TotalPages 1 }}
-    {{ $mainTitle = printf "%s, %s %s %s %s" .Title (T "page") (string .Paginator.PageNumber) (T "of") (string .Paginator.TotalPages) }}
+    {{ $mainTitle = printf `%s, %s %s %s %s` .Title (T "page") (string .Paginator.PageNumber) (T "of") (string .Paginator.TotalPages) }}
   {{ end }}
   
 {{ else if eq .Kind "term" }}
@@ -33,13 +33,13 @@
     {{ $currentTerm = (T "category") }}
   {{ end }}
   
-  {{ $currentTitle = printf "%s: \"%s\"" $currentTerm .Title }}
+  {{ $currentTitle = printf `%s: "%s"` $currentTerm .Title }}
   
   {{ with .Paginator }}
     {{ if gt .TotalPages 1 }}
-      {{ $mainTitle = printf "%s: \"%s\", %s %s %s %s" $currentTerm $.Title (T "page") (string .PageNumber) (T "of") (string .TotalPages) }}
+      {{ $mainTitle = printf `%s: "%s", %s %s %s %s` $currentTerm $.Title (T "page") (string .PageNumber) (T "of") (string .TotalPages) }}
     {{ else }}
-      {{ $mainTitle = printf "%s: \"%s\"" $currentTerm $.Title }}
+      {{ $mainTitle = printf `%s: "%s"` $currentTerm $.Title }}
     {{ end }}
   {{ end }}
 
@@ -68,7 +68,7 @@
 {{ else if and (ne .Kind "taxonomy") (eq .Type "categories") (not .Params.description) }}
   {{ $currentDesc = (T "postsUnderCategory" .) }}
 {{ else if eq .Kind "taxonomy" }}
-  {{ $currentDesc = printf "%s %s." (T "pageContaining") ($currentTitle | lower) }}
+  {{ $currentDesc = printf `%s %s.` (T "pageContaining") ($currentTitle | lower) }}
 {{ else if (eq .Kind "404") }}
   {{ $currentDesc = .Site.Params.notFound.description | emojify | default .Site.Data.default.notFound.description }}
 {{ end }}
@@ -84,9 +84,9 @@
 <title>
   {{- if and $titleSeparator (not .Params.disableTitleSeparator ) -}}
     {{ if $mainTitle }}
-      {{- $mainTitle = printf "%s %s %s" $mainTitle $titleSeparator .Site.Title -}}
+      {{- $mainTitle = printf `%s %s %s` $mainTitle $titleSeparator .Site.Title -}}
     {{ else }}
-      {{- $mainTitle = printf "%s %s %s" $currentTitle $titleSeparator .Site.Title -}}
+      {{- $mainTitle = printf `%s %s %s` $currentTitle $titleSeparator .Site.Title -}}
     {{ end }}
   {{- end -}}
   

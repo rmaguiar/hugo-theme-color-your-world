@@ -11,32 +11,50 @@
   like i18n and responsiveness.
   
   Hopefully, most of the mess below can be removed in the future
-  as Hugo evolves and more render hooks are implemented. (It used
-  to also add anchor links to headings before render hooks were
-  implemented.)
+  as Hugo evolves and more render hooks are implemented. (I remember
+  about adding anchor links to headings with replaceRE before
+  render hooks were available.)
 -->
 
 <!-- i18n -->
-{{ $references    := (printf "${1}<h2>%s</h2>" (T "references")) }}
-{{ $seeFootnotes  := (printf "${1} title=\"%s\"" (T "seeFootnotes")) }}
-{{ $returnToText  := (printf "${1} title=\"%s\"" (T "returnToText")) }}
+{{ $references    := `(<section class="footnotes" role="doc-endnotes">)` }}
+{{ $seeFootnotes  := `(class="footnote-ref")` }}
+{{ $returnToText  := `(class="footnote-backref")` }}
+
+{{ $translatedReferences    := printf `${1}<h2>%s</h2>` (T "references") }}
+{{ $translatedSeeFootnotes  := printf `${1} title="%s"` (T "seeFootnotes") }}
+{{ $translatedReturnToText  := printf `${1} title="%s"` (T "returnToText") }}
+
 
 <!-- More i18n and also a11y, kind of -->
-{{ $highlightCodeBlockLabel := (printf "${1} aria-label=\"%s\" tabindex=0${2}" (T "boxContainingCode")) }}
-{{ $indentedCodeBlockLabel  := (printf "${1} aria-label=\"%s\" tabindex=0>${2}" (T "boxContainingCode")) }}
+{{ $highlightCodeBlock  := `(<div class="highlight"><(?:pre|div) class="chroma")(>)` }}
+{{ $indentedCodeBlock   := `(<pre)>(<code>)` }}
+
+{{ $labeledHighlightCodeBlock := printf `${1} aria-label="%s" tabindex=0${2}` (T "boxContainingCode") }}
+{{ $labeledIndentedCodeBlock  := printf `${1} aria-label="%s" tabindex=0>${2}` (T "boxContainingCode") }}
+
 
 <!-- Wrap tables to make use of overflow-x property (plus the tabindex thing) -->
-{{ $improvedTable := printf "<section class=scroll tabindex=0> ${1} </section>" }}
+{{ $table := `(<table>(?:.|\n)+?</table>)` }}
 
-<!-- Replace the footnote return links with a text label -->
-{{ $footnoteReturnLink := (printf "${1}%s${2}" (T "return")) }}
+{{ $improvedTable := printf `<section class="scroll" tabindex="0"> ${1} </section>` }}
+
 
 <!-- Replace the inline "padding:0" present if using the default Chroma -->
-{{ $highlightPadding := (printf "${1}padding: var(--il-pad)") }}
+{{ $highlightPadding := `(?:(<div class="highlight">(?:.|\n)+?<table (?:.*?))(?:padding:0))` }}
+
+{{ $tweakedHighlightPadding := printf "${1}padding: var(--il-pad)" }}
+
+
+<!-- Replace the footnote return links with a text label -->
+{{ $footnoteReturnLink := `(<a (?:.*) class="footnote-backref" (?:.*)>)(?:.*)(</a>)` }}
+
+{{ $improvedFootnoteReturnLink := printf `${1}%s${2}` (T "return") }}
+
 
 <!-- OR replace the footnote return links with a SVG icon -->
 {{ if .Site.Params.Style.hasIconAsFootnoteReturnLink }}
-  {{ $footnoteReturnLink = (printf "${1}<svg transform=\"rotate(180) translate(0 -1)\" aria-hidden=\"true\" ><use xlink:href=\"#caret-down\"/></svg>${2}") }}
+  {{ $improvedFootnoteReturnLink = printf `${1}<svg transform="rotate(180) translate(0 -1)" aria-hidden="true"><use xlink:href="#caret-down"/></svg>${2}` }}
 {{ end }}
 
 <!--
@@ -49,4 +67,4 @@
   * Changing the default inline style for default Chroma.
 -->
 
-{{ .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $improvedTable | replaceRE "(<div class=\"highlight\"><(?:pre|div) class=\"chroma\")(>)" $highlightCodeBlockLabel | replaceRE "(<pre)>(<code>)" $indentedCodeBlockLabel | replaceRE "(class=\"footnote-ref\")" $seeFootnotes | replaceRE "(class=\"footnote-backref\")" $returnToText | replaceRE "(<section class=\"footnotes\" role=\"doc-endnotes\">)" $references | replaceRE "(<a (?:.*) class=\"footnote-backref\" (?:.*)>)(?:.*)(</a>)" $footnoteReturnLink | replaceRE "(?:(<div class=\"highlight\">(?:.|\n)+?<table (?:.*?))(?:padding:0))" $highlightPadding | safeHTML }}
+{{ .Content | replaceRE $table $improvedTable | replaceRE $highlightCodeBlock $labeledHighlightCodeBlock | replaceRE $indentedCodeBlock $labeledIndentedCodeBlock | replaceRE $seeFootnotes $translatedSeeFootnotes | replaceRE $returnToText $translatedReturnToText | replaceRE $references $translatedReferences | replaceRE $footnoteReturnLink $improvedFootnoteReturnLink | replaceRE $highlightPadding $tweakedHighlightPadding | safeHTML }}

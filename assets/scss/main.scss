@@ -419,11 +419,11 @@ $anchor-size: 24px;
 
 // ANCHOR LINKS
 .anchor {
-  background-image: none;
-  
+  float: right;
   position: relative;
   transform: none;
-  float: right;
+  
+  margin: 0 0 0 1.5rem;
 
   svg {
     fill: var(--accent);
@@ -439,7 +439,8 @@ $anchor-size: 24px;
 @for $i from 2 through 6 {
   h#{$i} {
     .anchor {
-      margin: 0 (.25rem + .1 * (6 - $i)) 0 1.5rem;
+      margin-right: (.25rem + .1 * (6 - $i));
+      outline-offset: 10px - ($i * 1.25);
       
       svg {
         transform: scale(1 + .175 * (6 - $i));

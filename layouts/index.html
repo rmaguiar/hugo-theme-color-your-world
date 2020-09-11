@@ -23,7 +23,7 @@
       </article>
     {{ else }}
     
-      <h1>{{ T "posts" }}</h1>
+      <h1>{{ .Title | emojify | default (T "posts") }}</h1>
       
       {{ partial "post-list" . }}
       {{ partial "pagination" . }}
@@ -36,6 +36,6 @@
 
 {{ define "svg-extra" }}
   {{ if .Content }}
-    {{ partial "content-svg" . }}
+    {{ partialCached "content-svg" . }}
   {{ end }}
 {{ end }}
