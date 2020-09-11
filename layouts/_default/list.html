@@ -9,7 +9,7 @@
 
     <!-- Display search form before listing posts -->
     {{ if and .Site.Params.Search.enable (gt (len $searchPages) 0) (eq .Kind "section") }}
-      {{ partialCached "search-form" . }}
+      {{ partialCached "search-form" . .Layout }}
     {{ end }}
     
     <h1>{{ $currentTitle }}</h1>
