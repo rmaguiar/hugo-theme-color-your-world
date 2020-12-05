@@ -48,6 +48,8 @@
     data-srcset='{{ delimit $outputSet ", " }}'
     src="{{ $encodedPlaceholder }}"
     data-src="{{ (.Resize $mediumRes).RelPermalink }}"
+    width="{{ (.Resize $mediumRes).Width }}"
+    height="{{ (.Resize $mediumRes).Height }}"
     {{ with $altText }}alt="{{ . }}"{{ end }}
   />
 
@@ -57,6 +59,8 @@
       loading="lazy"
       srcset='{{ delimit $outputSet ", " }}'
       src="{{ $encodedPlaceholder }}"
+      width="{{ (.Resize $mediumRes).Width }}"
+      height="{{ (.Resize $mediumRes).Height }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />
   </noscript>

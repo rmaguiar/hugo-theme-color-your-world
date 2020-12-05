@@ -24,15 +24,26 @@
       HACK
       Reduce reflow by generating a placeholder with similar size
     -->
-  
-    {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((resources.Get "img/pixel.gif").Resize (printf "%vx%v %s" (.Resize (index $imageProc.mediumRes 0)).Width (.Resize (index $imageProc.mediumRes 0)).Height "png")).Content | base64Encode)) | safeURL }}
-  
+    
+    {{ $mediumRes := (index $imageProc.mediumRes 0) }}
+
+    {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((resources.Get "img/pixel.gif").Resize (printf "%vx%v %s" (.Resize $mediumRes).Width (.Resize $mediumRes).Height "png")).Content | base64Encode)) | safeURL }}
+    
+    {{ $outputSet := slice }}
+    {{ $inputFile := . }}
+    
+    {{ range $imageProc }}
+      {{ $outputSet = $outputSet | append (printf "%s %s" (($inputFile.Resize (index . 0)).RelPermalink) (index . 1)) }}
+    {{ end }}
+    
     <img
       class="lazyload {{ $class }}"
       loading="lazy"
-      data-srcset="{{ (.Resize (index $imageProc.highRes 0)).RelPermalink }} {{ index $imageProc.highRes 1 }}, {{ (.Resize (index $imageProc.mediumRes 0)).RelPermalink }} {{ index $imageProc.mediumRes 1 }}, {{ (.Resize (index $imageProc.lowRes 0)).RelPermalink }} {{ index $imageProc.lowRes 1 }}"
+      data-srcset='{{ delimit $outputSet ", " }}'
       src="{{ $encodedPlaceholder }}"
-      data-src="{{ (.Resize (index $imageProc.mediumRes 0)).RelPermalink }}"
+      data-src="{{ (.Resize $mediumRes).RelPermalink }}"
+      width="{{ (.Resize $mediumRes).Width }}"
+      height="{{ (.Resize $mediumRes).Height }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />
 
@@ -40,8 +51,10 @@
       <img
         {{ with $class }}class="{{ . }}"{{ end }}
         loading="lazy"
-        srcset="{{ (.Resize (index $imageProc.highRes 0)).RelPermalink }} {{ index $imageProc.highRes 1 }}, {{ (.Resize (index $imageProc.mediumRes 0)).RelPermalink }} {{ index $imageProc.mediumRes 1 }}, {{ (.Resize (index $imageProc.lowRes 0)).RelPermalink }} {{ index $imageProc.lowRes 1 }}"
+        srcset='{{ delimit $outputSet ", " }}'
         src="{{ $encodedPlaceholder }}"
+        width="{{ (.Resize $mediumRes).Width }}"
+        height="{{ (.Resize $mediumRes).Height }}"
         {{ with $altText }}alt="{{ . }}"{{ end }}
       />
     </noscript>
@@ -61,6 +74,8 @@
       loading="lazy"
       src="{{ $encodedPlaceholder }}"
       data-src="{{ $processed.RelPermalink }}"
+      width="{{ .Width }}"
+      height="{{ .Height }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />
 
@@ -69,6 +84,8 @@
         {{ with $class }}class="{{ . }}"{{ end }}
         loading="lazy"
         src="{{ $processed.RelPermalink }}"
+        width="{{ .Width }}"
+        height="{{ .Height }}"
         {{ with $altText }}alt="{{ . }}"{{ end }}
       />
     </noscript>

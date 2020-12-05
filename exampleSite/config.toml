@@ -8,6 +8,8 @@ copyright = "Copyright © 2008–2020, Steve Francia and the Hugo Authors;\n All
 enableEmoji = true
 enableInlineShortcodes = true
 
+ignoreErrors = [ "error-remote-getjson" ]
+
 paginate = 5
 
 

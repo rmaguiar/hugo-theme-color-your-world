@@ -831,6 +831,13 @@ article > header {
 
 
 // MEDIA
+img,
+figure,
+video {
+  width: auto;
+  height: auto;
+}
+
 img {
   display: block;
   
