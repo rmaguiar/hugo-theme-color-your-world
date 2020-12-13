@@ -41,7 +41,7 @@ I've been working on this theme for so long that there are features I don't even
 ## Requirements
 
 * Hugo Extended
-* Minimum version: 0.77.0
+* Minimum version: 0.73.0
 
 ## Installation
 

@@ -9,28 +9,6 @@ blockquote.twitter-tweet {
   padding: 0 30px 27px;
 }
 
-// Avoid breaking the layout
-div.__h_instagram {
-  margin: 2rem auto;
-  
-  a:nth-child(2) {
-    display: block;
-    margin: .6rem 0;
-    line-height: 0;
-    
-    &:hover {
-      opacity: .75;
-    }
-  }
-  
-  img {
-    border: 1px solid var(--fg);
-    
-    max-width: 100%;
-    object-fit: cover;
-  }
-}
-
 h2#vimeo-simple-shortcode {
   margin-bottom: 1rem;
 }

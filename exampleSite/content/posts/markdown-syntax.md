@@ -7,7 +7,6 @@ tags = [
     "markdown",
     "css",
     "html",
-    "themes",
 ]
 categories = [
     "themes",
@@ -145,12 +144,5 @@ H<sub>2</sub>O
 X<sup>n</sup> + Y<sup>n</sup> = Z<sup>n</sup>
 
 Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the session.
-
-<!--
-You can also create a new document using the keyboard shortcut
-<kbd><kbd>Ctrl</kbd>+<kbd>N</kbd></kbd>
-
-Testing {{< kbd "Ctrl" >}}
--->
 
 Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and other small creatures.
