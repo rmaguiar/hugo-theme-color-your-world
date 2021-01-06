@@ -345,7 +345,7 @@
 {{ partialCached "font-preload" . }}
 
 <!-- Should be loaded even if browser has native lazy load support -->
-{{ $lazysizes := resources.Get "libs/lazysizes@5.2.2/lazysizes.min.js" | resources.ExecuteAsTemplate "js/lazysizes.min.js" . | minify | resources.Fingerprint "sha512" }}
+{{ $lazysizes := resources.Get "libs/lazysizes@5.3.0/lazysizes.min.js" | resources.ExecuteAsTemplate "js/lazysizes.min.js" . | minify | resources.Fingerprint "sha512" }}
 <script defer src="{{ $lazysizes.RelPermalink }}" crossorigin="anonymous"></script>
 
 <!-- Preconnect for KaTeX -->
