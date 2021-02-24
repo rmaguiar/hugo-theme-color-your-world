@@ -1,6 +1,6 @@
 <!-- Main CSS -->
-{{ $main := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "css/main.scss" . | toCSS | minify | resources.Fingerprint "sha512" }}
-<link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}">
+{{ $main := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "css/main.scss" . | toCSS | minify }}
+<link rel="stylesheet" href="{{ $main.RelPermalink }}">
 
 
 <!-- If JS is disabled -->
@@ -28,8 +28,7 @@
       --accent: {{ if .Site.Params.Style.isDark }}{{ $darkAccent }}{{ else }}{{ $lightAccent }}{{ end }};
     }
   
-    .req-js,
-    img.lazyload {
+    .req-js {
       display: none;
     }
     

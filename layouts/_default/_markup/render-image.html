@@ -37,27 +37,14 @@
     {{ end }}
     
     <img
-      class="lazyload {{ $class }}"
+      {{ with $class }}class="{{ . }}"{{ end }}
       loading="lazy"
-      data-srcset='{{ delimit $outputSet ", " }}'
+      srcset='{{ delimit $outputSet ", " }}'
       src="{{ $encodedPlaceholder }}"
-      data-src="{{ (.Resize $mediumRes).RelPermalink }}"
       width="{{ (.Resize $mediumRes).Width }}"
       height="{{ (.Resize $mediumRes).Height }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />
-
-    <noscript>
-      <img
-        {{ with $class }}class="{{ . }}"{{ end }}
-        loading="lazy"
-        srcset='{{ delimit $outputSet ", " }}'
-        src="{{ $encodedPlaceholder }}"
-        width="{{ (.Resize $mediumRes).Width }}"
-        height="{{ (.Resize $mediumRes).Height }}"
-        {{ with $altText }}alt="{{ . }}"{{ end }}
-      />
-    </noscript>
 
   {{ else }}
   
@@ -70,47 +57,26 @@
     {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((.Resize (printf "%vx %s" .Width "png")) | images.Filter (images.Contrast -100)).Content | base64Encode)) | safeURL }}
 
     <img
-      class="lazyload {{ $class }}"
+      {{ with $class }}class="{{ . }}"{{ end }}
       loading="lazy"
-      src="{{ $encodedPlaceholder }}"
-      data-src="{{ $processed.RelPermalink }}"
+      src="{{ $processed.RelPermalink }}"
       width="{{ .Width }}"
       height="{{ .Height }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />
 
-    <noscript>
-      <img
-        {{ with $class }}class="{{ . }}"{{ end }}
-        loading="lazy"
-        src="{{ $processed.RelPermalink }}"
-        width="{{ .Width }}"
-        height="{{ .Height }}"
-        {{ with $altText }}alt="{{ . }}"{{ end }}
-      />
-    </noscript>
-    
   {{ end }}
     
 {{ else }}
   <!-- If local file isn't found, assume it's a remote file -->
   {{ with (.Destination | safeURL) }}
+
     <img
-      class="lazyload {{ $class }}"
+      {{ with $class }}class="{{ . }}"{{ end }}
       loading="lazy"
-      src="{{ $encodedPixel }}"
-      data-src="{{ . }}"
+      src="{{ . }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />
-    
-    <noscript>
-      <img
-        {{ with $class }}class="{{ . }}"{{ end }}
-        loading="lazy"
-        src="{{ . }}"
-        {{ with $altText }}alt="{{ . }}"{{ end }}
-      />
-    </noscript>
-  
+
   {{ end }}
 {{ end }}
