@@ -28,7 +28,7 @@ I've been working on this theme for so long that there are features I don't even
 * Open Graph, Twitter Cards and Structured Data (schema.org) meta tags;
 * Responsive images via image processing;
 * Basic search functionality via [Fuse.js](https://github.com/krisk/Fuse);
-* Image lazy loading (native + [lazysizes](https://github.com/aFarkas/lazysizes));
+* Image lazy loading;
 * **noscript** capable to an extent (except for KaTeX and search functionality).
 
 
@@ -360,7 +360,6 @@ More possible params for your config file (or front matter):
 * JeffProd and [his article](https://en.jeffprod.com/blog/2018/build-your-own-hugo-website-search-engine/) about building a custom search engine for Hugo;
 * Many people [on this forked gist](https://gist.github.com/eddiewebb/735feb48f50f0ddd65ae5606a1cb41ae) for their takes on Fuse.js + Hugo;
 * Philip Walton and [his sticky footer solution](https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/) with Flexbox;
-* [lazysizes](https://github.com/aFarkas/lazysizes);
 * [Fuse.js](https://github.com/krisk/Fuse);
 * [KaTeX](https://katex.org/);
 * Hugo and [its community](https://discourse.gohugo.io/).

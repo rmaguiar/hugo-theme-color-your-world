@@ -28,15 +28,8 @@
 
 {{ with $.Page.Resources.GetMatch $file }}
 
-  <!--
-    HACK
-    Reduce reflow by generating a placeholder with similar size
-  -->
-  
   {{ $mediumRes := (index $imageProc.mediumRes 0) }}
 
-  {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((resources.Get "img/pixel.gif").Resize (printf "%vx%v %s" (.Resize $mediumRes).Width (.Resize $mediumRes).Height "png")).Content | base64Encode)) | safeURL }}
-  
   {{ $outputSet := slice }}
   {{ $inputFile := . }}
   
@@ -49,7 +42,7 @@
       {{ with $class }}class="{{ . }}"{{ end }}
       loading="lazy"
       srcset='{{ delimit $outputSet ", " }}'
-      src="{{ $encodedPlaceholder }}"
+      src="{{ (.Resize $mediumRes).RelPermalink }}"
       width="{{ (.Resize $mediumRes).Width }}"
       height="{{ (.Resize $mediumRes).Height }}"
       {{ with $alt }}alt="{{ . }}"{{ end }}

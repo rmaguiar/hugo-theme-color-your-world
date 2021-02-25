@@ -366,7 +366,7 @@
   If not using Hugo server, remove every "console.log()"
 -->
 
-{{ with resources.Get "js/prepone.js" | resources.ExecuteAsTemplate .Page . | minify }}
+{{ with resources.Get "js/prepone.js" | resources.ExecuteAsTemplate .Page . }}
 
   <script>
     {{ if $.Site.IsServer }}
