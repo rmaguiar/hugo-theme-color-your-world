@@ -12,23 +12,14 @@
   {{ $file = path.Join $imgPath $file }}
 {{ end }}
 
-{{ $encodedPixel := (printf "data:image/gif;base64,%s" ((resources.Get "img/pixel.gif").Content | base64Encode)) | safeURL }}
-
 <!-- Assume file is local if found -->
 {{ with $.Page.Resources.GetMatch $file }}
 
   <!-- If image width is equal or greater than X, process it -->
   {{ if ge .Width $imageProc.markupAutoResizeWidth }}
 
-    <!--
-      HACK
-      Reduce reflow by generating a placeholder with similar size
-    -->
-    
     {{ $mediumRes := (index $imageProc.mediumRes 0) }}
 
-    {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((resources.Get "img/pixel.gif").Resize (printf "%vx%v %s" (.Resize $mediumRes).Width (.Resize $mediumRes).Height "png")).Content | base64Encode)) | safeURL }}
-    
     {{ $outputSet := slice }}
     {{ $inputFile := . }}
     
@@ -40,21 +31,15 @@
       {{ with $class }}class="{{ . }}"{{ end }}
       loading="lazy"
       srcset='{{ delimit $outputSet ", " }}'
-      src="{{ $encodedPlaceholder }}"
+      src="{{ (.Resize $mediumRes).RelPermalink }}"
       width="{{ (.Resize $mediumRes).Width }}"
       height="{{ (.Resize $mediumRes).Height }}"
       {{ with $altText }}alt="{{ . }}"{{ end }}
     />
 
   {{ else }}
-  
-    <!--
-      HACK
-      Reduce reflow by creating a placeholder with similar size
-    -->
 
     {{ $processed := (.Resize (printf "%vx" .Width)) }}
-    {{ $encodedPlaceholder := (printf "data:image/png;base64,%s" (((.Resize (printf "%vx %s" .Width "png")) | images.Filter (images.Contrast -100)).Content | base64Encode)) | safeURL }}
 
     <img
       {{ with $class }}class="{{ . }}"{{ end }}
