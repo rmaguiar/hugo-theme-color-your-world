@@ -353,7 +353,7 @@ More possible params for your config file (or front matter):
 * [Font Awesome](https://fontawesome.com/) and [Fork Awesome](https://forkaweso.me/) for the icons;
 * [@nickpunt](https://gist.github.com/nickpunt) and [@regpaq](https://gist.github.com/regpaq) for the [dark/light mode switcher](https://gist.github.com/regpaq/04c67e8aceecbf0fd819945835412d1f) idea;
 * Glenn McComb and [his article](https://glennmccomb.com/articles/how-to-build-custom-hugo-pagination/) about custom pagination with Hugo;
-* JeffProd and [his article](https://en.jeffprod.com/blog/2018/build-your-own-hugo-website-search-engine/) about building a custom search engine for Hugo;
+* JeffProd and [his article](https://en.jeffprod.com/blog/2018/build-your-own-Hugo-website-search-engine/) about building a custom search engine for Hugo;
 * Many people [on this forked gist](https://gist.github.com/eddiewebb/735feb48f50f0ddd65ae5606a1cb41ae) for their takes on Fuse.js + Hugo;
 * Philip Walton and [his sticky footer solution](https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/) with Flexbox;
 * [Fuse.js](https://github.com/krisk/Fuse);

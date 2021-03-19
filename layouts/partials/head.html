@@ -344,6 +344,11 @@
 <!-- Preload fonts -->
 {{ partialCached "font-preload" . }}
 
+<!-- Preload search index -->
+{{ if eq .Layout "search" }}
+  <link rel="preload" href="index.json" as="fetch" crossorigin="anonymous">
+{{ end }}
+
 <!-- Preconnect for KaTeX -->
 {{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="anonymous">

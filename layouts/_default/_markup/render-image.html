@@ -24,7 +24,9 @@
     {{ $inputFile := . }}
     
     {{ range $imageProc }}
-      {{ $outputSet = $outputSet | append (printf "%s %s" (($inputFile.Resize (index . 0)).RelPermalink) (index . 1)) }}
+      {{ if reflect.IsSlice . }}
+        {{ $outputSet = $outputSet | append (printf "%s %s" (($inputFile.Resize (index . 0)).RelPermalink) (index . 1)) }}
+      {{ end }}
     {{ end }}
     
     <img
