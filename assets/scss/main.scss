@@ -163,15 +163,11 @@ body {
   }
   
   > footer {
-    padding: 1rem 3rem;
+    padding: 1.5rem 3rem 1rem;
     
     p {
-      line-height: 1.8rem;
-      margin: .75rem 0;
-      
-      // HACK
-      // Render "\n" as a line break in the copyright (from config)
-      white-space: pre-wrap;
+      line-height: 1.5rem;
+      margin: .5rem 0;
     }
     
     a {
@@ -185,7 +181,7 @@ body {
     }
     
     section {
-      padding: 6px 0 12px;
+      padding: 12px 0;
 
       input {
         border: 1px solid var(--fg);
@@ -244,11 +240,6 @@ body {
 }
 
 
-// footer button,
-// footer input,
-// input[type=submit],
-// .search-box button,
-// .toc summary,
 body a,
 .outline-dashed {
   outline: 2px dashed transparent;
@@ -918,6 +909,7 @@ video {
     border: 1px solid var(--fg);
   }
 
+  // NOTE
   // Can be used to override the previous rule
   &.borderless {
     border: 0;

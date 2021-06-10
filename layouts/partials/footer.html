@@ -1,10 +1,21 @@
-<!-- Custom or default copyright -->
-{{ if (templates.Exists "partials/custom/copyright.html") }}
-  {{ partial "custom/copyright" . }}
+<!-- Custom or default footer text -->
+{{ if (templates.Exists "partials/custom/footer-text.html") }}
+  {{ partial "custom/footer-text" . }}
 {{ else }}
-  {{ with .Site.Copyright }}
-    <p>{{ . | markdownify | emojify }}</p>
+
+  {{ with .Site.Params.footerText }}
+
+    {{ $processedFooterText := slice }}
+
+    {{ range . }}
+      {{ $currentParagraph := printf `<p>%s</p>` (. | markdownify | emojify) }}
+      {{ $processedFooterText = $processedFooterText | append $currentParagraph }}
+    {{ end }}
+    
+    {{ delimit $processedFooterText "" }}
+
   {{ end }}
+
 {{ end }}
 
 <!--

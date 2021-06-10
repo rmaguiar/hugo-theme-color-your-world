@@ -3,7 +3,8 @@ languageCode = "en"
 title = "Color Your World"
 theme = "color-your-world"
 
-copyright = "Copyright © 2008–2020, Steve Francia and the Hugo Authors;\n All rights reserved."
+# Used only in the RSS file
+copyright = "Copyright © 2008–2021, Steve Francia and the Hugo Authors; All rights reserved."
 
 enableEmoji = true
 enableInlineShortcodes = true
@@ -30,6 +31,11 @@ paginate = 5
   # Author
   author      = "John Doe"
   authorDesc  = "Some indescribable horror."
+  
+  # Footer text
+  # Each value will become a paragraph
+  # Keep it as an array
+  footerText = [ "Generated with [Hugo](https://gohugo.io) using the [Color Your World](https://gitlab.com/rmaguiar/hugo-theme-color-your-world) theme." ]
   
   # Site cover, for Open Graph, Twitter Cards and Schema.org
   # It will be used if the current page doesn't have a image cover
@@ -263,13 +269,15 @@ paginate = 5
     
       languageName  = "Português"
       
-      copyright = "Copyright © 2008–2020, Steve Francia e os autores do Hugo;\n Todos os direitos reservados."
+      copyright = "Copyright © 2008–2021, Steve Francia e os autores do Hugo; Todos os direitos reservados."
 
       [languages.pt.params]        
         description = "Sítio pessoal de João Ninguém"
         
         author      = "João Ninguém"
         authorDesc  = "Algum horror indescritível."
+        
+        footerText = [ "Gerado com [Hugo](https://gohugo.io) usando o tema [Color Your World](https://gitlab.com/rmaguiar/hugo-theme-color-your-world)." ]
         
         [languages.pt.params.notFound]
           title         = "Página não encontrada"

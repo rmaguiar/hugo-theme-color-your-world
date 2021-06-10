@@ -5,9 +5,10 @@ tags        : [ extra, markdown ]
 toc         : true
 ---
 
-[Live demo (on Netlify)](https://color-your-world-demo.netlify.app/) | [Demo (on Hugo Themes)](https://themes.gohugo.io/theme/hugo-theme-color-your-world/)
+* [Live demo (on Netlify)](https://color-your-world-demo.netlify.app/)
+* [Demo (on Hugo Themes)](https://themes.gohugo.io/theme/hugo-theme-color-your-world/)
 
-**Color Your World** is a [Hugo](https://gohugo.io) theme developed around a single experiment that led me to this:
+**Color Your World** is a [Hugo](https://gohugo.io/) theme developed around a single experiment that led me to this:
 
 ![HTML color picker with 12 presets.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/color-picker.png)
 
@@ -24,7 +25,7 @@ I've been working on this theme for so long that there are features I don't even
 * Keyboard-friendly;
 * Privacy-aware to an extent (no Google Analytics/Fonts, Disqus, etc);
 * Social shortcode including centralized and decentralized platforms;
-* Contact form shortcode (via [Formspree](https://formspree.io));
+* Contact form shortcode (via [Formspree](https://formspree.io/));
 * Open Graph, Twitter Cards and Structured Data (schema.org) meta tags;
 * Responsive images via image processing;
 * Basic search functionality via [Fuse.js](https://github.com/krisk/Fuse);
@@ -257,7 +258,7 @@ A **really** basic 404 page can be generated via config file by using:
 * The site title can be replaced by creating a file named `layouts/partials/custom/site-title.html`;
 * Custom favicons can be used by creating a file named `layouts/partials/custom/head-append.html`;
 * Custom CSS can be imported into the main CSS file by creating a file named `static/css/custom.css` or `assets/scss/custom.scss`;
-* The `copyright` param can be replaced by creating a file named `layouts/partials/custom/copyright.html`.
+* The `footerText` param can be replaced by creating a file named `layouts/partials/custom/footer-text.html`.
 
 ### More params
 
@@ -272,6 +273,11 @@ More possible params for your config file (or front matter):
   # Author
   author      = "John Doe"
   authorDesc  = "Some indescribable horror."
+  
+  # Footer text
+  # Each value will become a paragraph
+  # Keep it as an array
+  footerText = [ "Generated with [Hugo](https://gohugo.io) using the [Color Your World](https://gitlab.com/rmaguiar/hugo-theme-color-your-world) theme." ]
   
   # Site cover, for Open Graph, Twitter Cards and Schema.org
   # It will be used if the current page doesn't have an image cover
@@ -344,6 +350,7 @@ More possible params for your config file (or front matter):
     socialIsFlex = true
     
     # Keep anchor links hidden until it's focused/hovered
+    # They will always be visible in mobile devices, regardless the option
     # The default is false
     hideAnchors = true
 
@@ -368,4 +375,4 @@ More possible params for your config file (or front matter):
 
 If this repo was useful or helpful to you in any way, please consider buying me a coffee:
 
-<a href="https://www.buymeacoffee.com/rmaguiar" target="_blank" rel="noopener noreferrer"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;"></a>
+[![Buy Me a Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-red.png)](https://www.buymeacoffee.com/rmaguiar)
