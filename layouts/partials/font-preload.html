@@ -3,6 +3,6 @@
   Add a better way to detect custom fonts (ignoring the default ones)
 -->
 
-{{ range (resources.Match "fonts/*") }}
+{{- range (resources.Match "fonts/*") -}}
   <link rel="preload" href="{{ .RelPermalink }}" as="font" crossorigin="anonymous">
-{{ end }}
+{{ end -}}

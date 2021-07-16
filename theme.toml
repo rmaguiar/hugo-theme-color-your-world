@@ -5,7 +5,13 @@ name = "Color Your World"
 license = "MIT"
 licenselink = "https://gitlab.com/rmaguiar/hugo-theme-color-your-world/blob/master/LICENSE"
 description = "A minimalist theme for personal blogs with a colored twist."
+
+# The home page of the theme, where the source can be found.
 homepage = "https://gitlab.com/rmaguiar/hugo-theme-color-your-world"
+
+# If you have a running demo of the theme.
+demosite = "https://color-your-world-demo.netlify.app"
+
 tags = [
   "accessible",
   "blog",
@@ -22,14 +28,15 @@ tags = [
   "search",
   "technical"
 ]
+
 features = [
   "dark mode",
   "noscript",
   "privacy",
   "syntax highlighting"
 ]
-min_version = "0.73.0"
 
+# If the theme has a single author
 [author]
   name = "rmaguiar"
   homepage = "https://rmaguiar.keybase.pub"

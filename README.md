@@ -2,11 +2,10 @@
 
 [![Hugo](https://img.shields.io/badge/Hugo-%5E0.73.0-ff4088?logo=hugo)](https://gohugo.io/)
 [![License](https://badgen.net/badge/license/MIT/blue)](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/blob/master/LICENSE)
-[![Buy Me a Coffee](https://badgen.net/badge/icon/buy%20me%20a%20coffee?icon=buymeacoffee&label&color=ff5f5f)](https://www.buymeacoffee.com/rmaguiar)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/fcc6d88f-4913-4716-be24-1888c3acaa03/deploy-status)](https://app.netlify.com/sites/color-your-world-demo/deploys)
+[![Hugo Themes](https://badgen.net/badge/Hugo%20Themes/Color%20Your%20World?color=1dbc91)](https://themes.gohugo.io/hugo-theme-color-your-world/)
+[![Buy Me a Coffee](https://badgen.net/badge/icon/buy%20me%20a%20coffee?icon=kofi&label&color=ff5e5b)](https://ko-fi.com/rmaguiar)
 
-* [Live demo (on Netlify)](https://color-your-world-demo.netlify.app/)
-* [Demo (on Hugo Themes)](https://themes.gohugo.io/theme/hugo-theme-color-your-world/)
+[Live demo (on Netlify)](https://color-your-world-demo.netlify.app)
 
 **Color Your World** is a [Hugo](https://gohugo.io/) theme developed around a single experiment that led me to this:
 
@@ -62,7 +61,7 @@ Both color palettes can be found in `assets/scss/colors/variables.scss`.
 
 ### Accent color
 
-By default, there are 2 accent colors plus 10 on the `exampleSite`, distributed into pairs.
+By default, there are 2 accent colors plus 10 on the demo site, distributed into pairs.
 
 You can change the default mode and accent colors in the config:
 
@@ -97,9 +96,8 @@ In case you want to change it, it can be found in `assets/scss/colors/chroma` as
 The lines below are **required** in your config file to make use of this feature:
 
 ```toml
-[markup]
-  [markup.highlight]
-    noClasses = false
+[markup.highlight]
+  noClasses = false
 ```
 
 To disable it, you can just remove the `noClasses = false` (as its default value is `true`) and add the lines below:
@@ -265,6 +263,9 @@ A **really** basic 404 page can be generated via config file by using:
 More possible params for your config file (or front matter):
 
 ```toml
+# Used only in the RSS file
+copyright = "Copyright © 2008–2021, Steve Francia and the Hugo Authors; All rights reserved."
+
 [params]
   
   # Site description
@@ -375,4 +376,4 @@ More possible params for your config file (or front matter):
 
 If this repo was useful or helpful to you in any way, please consider buying me a coffee:
 
-[![Buy Me a Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-red.png)](https://www.buymeacoffee.com/rmaguiar)
+[![Buy Me a Coffee](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/rmaguiar)

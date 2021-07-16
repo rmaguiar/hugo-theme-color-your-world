@@ -103,7 +103,6 @@
 
 
 <meta name="robots" content="{{ if and (ne .Kind "404") (ne .Params.noindex true) }}index follow{{ else }}noindex follow{{ end }}">
-<meta name="referrer" content="no-referrer-when-downgrade">
 
 
 <!-- Canon -->
@@ -250,11 +249,11 @@
 
 
 <!-- Reduce repetition... -->
-{{ $centralized   := .Site.Params.Social.Centralized }}
-{{ $decentralized := .Site.Params.Social.Decentralized }}
+{{- $centralized   := .Site.Params.Social.Centralized -}}
+{{- $decentralized := .Site.Params.Social.Decentralized -}}
 
 <!-- Generate array with social profiles -->
-{{ $sameAs := slice }}
+{{- $sameAs := slice -}}
 
 {{ if .Site.Params.Social }}
   {{ range .Site.Data.social }}
@@ -344,14 +343,14 @@
 <!-- Preload fonts -->
 {{ partialCached "font-preload" . }}
 
+{{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}
+  {{ partialCached "katex-font-preload" . }}
+{{ end }}
+
+
 <!-- Preload search index -->
 {{ if eq .Layout "search" }}
   <link rel="preload" href="index.json" as="fetch" crossorigin="anonymous">
-{{ end }}
-
-<!-- Preconnect for KaTeX -->
-{{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="anonymous">
 {{ end }}
 
 
@@ -361,24 +360,11 @@
   but since it's easy to implement...
 -->
 
-{{ range $sameAs }}
+{{- range $sameAs -}}
   <link rel="me" href="{{ . }}"> 
-{{ end }}
+{{ end -}}
 
 
-<!--
-  Priority JavaScript
-  If not using Hugo server, remove every "console.log()"
--->
-
-{{ with resources.Get "js/prepone.js" | resources.ExecuteAsTemplate .Page . }}
-
-  <script>
-    {{ if $.Site.IsServer }}
-      {{ .Content | safeJS }}
-    {{ else }}
-      {{ .Content | replaceRE "console.log(.*?);" "" | safeJS }}
-    {{ end }}
-  </script>
-
-{{ end }}
+<!-- Main JS -->
+{{ $main := resources.Get "js/main.js" | resources.ExecuteAsTemplate "js/main.js" . | minify | fingerprint }}
+<script src="{{ $main.Permalink }}" integrity="{{ $main.Data.Integrity }}" crossorigin="anonymous"></script>

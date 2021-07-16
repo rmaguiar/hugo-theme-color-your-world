@@ -12,8 +12,8 @@
   markupAutoResizeWidth = 1280
   
 [style]
-  lightAccent  = "#225670"
-  darkAccent   = "#dd587c"
+  darkAccent   = "#1dbc91"
+  lightAccent  = "#1f676b"
   
   changeTransition = ".3s ease"
 

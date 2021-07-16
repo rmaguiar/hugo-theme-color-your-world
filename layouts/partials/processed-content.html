@@ -10,10 +10,12 @@
   I'm also taking this as an opportunity to fix other minor details
   like i18n and responsiveness.
   
-  Hopefully, most of the mess below can be removed in the future
+  ~~Hopefully, most of the mess below can be removed in the future
   as Hugo evolves and more render hooks are implemented. (I remember
   about adding anchor links to headings with replaceRE before
-  render hooks were available.)
+  render hooks were available.)~~
+  
+  I digress.
 -->
 
 <!-- i18n -->
@@ -27,10 +29,10 @@
 
 
 <!-- More i18n and also a11y, kind of -->
-{{ $highlightCodeBlock  := `(<div class="highlight"><(?:pre|div) class="chroma")(>)` }}
-{{ $indentedCodeBlock   := `(<pre)>(<code>)` }}
+{{ $highlightCodeBlock  := `(<div class="highlight"><(?:pre|div))(?:\s*|\stabindex="0") (class="chroma">)` }}
+{{ $indentedCodeBlock   := `(<pre)(?:>*|\stabindex="0">)(<code>)` }}
 
-{{ $labeledHighlightCodeBlock := printf `${1} aria-label="%s" tabindex=0${2}` (T "boxContainingCode") }}
+{{ $labeledHighlightCodeBlock := printf `${1} aria-label="%s" tabindex=0 ${2}` (T "boxContainingCode") }}
 {{ $labeledIndentedCodeBlock  := printf `${1} aria-label="%s" tabindex=0>${2}` (T "boxContainingCode") }}
 
 

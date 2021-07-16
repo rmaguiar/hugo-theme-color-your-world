@@ -39,7 +39,7 @@
   
   <label class="label-form">{{ T "message" }}<textarea id="message" aria-label="{{ T "message" }}" class="input-text" rows="6" name="message" {{ with .Site.Params.Contact.messageMinLength | default 140 }}minlength="{{ . }}"{{ end }} {{ with .Site.Params.Contact.Placeholder.message }}placeholder="{{ . }}"{{ end }} required></textarea></label>
   
-  <input type="text" name="_gotcha" style="display:none">
+  <input type="text" name="_gotcha">
   
   <input class="outline-dashed" type="submit" value="{{ T "submit" }}">
 

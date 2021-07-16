@@ -139,7 +139,7 @@ other = "Uma página encontrada"
 other = "páginas encontradas"
 
 [searchAwaitingSearch]
-other = "Aguardando pesquisa."
+other = "Aguardando busca."
 
 [searchTooMany]
 other = "Muitas páginas encontradas. Por favor, tente repetir a busca usando outro termo."

@@ -62,24 +62,13 @@
       {{ end }}
       
     </svg>
-
-    <!--
-      Remnant JavaScript
-      If not using Hugo server, remove every "console.log()"
-    -->
     
-    {{ with resources.Get "js/postpone.js" | resources.ExecuteAsTemplate .Page . | minify }}
-
-      <script>
-        {{ if $.Site.IsServer }}
-          {{ .Content | safeJS }}
-        {{ else }}
-          {{ .Content | replaceRE "console.log(.*?);" "" | safeJS }}
-        {{ end }}
-      </script>
-
+    <!-- Search -->
+    {{ if eq .Layout "search" }}
+      {{ $searchJS := resources.Get "js/search.js" | resources.ExecuteAsTemplate (printf "js/search.js" | relLangURL) . | minify | fingerprint }}
+      <script type="module" src="{{ $searchJS.Permalink }}" integrity="{{ $searchJS.Data.Integrity }}" crossorigin="anonymous"></script>
     {{ end }}
-    
+
     <!-- KaTeX -->
     {{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}
       {{ partial "katex" . }}

@@ -19,38 +19,6 @@ $change-transition: {{ .Site.Params.Style.changeTransition | default .Site.Data.
 html {
   scroll-behavior: smooth;
   
-  // Light mode
-  &[data-mode='light'] {
-    --bg: #{$light-background};
-    --fg: #{$light-foreground};
-    
-    --alt-bg: #{$light-alt-background};
-    --alt-fg: #{$light-alt-foreground};
-    
-    --dtl: #{$light-details};
-    --err: #{$light-error-color};
-    
-    --bgmod: #{$light-bg-modifier};
-
-    --input-bg: #{$light-input-background};
-    --input-fg: #{$light-input-foreground};
-    --input-bd: #{$light-input-border};
-
-    --lpress: #{$light-letterpress};
-    --rlpress: #{$dark-letterpress};
-
-    // Custom Chroma stylesheet
-    {{ if .Site.Params.Style.useCustomChroma | default true }}
-    
-      {{ if (fileExists "static/css/chroma/light.css") }}
-        @import '/css/chroma/light.css';
-      {{ else if (resources.Get "scss/colors/chroma/light.scss") }}
-        @import 'colors/chroma/light';
-      {{ end }}
-      
-    {{ end }}
-  }
-  
   // Dark mode
   &[data-mode='dark'] {
     --bg: #{$dark-background};
@@ -83,6 +51,38 @@ html {
         @import '/css/chroma/dark.css';
       {{ else if (resources.Get "scss/colors/chroma/dark.scss") }}
         @import 'colors/chroma/dark';
+      {{ end }}
+      
+    {{ end }}
+  }
+  
+  // Light mode
+  &[data-mode='light'] {
+    --bg: #{$light-background};
+    --fg: #{$light-foreground};
+    
+    --alt-bg: #{$light-alt-background};
+    --alt-fg: #{$light-alt-foreground};
+    
+    --dtl: #{$light-details};
+    --err: #{$light-error-color};
+    
+    --bgmod: #{$light-bg-modifier};
+
+    --input-bg: #{$light-input-background};
+    --input-fg: #{$light-input-foreground};
+    --input-bd: #{$light-input-border};
+
+    --lpress: #{$light-letterpress};
+    --rlpress: #{$dark-letterpress};
+
+    // Custom Chroma stylesheet
+    {{ if .Site.Params.Style.useCustomChroma | default true }}
+    
+      {{ if (fileExists "static/css/chroma/light.css") }}
+        @import '/css/chroma/light.css';
+      {{ else if (resources.Get "scss/colors/chroma/light.scss") }}
+        @import 'colors/chroma/light';
       {{ end }}
       
     {{ end }}
@@ -466,40 +466,63 @@ summary,
 
 
 // Lists in general
+nav#TableOfContents,
 article ol,
 article ul {
   li {
-    margin-bottom: .45rem;
+    &:first-of-type {
+      margin-top: .3rem;
+    }
   }
-}
-
-
-ol {
-  counter-reset: a-counter;
   
   li {
-    counter-increment: a-counter;
-    
-    &::before {
-      content: counter(a-counter) '';
-      
-      font-size: .85rem;
-      font-weight: $body-bold-weight;
-
-      @include letterpress(var(--lpress));
-
-      background: var(--fg);
-      border: 1px solid var(--lpress);
-      border-radius: $border-radius;
-      color: var(--bg);
-      
-      margin-right: 12px;
-      padding: 2px 7.5px;
+    &:not(:last-of-type),
+    ul li:first-of-type,
+    ol li:first-of-type {
+      margin-bottom: .3rem;
     }
   }
 }
 
 
+ol li > p,
+ul li > p {
+  margin: 0;
+  display: inline-block;
+}
+
+
+
+ol {
+  counter-reset: n;
+  
+  & > li {
+    counter-increment: n;
+
+    &::before {
+      content: counter(n) '';
+      //content: counters(n, '.') ''; // Doesn't seem to work well with mixed nested lists (ul + ol)
+      
+      font-family: $code-font;
+      font-size: .85rem;
+      font-weight: $body-bold-weight;
+
+      @include letterpress(var(--lpress));
+
+      border: 1px solid var(--lpress);
+      color: var(--bg);
+
+      padding: 3px 7.5px 2px; // padding: 2px 7.5px;
+    }
+  }
+}
+
+li::before {
+  margin-right: 12px;
+
+  background: var(--fg);
+  border-radius: $border-radius;
+}
 
 
 
@@ -688,7 +711,7 @@ article > pre,
 
 
 .highlight > div table {
-  padding: 0 24px;
+  padding: var(--lnhl-pad); // 0 24px;
   max-height: $box-max-height;
 }
 
@@ -978,20 +1001,6 @@ video {
   
     padding: 6px 15px 15px 9px;
 
-    li {
-      &:first-of-type {
-        margin-top: .3rem;
-      }
-    }
-    
-    ul li,
-    ol li {
-      &:not(:last-of-type),
-      ul li:first-of-type,
-      ol li:first-of-type {
-        margin-bottom: .3rem;
-      }
-    }
   }
 }
 
@@ -1002,31 +1011,27 @@ article > ol {
   line-height: 1.5rem;
 }
 
-#TableOfContents ul,
-.footnotes ol {
+#TableOfContents > ol,
+#TableOfContents > ul,
+.footnotes > ol {
   padding-left: 24px;
 }
 
-article > ul,
-article > ul ul,
-article > ol,
-article > ol ol {
-  //margin: 1.8rem 0;
-  padding: 0 24px 0;
+article ol,
+article ul {
+  padding-inline-start: 1rem;
 }
 
 #TableOfContents ul,
-article > ul {
+article > ol ul,
+article > ul,
+article > ul ul {
 
-  li:before {
+  & > li::before {
     content: '';
-    margin-right: 12px;
 
-    background: var(--fg);
-    border-radius: $border-radius;
-    
     @include squared(18px);
-
+    
     display: inline-block;
     
     // HACK
@@ -1130,6 +1135,7 @@ summary {
   text-align: center;
   
   margin: 3rem auto 1rem;
+  padding: 0;
 
   display: flex;
   flex-wrap: wrap;
@@ -1236,6 +1242,7 @@ summary {
   }
 
   input[name=q] {
+    min-width: 210px; // Override, not the best solution
     padding: 6px 12px;
     flex: 1;
 
@@ -1478,18 +1485,25 @@ article {
 
 
 html {
+  // Margin for blockquote
   --blk-mg: 1.05rem .75rem;
+  
+  // Padding for highlight
+  --hl-pad: 15px 18px;
+  
   --il-pad: 0 12px;
   
-  --hl-pad: 15.75px 18px;
+  // Padding for highlight with line numbers
+  --lnhl-pad: 3px 18px;
 }
 
+// If not in mobile
 @include respond-above($mobile-breakpoint) {
   html {
     --blk-mg: 2.1rem 1.5rem;
-    --il-pad: 6px 24px;
+    --hl-pad: 18px 24px; // 21px 24px;
     
-    --hl-pad: 21px 24px;
+    --lnhl-pad: 6px 24px;
   }
   
   .footnotes {
@@ -1519,24 +1533,6 @@ html {
   .noscript {
     font-weight: bold;
   }
-{{ end }}
-
-
-// Rich Content
-{{ if (fileExists "static/css/rich-content.css") }}
-  @import '/css/rich-content.css';
-{{ else if (resources.Get "scss/rich-content.scss") }}
-  @import 'rich-content';
-{{ end }}
-
-
-// TODO
-// Custom user stuff
-// This isn't good enough
-{{ if (fileExists "static/css/custom.css") }}
-  @import '/css/custom.css';
-{{ else if (resources.Get "scss/custom.scss") }}
-  @import 'custom';
 {{ end }}
 
 
@@ -1573,3 +1569,44 @@ html {
     border-width: 1px 0 0 1px;
   }
 }
+
+
+// "Honeypot"
+input[name="_gotcha"] {
+  display: none;
+}
+
+
+// Definition list
+dt {
+  font-weight: $heading-weight;
+  font-style: italic;
+}
+
+dd {
+  margin: 0 1.5rem 1rem;
+}
+
+dt,
+dd {
+  line-height: 1.5rem;
+}
+
+
+
+// Rich Content
+{{ if (fileExists "static/css/rich-content.css") }}
+  @import '/css/rich-content.css';
+{{ else if (resources.Get "scss/rich-content.scss") }}
+  @import 'rich-content';
+{{ end }}
+
+
+// TODO
+// Custom user stuff
+// This isn't good enough
+{{ if (fileExists "static/css/custom.css") }}
+  @import '/css/custom.css';
+{{ else if (resources.Get "scss/custom.scss") }}
+  @import 'custom';
+{{ end }}

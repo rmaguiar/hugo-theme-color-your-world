@@ -1,49 +1,45 @@
 <!-- KaTeX -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha256-tn6hZ2YGDv0w1/DaFL4MiUoXuAVclrtFZs13ch3TB9M=" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha256-1qhJwAgsSPVSSjlQVTewHS49eaoAbOz651dveUANVBI=" crossorigin="anonymous"></script>
+{{ $katexCSS := resources.Get "libs/katex@0.13.11/dist/katex.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $katexCSS.Permalink }}" integrity="{{ $katexCSS.Data.Integrity }}" crossorigin="anonymous">
+
+{{ $katexJS := resources.Get "libs/katex@0.13.11/dist/katex.js" | minify | fingerprint }}
+<script defer src="{{ $katexJS.Permalink }}" integrity="{{ $katexJS.Data.Integrity }}" crossorigin="anonymous"></script>
+
 
 <!-- mhchem extension -->
 {{ if or (in .Params.katexExtensions "mhchem") (in .Site.Params.katexExtensions "mhchem") }}
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/mhchem.min.js" integrity="sha256-eI7Tty86eW+t5CeLj2o77+bKgW1jLziQASHI3lh+sn8=" crossorigin="anonymous"></script>
+
+  {{ $mhchem := resources.Get "libs/katex@0.13.11/dist/contrib/mhchem.js" | minify | fingerprint }}
+  <script defer src="{{ $mhchem.Permalink }}" integrity="{{ $mhchem.Data.Integrity }}" crossorigin="anonymous"></script>
+
 {{ end }}
+
 
 <!-- copy-tex extension -->
 {{ if or (in .Params.katexExtensions "copy-tex") (in .Site.Params.katexExtensions "copy-tex") }}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.css" integrity="sha256-v5/0E3/sOPYlVBnhQtCIPJxSCQiF10b4Du4SsnPZs+A=" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.js" integrity="sha256-KrIjcykCG8RDmGyDJ/bmE1f7aKVOXSM9IkAjcYwCIH0=" crossorigin="anonymous"></script>
+
+  {{ $copyTexCSS := resources.Get "libs/katex@0.13.11/dist/contrib/copy-tex.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $copyTexCSS.Permalink }}" integrity="{{ $copyTexCSS.Data.Integrity }}" crossorigin="anonymous">
+
+  {{ $copyTexJS := resources.Get "libs/katex@0.13.11/dist/contrib/copy-tex.js" | minify | fingerprint }}
+  <script defer src="{{ $copyTexJS.Permalink }}" integrity="{{ $copyTexJS.Data.Integrity }}" crossorigin="anonymous"></script>
+  
 {{ end }}
 
-<!-- auto-render extension + tabIndex HACK (see below) -->
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha256-oEuQVLwO5Ii6subChtLbrY5gx7NDRU+UJJ9jvvau+FI=" crossorigin="anonymous" onload="renderMathInElement(document.body);addTabIndex()"></script>
 
 <!--
-  HACK
-  Google Chrome will ignore "scroll" elements while navigating via keyboard
-  I could "fix" such behavior by using "tabindex=0"
-  But since KaTeX stuff here is being injected with JS, it seems I need to fight JS with JS
+  auto-render extension + auto-render options + tabindex HACK (see below)
   
-  (what a BS...)
+  Chrome will ignore "scroll" elements while navigating
+  via keyboard (while Firefox will not)
+  
+  The workaround used here is to inject "tabindex=0" after
+  the auto-render extension work is done
 -->
+{{ $autoRender := resources.Get "libs/katex@0.13.11/dist/contrib/auto-render.js" }}
+{{ $katexAutoRenderOptions := resources.Get "js/katex-auto-render-options.js" }}
+{{ $katexPostRender := resources.Get "js/katex-post-render.js" | resources.ExecuteAsTemplate "js/katex-post-render.js" . }}
 
-<script>
-  'use strict';
-  
-  function getAll(selector) {
-    return Array.prototype.slice.call(document.querySelectorAll(selector), 0)
-  };
+{{ $katexCustomRender := slice $autoRender $katexAutoRenderOptions $katexPostRender | resources.Concat "js/katex-custom-render.js" | minify | fingerprint }}
+<script defer src="{{ $katexCustomRender.Permalink }}" integrity="{{ $katexCustomRender.Data.Integrity }}" crossorigin="anonymous"></script>
 
-  function addTabIndex() {
-  
-    const $katexBlocks = getAll('span.katex-display');
-    
-    // Some a11y
-    const $katexLabel = {{ T "boxContainingExpression" }};
-    
-    $katexBlocks.forEach(function ($el) {
-      $el.tabIndex = 0;
-      
-      $el.setAttribute('aria-label', $katexLabel);
-    })
-  }
-
-</script>
