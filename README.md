@@ -5,7 +5,8 @@
 [![Hugo Themes](https://badgen.net/badge/Hugo%20Themes/Color%20Your%20World?color=1dbc91)](https://themes.gohugo.io/hugo-theme-color-your-world/)
 [![Buy Me a Coffee](https://badgen.net/badge/icon/buy%20me%20a%20coffee?icon=kofi&label&color=ff5e5b)](https://ko-fi.com/rmaguiar)
 
-[Live demo (on Netlify)](https://color-your-world-demo.netlify.app)
+* [Live demo (on Netlify)](https://color-your-world-demo.netlify.app)
+* [Demo repo](https://gitlab.com/rmaguiar/hugo-theme-color-your-world-demo/)
 
 **Color Your World** is a [Hugo](https://gohugo.io/) theme developed around a single experiment that led me to this:
 
@@ -19,7 +20,7 @@ It makes heavy use of [Hugo Pipes](https://gohugo.io/hugo-pipes) and I highly re
 
 I've been working on this theme for so long that there are features I don't even remember anymore... But here are *some*:
 
-* Customizable light/dark mode;
+* Customizable dark/light mode;
 * Customizable "accent color" (in an user-level);
 * Keyboard-friendly;
 * Privacy-aware to an extent (no Google Analytics/Fonts, Disqus, etc);
@@ -55,7 +56,7 @@ For more information read the [Hugo official setup guide](https://gohugo.io/over
 
 ## Customization
 
-### Light/dark mode colors
+### Dark/light mode colors
 
 Both color palettes can be found in `assets/scss/colors/variables.scss`.
 
@@ -73,9 +74,9 @@ You can change the default mode and accent colors in the config:
   # The default is false
   isDark = true
 
-  # Accent colors for light and dark mode respectively
-  lightAccent  = "#225670" # Default is "#225670"
-  darkAccent   = "#dd587c" # Default is "#dd587c"
+  # Accent colors for dark and light mode respectively
+  darkAccent   = "#1dbc91" # Default is "#1dbc91"
+  lightAccent  = "#1f676b" # Default is "#1f676b"
 
   # More colors, pick as many as you want (not really sure if there's a limit)
   # Apparently these may not show up on every modern browser (ie.: Firefox)
@@ -85,13 +86,13 @@ You can change the default mode and accent colors in the config:
 
 ### Syntax highlighting
 
-This theme comes with two chroma styles, meant to be used with light and dark mode respectively. These are **Solarized Dark** for light mode and **Monokai** for dark mode.
+This theme comes with two chroma styles, meant to be used with dark and light mode respectively. These are **Monokai** for dark mode and **Solarized Dark** for light mode.
 
 ![Syntax highlighting in both dark and light modes.](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/raw/master/images/syntax-highlight.gif)
 
 It's worth noting that I'm not using the original stylesheets, but modified stylesheets based on the [pygments-high-contrast-stylesheets](https://github.com/mpchadwick/pygments-high-contrast-stylesheets) (aka "WCAG AA passing Pygments stylesheets").
 
-In case you want to change it, it can be found in `assets/scss/colors/chroma` as `light.scss` and `dark.scss`.
+In case you want to change it, it can be found in `assets/scss/colors/chroma` as `dark.scss` and `light.scss`.
 
 The lines below are **required** in your config file to make use of this feature:
 
