@@ -11419,7 +11419,7 @@ function mclass_mathmlBuilder(group, options) {
   var inner = buildMathML_buildExpression(group.body, options);
 
   if (group.mclass === "minner") {
-    return mathMLTree.newDocumentFragment(inner);
+    node = new mathMLTree.MathNode("mpadded", inner);
   } else if (group.mclass === "mord") {
     if (group.isCharacterBox) {
       node = inner[0];
@@ -11447,6 +11447,10 @@ function mclass_mathmlBuilder(group, options) {
     } else if (group.mclass === "mopen" || group.mclass === "mclose") {
       node.attributes.lspace = "0em";
       node.attributes.rspace = "0em";
+    } else if (group.mclass === "minner") {
+      node.attributes.lspace = "0.0556em"; // 1 mu is the most likely option
+
+      node.attributes.width = "+0.1111em";
     } // MathML <mo> default space is 5/18 em, so <mrel> needs no action.
     // Ref: https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mo
 
@@ -18347,7 +18351,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
   /**
    * Current KaTeX version
    */
-  version: "0.15.1",
+  version: "0.15.2",
 
   /**
    * Renders the given LaTeX into an HTML+MathML combination, and adds

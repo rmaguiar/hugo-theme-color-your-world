@@ -31,10 +31,10 @@ function getUrlParameter(name) {
 const searchQuery = getUrlParameter('q');
 
 // Search info section
-const searchInfo = document.getElementById('search-info');
+const searchInfo = document.querySelector('#search-info');
 
 // Show message
-function displayMessage(message, type) {
+function report(message, type) {
   const el = document.createElement('p');
   
   el.textContent = message;
@@ -54,7 +54,7 @@ if (searchQuery) {
   
   executeSearch(searchQuery);
 } else {
-  displayMessage('{{ T "searchAwaitingSearch" }}');
+  report('{{ T "searchAwaitingSearch" }}');
 }
 
 
@@ -68,27 +68,29 @@ function executeSearch(searchQuery) {
     // Limit results and throw an error if too many pages are found
     const limit = {{ .Site.Params.Search.maxResults | default 30 }};
 
-    import('/libs/fuse.js@6.4.6/dist/fuse.basic.esm.min.js')
+    import('/libs/fuse.js@6.5.3/dist/fuse.basic.esm.min.js')
       .then((fuseBasic) => {
         const fuse = new fuseBasic.default(data, fuseOptions);
         return fuse.search(searchQuery);
       })
       .then((output) => {
-        displayMessage('{{ T "searchResultsFor" }}: ' + searchQuery);
+        report('{{ T "searchResultsFor" }}: ' + searchQuery);
+
+        const matches = output.length;
         
-        if (output.length > 0) {
-          if (output.length == 1) {
-            displayMessage('{{ T "searchOnePageFound" }}.');
-          } else if (1 < output.length && output.length < limit + 1) {
-            displayMessage(output.length + ' {{ T "searchPagesFound" }}.');
+        if (matches > 0) {
+          if (matches == 1) {
+            report('{{ T "searchOnePageFound" }}.');
+          } else if (1 < matches && matches < limit + 1) {
+            report(matches + ' {{ T "searchPagesFound" }}.');
           } else {
-            displayMessage('{{ T "searchTooMany" }}', 'error');
+            report('{{ T "searchTooMany" }}', 'error');
           }
         } else {
-          displayMessage('{{ T "searchNoPageFound" }}', 'error');
+          report('{{ T "searchNoPageFound" }}', 'error');
         }
         
-        if (0 < output.length && output.length < limit + 1) {
+        if (0 < matches && matches < limit + 1) {
           populateResults(output);
         }
       });
@@ -98,22 +100,24 @@ function executeSearch(searchQuery) {
 
 // Populate results
 function populateResults(output) {
-  output.forEach((value, key) => {
+  output.forEach((value) => {
+    
+    const el = value.item;
 
-    const postTitle = value.item.title;
-    const postDate = value.item.date;
+    const postTitle = el.title;
+    const postDate = el.date;
     
     const htmlPostTitle = document.createElement('p');
     htmlPostTitle.textContent = postTitle;
               
     // Pull HTML template
-    const resultsTemplate = document.getElementById('search-results-template')
+    const resultsTemplate = document.querySelector('#search-results-template')
       .content.cloneNode(true);
       
     const postLink = resultsTemplate.querySelector('.btn');
-
+    
     // Replace values
-    postLink.setAttribute('href', value.item.permalink);
+    postLink.setAttribute('href', el.permalink);
     postLink.setAttribute('title', postTitle);
 
     if (postDate) {
@@ -132,7 +136,7 @@ function populateResults(output) {
       postLink.appendChild(htmlPostTitle);
     }
 
-    document.getElementById('search-results')
+    document.querySelector('#search-results')
       .appendChild(resultsTemplate);
   });
 }

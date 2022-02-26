@@ -1,15 +1,17 @@
 <!-- KaTeX -->
-{{ $katexCSS := resources.Get "libs/katex@0.15.1/dist/katex.css" | minify | fingerprint }}
+{{ $katexVersion := "0.15.2" }}
+
+{{ $katexCSS := resources.Get (printf "libs/katex@%s/dist/katex.css" $katexVersion) | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $katexCSS.Permalink }}" integrity="{{ $katexCSS.Data.Integrity }}" crossorigin="anonymous">
 
-{{ $katexJS := resources.Get "libs/katex@0.15.1/dist/katex.js" | minify | fingerprint }}
+{{ $katexJS := resources.Get (printf "libs/katex@%s/dist/katex.js" $katexVersion) | minify | fingerprint }}
 <script defer src="{{ $katexJS.Permalink }}" integrity="{{ $katexJS.Data.Integrity }}" crossorigin="anonymous"></script>
 
 
 <!-- mhchem extension -->
 {{ if or (in .Params.katexExtensions "mhchem") (in .Site.Params.katexExtensions "mhchem") }}
 
-  {{ $mhchem := resources.Get "libs/katex@0.15.1/dist/contrib/mhchem.js" | minify | fingerprint }}
+  {{ $mhchem := resources.Get (printf "libs/katex@%s/dist/contrib/mhchem.js" $katexVersion) | minify | fingerprint }}
   <script defer src="{{ $mhchem.Permalink }}" integrity="{{ $mhchem.Data.Integrity }}" crossorigin="anonymous"></script>
 
 {{ end }}
@@ -18,10 +20,10 @@
 <!-- copy-tex extension -->
 {{ if or (in .Params.katexExtensions "copy-tex") (in .Site.Params.katexExtensions "copy-tex") }}
 
-  {{ $copyTexCSS := resources.Get "libs/katex@0.15.1/dist/contrib/copy-tex.css" | minify | fingerprint }}
+  {{ $copyTexCSS := resources.Get (printf "libs/katex@%s/dist/contrib/copy-tex.css" $katexVersion) | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $copyTexCSS.Permalink }}" integrity="{{ $copyTexCSS.Data.Integrity }}" crossorigin="anonymous">
 
-  {{ $copyTexJS := resources.Get "libs/katex@0.15.1/dist/contrib/copy-tex.js" | minify | fingerprint }}
+  {{ $copyTexJS := resources.Get (printf "libs/katex@%s/dist/contrib/copy-tex.js" $katexVersion) | minify | fingerprint }}
   <script defer src="{{ $copyTexJS.Permalink }}" integrity="{{ $copyTexJS.Data.Integrity }}" crossorigin="anonymous"></script>
   
 {{ end }}
@@ -36,7 +38,7 @@
   The workaround used here is to inject "tabindex=0" after
   the auto-render extension work is done
 -->
-{{ $autoRender := resources.Get "libs/katex@0.15.1/dist/contrib/auto-render.js" }}
+{{ $autoRender := resources.Get (printf "libs/katex@%s/dist/contrib/auto-render.js" $katexVersion) }}
 {{ $katexAutoRenderOptions := resources.Get "js/katex-auto-render-options.js" }}
 {{ $katexPostRender := resources.Get "js/katex-post-render.js" | resources.ExecuteAsTemplate "js/katex-post-render.js" . }}
 
