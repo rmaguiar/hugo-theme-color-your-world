@@ -1,8 +1,8 @@
 'use strict';
 
 // Get default accent colors
-{{ $darkAccent   := .Site.Params.Style.darkAccent   | default .Site.Data.default.style.darkAccent }}
-{{ $lightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
+{{ $defaultDarkAccent   := .Site.Params.Style.darkAccent  | default .Site.Data.default.style.darkAccent }}
+{{ $defaultLightAccent  := .Site.Params.Style.lightAccent | default .Site.Data.default.style.lightAccent }}
 
 // Get CSS transition
 {{ $changeTransition := .Site.Params.Style.changeTransition | default .Site.Data.default.style.changeTransition }}
@@ -12,16 +12,7 @@
 // Based on: https://gist.github.com/regpaq/04c67e8aceecbf0fd819945835412d1f
 // =================================================
 
-{{ if not .Site.Params.Style.ignoreSystemSettings }}
-  // Use prefers-color-scheme media query to detect OS dark/light mode setting
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)');
-{{ end }}
-
 const rootElement = document.documentElement;
-
-const rootStyle = rootElement.style;
-const metaThemeColor = document.querySelector('meta[name=theme-color]');
 
 // Set the dark mode
 function setDark() {
@@ -33,60 +24,102 @@ function setLight() {
   rootElement.setAttribute('data-mode', 'light');
 }
 
-// Initialization triggers dark/light mode based on prior preference, then OS setting
-// If both are unavailable, the default 'data-mode' attribute will be used instead
-// And yes, I know 'true' here is a string
-if(localStorage.getItem('isDark') == 'true') {
+/*
+ * Initialization triggers dark/light mode based on 3 things
+ * The priority follows:
+ * 
+ * 1. Local preference (localStorage)
+ * 2. System settings (prefers-color-scheme)
+ * 3. HTML data-* attribute (data-mode)
+ */
+
+const localMode = localStorage.getItem('mode');
+
+{{ if not .Site.Params.Style.ignoreSystemSettings }}
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)');
+{{ end }}
+
+if (localMode === 'dark') {
   setDark();
-} else if(localStorage.getItem('isDark') == 'false') {
+} else if (localMode === 'light') {
   setLight();
 
   {{ if not .Site.Params.Style.ignoreSystemSettings }}
-    } else if(prefersDark.matches) {
+    } else if (prefersDark.matches) {
       setDark();
-    } else if(prefersLight.matches) {
+    } else if (prefersLight.matches) {
       setLight();
   {{ end }}
 
 }
 
-//console.log('Dark/light mode loaded.');
+
+{{ if .Site.IsServer }}
+
+  function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  const currentModeTitle = capitalize(rootElement.getAttribute('data-mode'));
+
+  if (localMode !== null) {
+    console.log(currentModeTitle +
+    ' mode loaded via local preference (localStorage).');
+  } else if (typeof prefersDark !== 'undefined') {
+    console.log(currentModeTitle +
+    ' mode loaded via system settings (prefers-color-scheme).');
+  } else {
+    console.log(currentModeTitle +
+    ' mode loaded via HTML data-* attribute (data-mode).');
+  }
+  
+{{ end }}
 
 
-// TODO
-// Maybe I should rethink this...
 function getAccent() {
   
   const currentMode = rootElement.getAttribute('data-mode');
+  
+  const localDarkAccent = localStorage.getItem('darkAccent');
+  const localLightAccent = localStorage.getItem('lightAccent');
+  
   let currentAccent;
 
   if (currentMode === 'dark') {
   
-    if (localStorage.getItem('darkAccent') === null) {
-      //console.log("The user never used the palette while in the 'dark' mode.");
-      //console.log("As the mode is 'dark', loading the 'default accent color' for the dark mode.");
-      
-      currentAccent = "{{ $darkAccent }}";
+    if (localDarkAccent === null) {
+      currentAccent = '{{ $defaultDarkAccent }}';
     } else {
-      //console.log("The user previously used the palette while in the 'dark' mode.");
-      //console.log("As the mode is 'dark', loading the 'dark accent color' chosen by the user.");
-      
-      currentAccent = localStorage.getItem('darkAccent');
+      currentAccent = localDarkAccent;
     }
-  } else if (currentMode === 'light') {
+    
+  } else {
 
-    if (localStorage.getItem('lightAccent') === null) {
-      //console.log("The user never used the palette while in the 'light' mode.");
-      //console.log("As the mode is 'light', loading the 'default accent color' for the light mode.");
-      
-      currentAccent = "{{ $lightAccent }}";
+    if (localLightAccent === null) {
+      currentAccent = '{{ $defaultLightAccent }}';
     } else {
-      //console.log("The user previously used the palette while in the 'light' mode.");
-      //console.log("As the mode is 'light', loading the 'light accent color' chosen by the user.");
-      
-      currentAccent = localStorage.getItem('lightAccent');
+      currentAccent = localLightAccent;
     }
+    
   }
+  
+  {{ if .Site.IsServer }}
+  
+    if (
+      (currentMode === 'dark') &&
+      (localStorage.getItem('darkAccent') !== null) ||
+      (currentMode === 'light') &&
+      (localStorage.getItem('lightAccent') !== null)
+    ) {
+      console.log('Custom accent color defined. Loading custom ' +
+      currentMode + ' accent (' + currentAccent + ').');
+    } else {
+      console.log('Custom accent color NOT defined. Loading default ' +
+      currentMode + ' accent (' + currentAccent + ').');
+    }
+    
+  {{ end }}
   
   return currentAccent;
 }
@@ -95,117 +128,127 @@ const activeAccent = getAccent();
 
 // Set the active accent color for these right after setting dark/light mode
 // Should mitigate any flashing/flickering
+const rootStyle = rootElement.style;
+
 rootStyle.setProperty('--accent', activeAccent);
 
+
 // Also meta-theme cuz, why not
+const metaThemeColor = document.querySelector('meta[name=theme-color]');
+
 metaThemeColor.setAttribute('content', activeAccent);
 
 
-document.addEventListener('DOMContentLoaded', function () {
 
-  // Accent color palette (HTML color picker)
-  const palette = document.querySelector('footer input');
+document.addEventListener('DOMContentLoaded', function() {
 
-  palette.onchange = function () {
-
-    // User's pick
-    const pick = palette.value;
-
-    rootStyle.setProperty('--accent', pick);
-    
-    if (rootElement.getAttribute('data-mode') === 'dark') {
-      localStorage.setItem('darkAccent', pick);
-    } else {
-      localStorage.setItem('lightAccent', pick);
-    }
-    
-    updateAccent();
-  }
-
-  // Update the color picker with the active accent color 
-  palette.value = activeAccent;
-
-  // Smooth transition, only when changing modes (and not loading pages)
-  function smoothTransition() {
-    document.body.style.transition 
-      = document.querySelector('header').style.transition
-      = document.querySelector('footer').style.transition
-      = '{{ printf "background-color %[1]s, color %[1]s" $changeTransition }}';
-  }
-  
-  // Switch mode
-  function userModeChange() {
-  
-    smoothTransition();
-
-    if (rootElement.getAttribute('data-mode') == 'dark') {
-      setLight();
-      localStorage.setItem('isDark', 'false');
-      
-      //console.log("Mode changed to 'light' by the user.");
-    } else {
-      setDark();
-      localStorage.setItem('isDark', 'true');
-
-      //console.log("Mode changed to 'dark' by the user.");
-    }
-    
-    updateAccent();
-  }
-
-  
-  // TEST
-  // Keyboard shortcut for mode change, here for testing purposes only
-  // CTRL + ALT + M
-  {{ if .Site.IsServer }}
-    document.addEventListener('keydown', (event) => {
-      const e = event || window.event;
-      if (e.keyCode === 77 && e.ctrlKey && e.altKey) {
-        userModeChange();
-        return;
-      }
-    }, false);
-  {{ end }}
-
-
-  {{ if not .Site.Params.Style.ignoreSystemSettings }}
-  
-    // Runs when OS changes dark/light mode. Changes only if you were on default
-    // color state (light on light mode, dark on dark mode).
-    function OSModeChange() {
-    
-      smoothTransition();
-      
-      if (prefersDark.matches) {
-        setDark();
-        localStorage.setItem('isDark', 'false');
-
-        //console.log("Mode changed to 'light' in OS level.");
-      } else if (prefersLight.matches) {
-        setLight();
-        localStorage.setItem('isDark', 'true');
-        
-        //console.log("Mode changed to 'dark' in OS level.");
-      }
-      
-      updateAccent();
-    }
-
-    // Listeners for when you change OS setting for dark/light mode
-    prefersDark.addListener(OSModeChange);
-    prefersLight.addListener(OSModeChange);
-  
-  {{ end }}
+  const colorPicker = document.querySelector('footer input');
   
   function updateAccent() {
     const activeAccent = getAccent();
 
     rootStyle.setProperty('--accent', activeAccent);
-    palette.value = activeAccent;
+    colorPicker.value = activeAccent;
     metaThemeColor.setAttribute('content', activeAccent);
   }
+
+  colorPicker.onchange = function() {
+
+    const selectedAccent = colorPicker.value;
+
+    rootStyle.setProperty('--accent', selectedAccent);
+    
+    if (rootElement.getAttribute('data-mode') === 'dark') {
+      localStorage.setItem('darkAccent', selectedAccent);
+    } else {
+      localStorage.setItem('lightAccent', selectedAccent);
+    }
+    
+    updateAccent();
+  }
+
+  // Update the color picker with the active accent color
+  colorPicker.value = activeAccent;
+
+  // Smooth transition, only when changing modes (and not loading pages)
+  function smoothTransition() {
+    document.body.style.transition =
+    document.querySelector('header').style.transition =
+    document.querySelector('footer').style.transition =
+    '{{ printf "background-color %[1]s, color %[1]s" $changeTransition }}';
+  }
   
-  // Mode change button
+  // Change mode via localStorage
+  function localModeChange() {
+  
+    smoothTransition();
+
+    if (rootElement.getAttribute('data-mode') === 'light') {
+      setDark();
+      localStorage.setItem('mode', 'dark');
+    } else {
+      setLight();
+      localStorage.setItem('mode', 'light');
+    }
+    
+    {{ if .Site.IsServer }}
+      console.log('Local: ' +
+      capitalize(localStorage.getItem('mode') + ' mode set.'));
+    {{ end }}
+    
+    updateAccent();
+  }
+
+  
+  {{ if .Site.IsServer }}
+  
+    // TEST
+    // Keyboard shortcut for mode change, here for testing purposes only
+    // CTRL + ALT + M
+    document.addEventListener('keydown', (event) => {
+      const e = event || window.event;
+      if (e.keyCode === 77 && e.ctrlKey && e.altKey) {
+        localModeChange();
+        return;
+      }
+    }, false);
+    
+  {{ end }}
+
+
+  {{ if not .Site.Params.Style.ignoreSystemSettings }}
+  
+    // Change mode via system settings
+    function systemModeChange() {
+    
+      smoothTransition();
+      
+      if (prefersDark.matches) {
+        setDark();
+      } else {
+        setLight();
+      }
+      
+      {{ if .Site.IsServer }}
+        console.log('System: ' +
+        capitalize(rootElement.getAttribute('data-mode')) + ' mode set.');
+      {{ end }}
+      
+      updateAccent();
+      
+      // System settings do not require localStorage
+      if (localMode !== null) {
+        localStorage.removeItem('mode');
+      }
+
+    }
+
+    // System settings listener
+    prefersDark.addEventListener('change', systemModeChange);
+  
+  {{ end }}
+
+  // Mode change button listener
   document.querySelector('footer button')
-    .addEventListener('click', userModeChange);
+    .addEventListener('click', localModeChange);
 });

@@ -1,5 +1,5 @@
 <!-- KaTeX -->
-{{ $katexVersion := "0.15.2" }}
+{{ $katexVersion := "0.15.3" }}
 
 {{ $katexCSS := resources.Get (printf "libs/katex@%s/dist/katex.css" $katexVersion) | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $katexCSS.Permalink }}" integrity="{{ $katexCSS.Data.Integrity }}" crossorigin="anonymous">
@@ -44,4 +44,3 @@
 
 {{ $katexCustomRender := slice $autoRender $katexAutoRenderOptions $katexPostRender | resources.Concat "js/katex-custom-render.js" | minify | fingerprint }}
 <script defer src="{{ $katexCustomRender.Permalink }}" integrity="{{ $katexCustomRender.Data.Integrity }}" crossorigin="anonymous"></script>
-

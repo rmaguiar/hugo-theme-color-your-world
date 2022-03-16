@@ -340,7 +340,7 @@ copyright = "Copyright © 2008–2021, Steve Francia and the Hugo Authors; All r
     # Can be used as a workaround for Chrome on Linux
     # (Issue 998903: Dark Gtk theme does not affect prefers-color-scheme media query)
     # The default is false
-    ignoreSystemSettings = true
+    ignoreSystemSettings = false
   
     # Use an icon or text for footnote return links
     # The default is false
@@ -349,7 +349,7 @@ copyright = "Copyright © 2008–2021, Steve Francia and the Hugo Authors; All r
     # For the social shortcode
     # Use flexbox (with flex-grow) or grid (equal width)
     # The default is false
-    socialIsFlex = true
+    socialIsFlex = false
     
     # Keep anchor links hidden until it's focused/hovered
     # They will always be visible in mobile devices, regardless the option

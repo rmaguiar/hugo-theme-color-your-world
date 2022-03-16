@@ -32,6 +32,9 @@
   with line numbers (.lntd > .chroma).
 -->
 
+<!-- Get SVG bundle -->
+{{ $svgBundleLink := (.Scratch.Get "svgBundle").RelPermalink }}
+
 <!-- i18n -->
 {{ $references    := `(<section class="footnotes" role="doc-endnotes">)` }}
 {{ $seeFootnotes  := `(class="footnote-ref")` }}
@@ -70,7 +73,7 @@
 
 <!-- OR replace the footnote return links with a SVG icon -->
 {{ if .Site.Params.Style.hasIconAsFootnoteReturnLink }}
-  {{ $improvedFootnoteReturnLink = printf `${1}<svg transform="rotate(180) translate(0 -1)" aria-hidden="true"><use xlink:href="#caret-down"/></svg>${2}` }}
+  {{ $improvedFootnoteReturnLink = printf `${1}<svg transform="rotate(180) translate(0 -1)" aria-hidden="true"><use xlink:href="%s#caret-down"/></svg>${2}` $svgBundleLink }}
 {{ end }}
 
 <!--

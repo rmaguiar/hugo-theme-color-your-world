@@ -6,8 +6,8 @@
 <!-- If JS is disabled -->
 <noscript>
 
-  {{ $lightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
   {{ $darkAccent   := .Site.Params.Style.darkAccent   | default .Site.Data.default.style.darkAccent }}
+  {{ $lightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
 
   {{ if .Site.Params.Style.ignoreSystemSettings }}
 

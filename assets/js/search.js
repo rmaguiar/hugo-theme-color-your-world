@@ -53,6 +53,8 @@ if (searchQuery) {
     .value = searchQuery;
   
   executeSearch(searchQuery);
+  report('{{ T "searchProcessing" }}');
+  
 } else {
   report('{{ T "searchAwaitingSearch" }}');
 }
@@ -74,12 +76,13 @@ function executeSearch(searchQuery) {
         return fuse.search(searchQuery);
       })
       .then((output) => {
+        searchInfo.firstElementChild.remove();
         report('{{ T "searchResultsFor" }}: ' + searchQuery);
 
         const matches = output.length;
         
         if (matches > 0) {
-          if (matches == 1) {
+          if (matches === 1) {
             report('{{ T "searchOnePageFound" }}.');
           } else if (1 < matches && matches < limit + 1) {
             report(matches + ' {{ T "searchPagesFound" }}.');

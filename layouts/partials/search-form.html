@@ -1,3 +1,6 @@
+<!-- Get SVG bundle -->
+{{ $svgBundleLink := (.Scratch.Get "svgBundle").RelPermalink }}
+
 <!--
   Assume that the first page in a collection with pages
   using the "search" layout is the main search page
@@ -7,13 +10,14 @@
 {{ $minLength := .Site.Params.Search.minLength | default .Site.Data.default.search.minLength }}
 {{ $maxLength := .Site.Params.Search.maxLength | default .Site.Data.default.search.maxLength }}
 
+
 <section class="req-js search-box">
   {{ if eq .Layout "search" }}
     <form role="search">
   {{ else }}
     <form role="search" action="{{ $searchPage.RelPermalink }}">
   {{ end }}
-      <label class="label-form" for="search-input">{{ T "searchLabel" }}</label><input class="input-text" type="search" id="search-input" title='{{ T "searchInput" (dict "minLength" $minLength "maxLength" $maxLength) }}' name="q" {{ with .Site.Params.Search.placeholder }}placeholder="{{ . }}"{{ end }} minlength="{{ $minLength }}" maxlength="{{ $maxLength }}" pattern="^[\S].*" required><button aria-label="{{ T "searchAriaButton" }}" class="btn outline-dashed" type="submit"><svg aria-hidden="true"><use xlink:href="#search"/></svg></button>
+      <label class="label-form" for="search-input">{{ T "searchLabel" }}</label><input class="input-text" type="search" id="search-input" title='{{ T "searchInput" (dict "minLength" $minLength "maxLength" $maxLength) }}' name="q" {{ with .Site.Params.Search.placeholder }}placeholder="{{ . }}"{{ end }} minlength="{{ $minLength }}" maxlength="{{ $maxLength }}" pattern="^[\S].*" required><button aria-label="{{ T "searchAriaButton" }}" class="btn outline-dashed" type="submit"><svg aria-hidden="true"><use xlink:href="{{ $svgBundleLink }}#search"/></svg></button>
     </form>
   <hr>
 </section>

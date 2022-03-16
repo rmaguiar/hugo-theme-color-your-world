@@ -366,5 +366,11 @@
 
 
 <!-- Main JS -->
-{{ $main := resources.Get "js/main.js" | resources.ExecuteAsTemplate "js/main.js" . | minify | fingerprint }}
-<script src="{{ $main.Permalink }}" integrity="{{ $main.Data.Integrity }}" crossorigin="anonymous"></script>
+{{ $mainJS := resources.Get "js/main.js" | resources.ExecuteAsTemplate "js/main.js" . | minify | fingerprint }}
+
+<!-- Use ESBuild if available -->
+{{ if ge hugo.Version "0.74" }}  
+  {{ $mainJS = resources.Get "js/main.js" | resources.ExecuteAsTemplate "js/main.js" . | js.Build (dict "minify" "true") | fingerprint }}
+{{ end }}
+
+<script src="{{ $mainJS.Permalink }}" integrity="{{ $mainJS.Data.Integrity }}" crossorigin="anonymous"></script>

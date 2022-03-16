@@ -1,5 +1,8 @@
-{{ $pag := .Paginator }}
+<!-- Get SVG bundle -->
+{{ $svgBundleLink := (.Scratch.Get "svgBundle").RelPermalink }}
 
+
+{{ $pag := .Paginator }}
 
 <!-- Number of links either side of the current page. Default value is 2 -->
 {{ $adjacentLinks := 1 }}
@@ -24,7 +27,7 @@
       <li>
         <a class="btn" href="{{ $pag.First.URL }}" aria-label="{{ T "ariaGoToFirst" }}">
           <svg aria-hidden="true">
-            <use transform="rotate(180) translate(-18 -18)" xlink:href="#angle-double-right"/>
+            <use transform="rotate(180) translate(-18 -18)" xlink:href="{{ $svgBundleLink }}#angle-double-right"/>
           </svg>
         </a>
       </li>
@@ -35,7 +38,7 @@
       <li>
         <a class="btn" href="{{ $pag.Prev.URL }}" aria-label="{{ T "ariaGoToPrev" }}">
           <svg transform="rotate(180)" aria-hidden="true">
-            <use xlink:href="#angle-right"/>
+            <use xlink:href="{{ $svgBundleLink }}#angle-right"/>
           </svg>
         </a>
       </li>
@@ -104,7 +107,7 @@
       <li>
         <a class="btn" href="{{ $pag.Next.URL }}" aria-label="{{ T "ariaGoToNext" }}">
           <svg aria-hidden="true">
-            <use xlink:href="#angle-right"/>
+            <use xlink:href="{{ $svgBundleLink }}#angle-right"/>
           </svg>
         </a>
       </li>
@@ -115,7 +118,7 @@
       <li>
         <a class="btn" href="{{ $pag.Last.URL }}" aria-label="{{ T "ariaGoToLast" }}">
           <svg aria-hidden="true">
-            <use xlink:href="#angle-double-right"/>
+            <use xlink:href="{{ $svgBundleLink }}#angle-double-right"/>
           </svg>
         </a>
       </li>

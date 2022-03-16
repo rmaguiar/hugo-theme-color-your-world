@@ -1,8 +1,13 @@
 {{ if .Site.Params.Social }}
+
+  <!-- Get SVG bundle -->
+  {{ $svgBundleLink := (.Page.Scratch.Get "svgBundle").RelPermalink }}
+  
   <!-- Reduce repetition... -->
   {{ $centralized   := $.Site.Params.Social.Centralized }}
   {{ $decentralized := $.Site.Params.Social.Decentralized }}
-
+  
+  
   <section class="social">
 
     {{ range .Site.Data.social }}
@@ -25,7 +30,7 @@
           
           <a class="btn" href="{{ $url }}" rel="me nofollow" title="{{ $label }}">
             <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <use xlink:href="#{{ $currentIcon }}"/>
+              <use xlink:href="{{ $svgBundleLink }}#{{ $currentIcon }}"/>
             </svg>
 
             <p>{{ $label }}</p>
@@ -40,7 +45,7 @@
           {{ range (index $decentralized $currentEntry) }}
             <a class="btn" href="{{ index . 0 }}" rel="me nofollow" title="{{ printf "%s (%s)" (index . 1) $currentLabel }}">
               <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <use xlink:href="#{{ $currentIcon }}"/>
+                <use xlink:href="{{ $svgBundleLink }}#{{ $currentIcon }}"/>
               </svg>
 
               <p>{{ index . 1 | truncate 15 }}</p>

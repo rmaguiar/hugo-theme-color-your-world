@@ -9,7 +9,7 @@ function addTabIndex() {
 
   const katexBlocks = getAll('span.katex-display');
   
-  katexBlocks.forEach(function (el) {
+  katexBlocks.forEach(function(el) {
     el.tabIndex = 0;
   });
 }

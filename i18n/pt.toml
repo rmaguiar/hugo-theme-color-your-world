@@ -138,6 +138,9 @@ other = "Uma página encontrada"
 [searchPagesFound]
 other = "páginas encontradas"
 
+[searchProcessing]
+other = "Processando busca..."
+
 [searchAwaitingSearch]
 other = "Aguardando busca."
 

@@ -11,12 +11,8 @@ $change-transition: {{ .Site.Params.Style.changeTransition | default .Site.Data.
 
 
 
-// Default font size
-:root {
-  font-size: $font-size;
-}
-
 html {
+  font-size: $font-size;
   scroll-behavior: smooth;
   
   // Dark mode
@@ -40,7 +36,7 @@ html {
     --rlpress: #{$light-letterpress};
 
     // Lazy way to deter images that can be too bright
-    img {
+    img:not([src$='.svg']) {
       filter: $img-filter;
     }
     
@@ -87,6 +83,19 @@ html {
       
     {{ end }}
   }
+  
+  // RESPONSIVENESS
+  
+  // Margin for blockquote
+  --blk-mg: 1.05rem .75rem;
+  
+  // Padding for highlight
+  --hl-pad: 15px 18px;
+  
+  --il-pad: 0 12px;
+  
+  // Padding for highlight with line numbers
+  --lnhl-pad: 3px 18px;
 }
 
 
@@ -156,7 +165,6 @@ body {
 
           font-size: .75rem;
           font-weight: $body-bold-weight;
-          text-transform: uppercase;
         }
       }
     }
@@ -283,10 +291,12 @@ hr {
 }
 
 
-
 article > header {
+  margin: 0 0 2rem; // White space
+  
   h1 {
     line-height: 3rem;
+    margin: 9px 0; // White space
   }
   
   img {
@@ -296,6 +306,8 @@ article > header {
   p {
     font-size: .9rem;
     font-style: italic;
+    
+    margin: 0; // White space
   }
 }
 
@@ -350,18 +362,6 @@ code {
 
 
 // WHITE SPACE
-article > header {
-  margin: 0 0 2rem;
-
-  h1 {
-    margin: 9px 0;
-  }
-  
-  p {
-    margin: 0;
-  }
-}
-
 article {
   h2,
   h3 {
@@ -644,9 +644,9 @@ article > pre,
   &:focus {
     outline-color: var(--accent);
   }
-  
-  // TEST
+
   @extend %webkit-scrollbar;
+  @extend %moz-scrollbar;
 }
 
 
@@ -784,12 +784,13 @@ article > header {
     color: var(--dtl);
 
     display: flex;
+    flex-direction: column-reverse;
+    
     margin: 15px auto;
     padding: 15px 30px 18px;
     
     text-decoration: none;
     
-    align-items: center;
     word-break: break-word;
 
     p {
@@ -810,20 +811,9 @@ article > header {
       
       font-size: .85rem;
       
-      margin-left: 1.8rem;
-      padding: 0 9px 2px;
-    }
-  }
-}
-
-// Not sure if I like this
-@include respond-below($mobile-breakpoint) {
-  .posts a {
-    flex-direction: column-reverse;
-    align-items: unset;
-    
-    time {
       margin: .3rem 0;
+      //margin-left: 1.8rem;
+      padding: 0 9px 2px;
     }
   }
 }
@@ -855,7 +845,7 @@ video {
 img {
   display: block;
   
-  max-width: 100%;
+  max-width: calc(100% - 2px);
   max-height: $box-max-height;
 
   outline: 3px solid transparent;
@@ -869,14 +859,14 @@ img {
     border: 1px solid var(--fg);
     
     object-fit: cover;
-    width: 100%;
+    width: calc(100% - 2px);
   }
 }
 
 article p > img {
   display: block;
   margin: 2rem auto;
-  max-width: 100%;
+  max-width: calc(100% - 2px);
 }
 
 figure {
@@ -997,7 +987,7 @@ video {
     
     border-radius: 0 0 $border-radius $border-radius;
     
-    box-shadow: inset 0 -3px 0 rgba(0,0,0,.3);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.3);
   
     padding: 6px 15px 15px 9px;
 
@@ -1483,20 +1473,6 @@ article {
   margin: 90px auto 120px;
 }
 
-
-html {
-  // Margin for blockquote
-  --blk-mg: 1.05rem .75rem;
-  
-  // Padding for highlight
-  --hl-pad: 15px 18px;
-  
-  --il-pad: 0 12px;
-  
-  // Padding for highlight with line numbers
-  --lnhl-pad: 3px 18px;
-}
-
 // If not in mobile
 @include respond-above($mobile-breakpoint) {
   html {
@@ -1506,28 +1482,39 @@ html {
     --lnhl-pad: 6px 24px;
   }
   
+  // Not sure if I like this
+  .posts a {
+    flex-direction: unset;
+    
+    align-items: center;
+    
+    time {
+      margin: 0 0 0 1.8rem;
+    }
+  }
+  
   .footnotes {
     padding: 1rem .5rem 1.8rem;
   }
+  
+  {{ if .Site.Params.Style.hideAnchors }}
+    a.anchor:not(:focus) {
+      opacity: 0;
+    }
+    
+    %visible {
+      opacity: 1;
+    }
+    
+    @for $i from 2 through 6 {
+      h#{$i} > a:focus + a.anchor,
+      h#{$i}:hover > a.anchor {
+        @extend %visible;
+      }
+    }
+  {{ end }}
 }
 
-
-{{ if .Site.Params.Style.hideAnchors }}
-  a.anchor:not(:focus) {
-    opacity: 0;
-  }
-  
-  %visible {
-    opacity: 1;
-  }
-  
-  @for $i from 2 through 6 {
-    h#{$i} > a:focus + a.anchor,
-    h#{$i}:hover > a.anchor {
-      @extend %visible;
-    }
-  }
-{{ end }}
 
 {{ if .Site.Params.hasNoscriptNotice }}
   .noscript {
@@ -1537,7 +1524,6 @@ html {
 
 
 
-// TEST
 // Non-standard
 %webkit-scrollbar {
   &::-webkit-scrollbar {
@@ -1568,6 +1554,11 @@ html {
     border-style: solid;
     border-width: 1px 0 0 1px;
   }
+}
+
+// Non-standard
+%moz-scrollbar {
+  scrollbar-color: var(--accent) var(--input-bg);
 }
 
 

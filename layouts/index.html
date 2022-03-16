@@ -33,9 +33,3 @@
   </main>
 
 {{ end }}
-
-{{ define "svg-extra" }}
-  {{ if .Content }}
-    {{ partialCached "content-svg" . }}
-  {{ end }}
-{{ end }}
