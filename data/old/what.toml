@@ -1,0 +1,27 @@
+# File dedicated to storing some default values
+
+[search]
+  minLength = 3
+  maxLength = 32
+
+[imageProc]
+  highRes   = [ "1280x", "1280w" ]
+  mediumRes = [ "960x", "960w" ]
+  lowRes    = [ "640x q90", "640w" ]
+  
+  markupAutoResizeWidth = 1280
+  
+[style]
+  darkAccent   = "#1dbc91"
+  lightAccent  = "#1f676b"
+  
+  changeTransition = ".3s ease"
+
+[notFound]
+  title         = "Page not found"
+  description   = "This page was not found."
+  paragraph     = "Nothing to see here, buddy."
+
+[libs]
+  fuse = "6.5.3"
+  katex = "0.15.3"

@@ -1,5 +1,5 @@
 <!-- Get SVG bundle -->
-{{ $svgBundleLink := (.Page.Scratch.Get "svgBundle").RelPermalink }}
+{{ $svgBundleLink := (partialCached "svg-bundle" .) }}
 
 <!-- Get default accent colors -->
 {{ $defaultLightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
@@ -7,9 +7,9 @@
 
 {{ $allAccentColors := union (slice $defaultLightAccent $defaultDarkAccent) .Site.Params.Style.presets }}
 
-<section class="req-js">
+<div class="req-js">
   <button class="outline-dashed" title="{{ T "changeMode" }}"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="{{ $svgBundleLink }}#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="{{ if .Site.Params.Style.isDark }}{{ $defaultDarkAccent }}{{ else }}{{ $defaultLightAccent }}{{ end }}" title="{{ T "changeAccent" }}" aria-label="{{ T "changeAccent" }}"><datalist id="presets">{{ range $allAccentColors }}<option value="{{ . }}">{{ end }}</datalist>
-</section>
+</div>
 
 <!-- noscript notice -->
 {{ if .Site.Params.hasNoscriptNotice }}

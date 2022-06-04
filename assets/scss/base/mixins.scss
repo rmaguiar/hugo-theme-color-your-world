@@ -30,3 +30,12 @@
     @content;
   }
 }
+
+// HACK
+// For some reason, Chrome will leave a small gap between the
+// border and the element depending on the resolution
+// The gap can be filled by using "box-shadow" 
+@mixin chrome-border($border-width, $border-color) {
+  border: $border-width solid $border-color;
+  box-shadow: inset 0 0 0 $border-width $border-color;
+}

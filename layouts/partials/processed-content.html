@@ -26,17 +26,13 @@
   https://github.com/gohugoio/hugo/pull/8568
   
   So... this is now a hack to a hack.
-  
-  TODO
-  Also, I need to fix the "additional" tabindexes in code fences
-  with line numbers (.lntd > .chroma).
 -->
 
 <!-- Get SVG bundle -->
-{{ $svgBundleLink := (.Scratch.Get "svgBundle").RelPermalink }}
+{{ $svgBundleLink := (partialCached "svg-bundle" .) }}
 
 <!-- i18n -->
-{{ $references    := `(<section class="footnotes" role="doc-endnotes">)` }}
+{{ $references    := `(<(?:section|div) class="footnotes" role="doc-endnotes">)` }}
 {{ $seeFootnotes  := `(class="footnote-ref")` }}
 {{ $returnToText  := `(class="footnote-backref")` }}
 
@@ -56,7 +52,7 @@
 <!-- Wrap tables to make use of overflow-x property (plus the tabindex thing) -->
 {{ $table := `(<table>(?:.|\n)+?</table>)` }}
 
-{{ $improvedTable := printf `<section class="scroll" tabindex="0"> ${1} </section>` }}
+{{ $improvedTable := printf `<div class="scroll" tabindex="0"> ${1} </div>` }}
 
 
 <!-- Replace the inline "padding:0" present if using the default Chroma -->
@@ -76,14 +72,23 @@
   {{ $improvedFootnoteReturnLink = printf `${1}<svg transform="rotate(180) translate(0 -1)" aria-hidden="true"><use xlink:href="%s#caret-down"/></svg>${2}` $svgBundleLink }}
 {{ end }}
 
+
+<!-- Remove extra tab indexes (see at the top) -->
+{{ $extraTabIndex := `(?:(<td class="lntd">(?:.|\n)+?<pre) tabindex="0" (class="chroma">))` }}
+
+{{ $trimmedExtraTabIndex := printf `${1} ${2}` }}
+
+
 <!--
-  This is doing 5 things right now (or is it):
+  This is doing 6 things right now (or is it):
   
   * Adding "tabindex=0" to native table and code fences;
   * Making tables scrollable;
   * Localizing some text;
   * Adding a "h2" to footnotes;
-  * Changing the default inline style for default Chroma.
+  * Changing the default inline style for default Chroma;
+  * Removing the "extra" tabindexes in code fences 
+  with line numbers (.lntd > .chroma).
 -->
 
-{{ .Content | replaceRE $table $improvedTable | replaceRE $highlightCodeBlock $labeledHighlightCodeBlock | replaceRE $indentedCodeBlock $labeledIndentedCodeBlock | replaceRE $seeFootnotes $translatedSeeFootnotes | replaceRE $returnToText $translatedReturnToText | replaceRE $references $translatedReferences | replaceRE $footnoteReturnLink $improvedFootnoteReturnLink | replaceRE $highlightPadding $tweakedHighlightPadding | safeHTML }}
+{{ .Content | replaceRE $table $improvedTable | replaceRE $highlightCodeBlock $labeledHighlightCodeBlock | replaceRE $indentedCodeBlock $labeledIndentedCodeBlock | replaceRE $seeFootnotes $translatedSeeFootnotes | replaceRE $returnToText $translatedReturnToText | replaceRE $references $translatedReferences | replaceRE $footnoteReturnLink $improvedFootnoteReturnLink | replaceRE $highlightPadding $tweakedHighlightPadding | replaceRE $extraTabIndex $trimmedExtraTabIndex | safeHTML }}

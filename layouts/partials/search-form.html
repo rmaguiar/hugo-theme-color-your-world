@@ -1,5 +1,5 @@
 <!-- Get SVG bundle -->
-{{ $svgBundleLink := (.Scratch.Get "svgBundle").RelPermalink }}
+{{ $svgBundleLink := (partialCached "svg-bundle" .) }}
 
 <!--
   Assume that the first page in a collection with pages
@@ -11,7 +11,7 @@
 {{ $maxLength := .Site.Params.Search.maxLength | default .Site.Data.default.search.maxLength }}
 
 
-<section class="req-js search-box">
+<div class="req-js search-box">
   {{ if eq .Layout "search" }}
     <form role="search">
   {{ else }}
@@ -20,4 +20,4 @@
       <label class="label-form" for="search-input">{{ T "searchLabel" }}</label><input class="input-text" type="search" id="search-input" title='{{ T "searchInput" (dict "minLength" $minLength "maxLength" $maxLength) }}' name="q" {{ with .Site.Params.Search.placeholder }}placeholder="{{ . }}"{{ end }} minlength="{{ $minLength }}" maxlength="{{ $maxLength }}" pattern="^[\S].*" required><button aria-label="{{ T "searchAriaButton" }}" class="btn outline-dashed" type="submit"><svg aria-hidden="true"><use xlink:href="{{ $svgBundleLink }}#search"/></svg></button>
     </form>
   <hr>
-</section>
+</div>

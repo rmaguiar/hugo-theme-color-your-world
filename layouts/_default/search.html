@@ -3,18 +3,27 @@
   <main class="list">
 
     {{ partialCached "search-form" . }}
+    
+    {{ $searchIndexLink := partialCached "search-index" . }}
 
     <h1>{{ .Title }}</h1>
     
-    <section id="search-info">
+    <div id="search-info">
       <!-- Info -->
-    </section>
+    </div>
 
-    <ul id="search-results" class="posts">
-      <!-- x-template -->
+    <ul
+      id="search-results"
+      class="posts"
+      data-search-index="{{ $searchIndexLink }}"
+      data-lib-version="{{ .Site.Data.default.libs.fusejs }}"
+    />
+      <!-- Results -->
     </ul>
     
-    <template id="search-results-template"><li><a class="btn"></a></li></template>
+    <template id="search-results-template">
+      <li><a class="btn"></a></li>
+    </template>
 
   </main>
 

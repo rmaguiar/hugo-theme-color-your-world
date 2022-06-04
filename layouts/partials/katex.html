@@ -1,5 +1,5 @@
 <!-- KaTeX -->
-{{ $katexVersion := "0.15.3" }}
+{{ $katexVersion := .Site.Data.default.libs.katex }}
 
 {{ $katexCSS := resources.Get (printf "libs/katex@%s/dist/katex.css" $katexVersion) | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $katexCSS.Permalink }}" integrity="{{ $katexCSS.Data.Integrity }}" crossorigin="anonymous">

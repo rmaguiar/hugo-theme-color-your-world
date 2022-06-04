@@ -1,14 +1,4 @@
-<!--
-  HACK
-  Set image processing options for render hooks
-  Currently here to avoid certain priority issues...
--->
-
-{{- .Scratch.Set "imageProc" (dict "highRes" (.Site.Params.imageProc.highRes | default .Site.Data.default.imageProc.highRes) "mediumRes" (.Site.Params.imageProc.mediumRes | default .Site.Data.default.imageProc.mediumRes) "lowRes" (.Site.Params.imageProc.lowRes | default .Site.Data.default.imageProc.lowRes) "markupAutoResizeWidth" (.Site.Params.imageProc.markupAutoResizeWidth | default .Site.Data.default.imageProc.markupAutoResizeWidth)) -}}
-
-<!-- Generate and set the SVG bundle -->
-{{- $svgBundle := resources.Get "svg/bundle.svg" | resources.ExecuteAsTemplate "img/bundle.svg" . | minify | resources.Fingerprint "md5" -}}
-{{- .Scratch.Set "svgBundle" $svgBundle -}}
+{{- $svgBundle := partialCached "svg-bundle" . -}}
 
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}" data-mode="{{ if .Site.Params.Style.isDark }}dark{{ else }}light{{ end }}">
@@ -34,8 +24,8 @@
     
     <!-- Search -->
     {{ if eq .Layout "search" }}
-      {{ $searchJS := resources.Get "js/search.js" | resources.ExecuteAsTemplate (printf "js/search.js" | relLangURL) . | minify | fingerprint }}
-      <script type="module" src="{{ $searchJS.Permalink }}" integrity="{{ $searchJS.Data.Integrity }}" crossorigin="anonymous"></script>
+      {{ $searchJS := resources.Get "js/search.js" | resources.ExecuteAsTemplate (print "js/search.js" | relLangURL) . | minify | fingerprint }}
+      <script async type="module" src="{{ $searchJS.Permalink }}" integrity="{{ $searchJS.Data.Integrity }}" crossorigin="anonymous"></script>
     {{ end }}
 
     <!-- KaTeX -->

@@ -3,103 +3,14 @@
 <meta name="generator" content="Hugo {{ hugo.Version }}">
 <meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
 
-<!-- I'm 99% sure there's a smarter way of doing it but whatever -->
-{{ $currentTitle  := .Title | emojify }}
-{{ $mainTitle     := .Params.mainTitle | emojify }}
-
-
-{{ $titleSeparator := .Site.Params.titleSeparator }}
-
-
-{{ if (eq .Kind "404") }}
-
-  <!-- If 404 page -->
-  {{ $currentTitle = .Site.Params.notFound.title | emojify | default .Site.Data.default.notFound.title }}
-  
-{{ else if (eq .Kind "section") }}
-
-  <!-- If post list -->
-  {{ if gt .Paginator.TotalPages 1 }}
-    {{ $mainTitle = printf `%s, %s %s %s %s` .Title (T "page") (string .Paginator.PageNumber) (T "of") (string .Paginator.TotalPages) }}
-  {{ end }}
-  
-{{ else if eq .Kind "term" }}
-
-  {{ $currentTerm := "" }}
-
-  {{ if eq .Type "tags" }}
-    {{ $currentTerm = (T "tag") }}
-  {{ else }}
-    {{ $currentTerm = (T "category") }}
-  {{ end }}
-  
-  {{ $currentTitle = printf `%s: "%s"` $currentTerm .Title }}
-  
-  {{ with .Paginator }}
-    {{ if gt .TotalPages 1 }}
-      {{ $mainTitle = printf `%s: "%s", %s %s %s %s` $currentTerm $.Title (T "page") (string .PageNumber) (T "of") (string .TotalPages) }}
-    {{ else }}
-      {{ $mainTitle = printf `%s: "%s"` $currentTerm $.Title }}
-    {{ end }}
-  {{ end }}
-
-{{ else if eq .Kind "taxonomy" }}
-
-  {{ if eq .Type "tags" }}
-    {{ $currentTitle = (T "tags") }}
-  {{ else }}
-    {{ $currentTitle = (T "categories") }}
-  {{ end }}
-
-{{ else if and (.IsHome) (not .Content) }}
-
-  <!-- If home page without content -->
-  {{ $currentTitle = .Site.Title | emojify }}
-
-{{ end }}
-
-
-{{ $currentDesc := .Params.Description | emojify }}
-
-{{ if .IsHome }}
-  {{ $currentDesc = .Site.Params.description | emojify }}
-{{ else if and (ne .Kind "taxonomy") (eq .Type "tags") (not .Params.description) }}
-  {{ $currentDesc = (T "postsUnderTag" .) }}
-{{ else if and (ne .Kind "taxonomy") (eq .Type "categories") (not .Params.description) }}
-  {{ $currentDesc = (T "postsUnderCategory" .) }}
-{{ else if eq .Kind "taxonomy" }}
-  {{ $currentDesc = printf `%s %s.` (T "pageContaining") ($currentTitle | lower) }}
-{{ else if (eq .Kind "404") }}
-  {{ $currentDesc = .Site.Params.notFound.description | emojify | default .Site.Data.default.notFound.description }}
-{{ end }}
-
-
-<!-- Set current title -->
-{{ .Scratch.Set "currentTitle" $currentTitle }}
-
-
 
 <!-- Beginning of the SEO madness -->
+{{- $basicTags := partial "basic-tags" . -}}
 
-<title>
-  {{- if and $titleSeparator (not .Params.disableTitleSeparator ) -}}
-    {{ if $mainTitle }}
-      {{- $mainTitle = printf `%s %s %s` $mainTitle $titleSeparator .Site.Title -}}
-    {{ else }}
-      {{- $mainTitle = printf `%s %s %s` $currentTitle $titleSeparator .Site.Title -}}
-    {{ end }}
-  {{- end -}}
-  
-  {{- if $mainTitle -}}
-    {{- $mainTitle -}}
-  {{ else }}
-    {{- $currentTitle -}}
-  {{- end -}}
-</title>
-
+<title>{{ $basicTags.title }}</title>
 
 {{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
-{{ with $currentDesc }}<meta name="description" content="{{ . }}">{{ end }}
+{{ with $basicTags.description }}<meta name="description" content="{{ . }}">{{ end }}
 
 
 <meta name="robots" content="{{ if and (ne .Kind "404") (ne .Params.noindex true) }}index follow{{ else }}noindex follow{{ end }}">
@@ -133,8 +44,8 @@
 
 <!-- Open Graph / Twitter Card -->
 <meta property="og:site_name" content="{{ .Site.Title }}">
-<meta property="og:title" content="{{ $currentTitle }}">
-{{ with $currentDesc }}<meta property="og:description" content="{{ . }}">{{ end }}
+<meta property="og:title" content="{{ $basicTags.heading }}">
+{{ with $basicTags.description }}<meta property="og:description" content="{{ . }}">{{ end }}
 
 {{- if ne .Kind "404" }}
   <meta property="og:url" content="{{ .Permalink }}">
@@ -142,53 +53,26 @@
 
 
 
-<!-- Image processing options -->
-{{ $highRes := .Site.Params.imageProc.highRes | default .Site.Data.default.imageProc.highRes }}
+<!-- Generate images for Open Graph, Twitter Cards and Schema -->
+{{ $cover := partial "head-cover" . }}
 
-<!-- Default image path -->
-{{ $imgPath := .Page.Param "imgPath" }}
 
-<!-- Generate images for Open Graph, Twitter Cards and also Schema.org -->
-{{- if .Params.cover }}
+{{ with $cover.openGraphImage }}
+  <meta property="og:image" content="{{ .Permalink }}">
+  <meta property="og:image:width" content="{{ .Width }}">
+  <meta property="og:image:height" content="{{ .Height }}">
+{{ end }}
 
-  {{ $file := .Params.cover }}
+{{ with $cover.coverAlt }}
+  <meta property="og:image:alt" content="{{ . }}">
+{{ end }}
 
-  {{ if $imgPath }}
-    {{ $file = path.Join $imgPath $file }}
-  {{ end }}
+{{ with $cover.twitterImage }}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ .Permalink }}">
+{{ end }}
 
-  {{- with .Resources.GetMatch $file }}
-    <meta property="og:image" content="{{ (.Fill "1200x630").Permalink }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    {{ with $.Params.coverAlt }}
-      <meta property="og:image:alt" content="{{ . }}">
-    {{ end }}
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="{{ (.Fill "1280x640").Permalink }}">
 
-    {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemapExclude) }}
-      {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
-    {{ end }}
-    
-  {{ end -}}
-{{ else if .Site.Params.cover }}
-  {{ with resources.Get (.Site.Params.cover | default "img/cover.jpg") }}
-    <meta property="og:image" content="{{ (.Fill "1200x630").Permalink }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    {{ with $.Site.Params.coverAlt }}
-      <meta property="og:image:alt" content="{{ . }}">
-    {{ end }}
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="{{ (.Fill "1280x640").Permalink }}">
-
-    {{ if and (in $.Site.Params.mainSections $.Section) (not .Params.sitemapExclude) }}
-      {{ $.Scratch.Set "schemaCover" (slice ((.Fill "1280x640").Permalink) ((.Fill "1200x630").Permalink) ((.Resize (index $highRes 0)).Permalink)) }}
-    {{ end }}
-    
-  {{ end }}
-{{ end -}}
 
 <!-- More social crap -->
 {{ if and (in .Site.Params.mainSections .Section) (.IsPage) (not .Params.sitemapExclude) }}
@@ -248,37 +132,37 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 
-<!-- Reduce repetition... -->
+<!-- DRY -->
 {{- $centralized   := .Site.Params.Social.Centralized -}}
 {{- $decentralized := .Site.Params.Social.Decentralized -}}
 
 <!-- Generate array with social profiles -->
 {{- $sameAs := slice -}}
 
-{{ if .Site.Params.Social }}
-  {{ range .Site.Data.social }}
+{{- if .Site.Params.Social -}}
+  {{- range .Site.Data.social -}}
 
-    {{ $currentEntry  := .entry }}
-    {{ $currentBase   := .base }}
+    {{- $currentEntry  := .entry -}}
+    {{- $currentBase   := .base -}}
 
-    {{ if not .decentralized }}
+    {{- if not .decentralized -}}
 
-      {{ with (index $centralized $currentEntry) }}
-        {{ $sameAs = $sameAs | append (printf "%s%s" $currentBase (index . 0)) }}
-      {{ end }}
+      {{- with (index $centralized $currentEntry) -}}
+        {{- $sameAs = $sameAs | append (printf "%s%s" $currentBase (index . 0)) -}}
+      {{- end -}}
       
-    {{ else }}
+    {{- else -}}
     
-      {{ if (index $decentralized $currentEntry) }}
-        {{ range (index $decentralized $currentEntry) }}
-          {{ $sameAs = $sameAs | append (index . 0) }}
-        {{ end }}
-      {{ end }}
+      {{- if (index $decentralized $currentEntry) -}}
+        {{- range (index $decentralized $currentEntry) -}}
+          {{- $sameAs = $sameAs | append (index . 0) -}}
+        {{- end -}}
+      {{- end -}}
       
-    {{ end }}
+    {{- end -}}
 
-  {{ end }}
-{{ end }}
+  {{- end -}}
+{{- end -}}
 
 <!-- Schema Markup / Structured Data -->
 
@@ -300,14 +184,14 @@
       "@type": "Article",
       "mainEntityOfPage": {
         "@type": "WebSite",
-        "@id": "{{ .Site.BaseURL }}"
+        "@id": {{ .Site.BaseURL }}
       },
-      "headline": {{ $currentTitle }},
-      "description": {{ $currentDesc }},
-      {{ with .Scratch.Get "schemaCover" }}"image": {{ . }},{{ end }}
-      "url": "{{ .Permalink }}",
+      "headline": {{ $basicTags.heading }},
+      "description": {{ $basicTags.description }},
+      {{ with $cover.schemaCover }}"image": {{ . }},{{ end }}
+      "url": {{ .Permalink }},
       "inLanguage": "{{ .Site.Language.Lang }}",
-      "datePublished": "{{ .PublishDate.Format "2006-01-02" | safeHTML }}",
+      {{ with .PublishDate }}"datePublished": "{{ .Format "2006-01-02" | safeHTML }}",{{ end }}
       {{ with .Lastmod }}"dateModified": "{{ .Format "2006-01-02" | safeHTML }}",{{ end }}
       "wordCount" : "{{ .WordCount }}",
       "publisher": {
@@ -327,7 +211,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "url": "{{ .Site.BaseURL }}",
+      "url": {{ .Site.BaseURL }},
       "inLanguage": "{{ .Site.Language.Lang }}",
       "name": {{ .Site.Title }},
       "description": {{ .Site.Params.description | emojify }},
@@ -350,7 +234,8 @@
 
 <!-- Preload search index -->
 {{ if eq .Layout "search" }}
-  <link rel="preload" href="index.json" as="fetch" crossorigin="anonymous">
+  {{ $searchIndexLink := partialCached "search-index" . }}
+  <link rel="preload" href="{{ $searchIndexLink }}" as="fetch" crossorigin="anonymous">
 {{ end }}
 
 

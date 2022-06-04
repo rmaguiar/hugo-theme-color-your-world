@@ -1,5 +1,5 @@
 <!-- Get SVG bundle -->
-{{ $svgBundleLink := (.Scratch.Get "svgBundle").RelPermalink }}
+{{ $svgBundleLink := (partialCached "svg-bundle" .) }}
 
 
 {{ $pag := .Paginator }}
@@ -47,7 +47,7 @@
       <!-- Page numbers. -->
       {{ range $pag.Pagers }}
       
-        {{ $.Scratch.Set "pageNumberFlag" false }}
+        {{ $pageNumberFlag := false }}
         
         <!-- Advanced page numbers. -->
         {{ if gt $pag.TotalPages $maxLinks }}
@@ -58,7 +58,7 @@
 
             <!-- If the current loop page is less than max_links. -->
             {{ if le .PageNumber $maxLinks }}
-              {{ $.Scratch.Set "pageNumberFlag" true }}
+              {{ $pageNumberFlag = true }}
             {{ end }}
 
 
@@ -68,7 +68,7 @@
 
             <!-- If the current loop page is greater than total pages minus $maxLinks -->
             {{ if gt .PageNumber (sub $pag.TotalPages $maxLinks) }}
-              {{ $.Scratch.Set "pageNumberFlag" true }}
+              {{ $pageNumberFlag = true }}
             {{ end }}
 
 
@@ -76,7 +76,7 @@
           {{ else }}
             
             {{ if and ( ge .PageNumber (sub $pag.PageNumber $adjacentLinks) ) ( le .PageNumber (add $pag.PageNumber $adjacentLinks) ) }}
-              {{ $.Scratch.Set "pageNumberFlag" true }}
+              {{ $pageNumberFlag = true }}
             {{ end }}
 
           {{ end }}
@@ -85,12 +85,12 @@
         <!-- Simple page numbers. -->
         {{ else }}
 
-          {{ $.Scratch.Set "pageNumberFlag" true }}
+          {{ $pageNumberFlag = true }}
 
         {{ end }}
 
         <!-- Output page numbers. -->
-        {{ if eq ($.Scratch.Get "pageNumberFlag") true }}
+        {{ if eq $pageNumberFlag true }}
           <li {{ if eq . $pag }}class="current"{{ end }}>
           {{ if eq . $pag }}
             <p>{{ .PageNumber }}</p>

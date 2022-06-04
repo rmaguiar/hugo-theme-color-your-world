@@ -87,15 +87,15 @@ html {
   // RESPONSIVENESS
   
   // Margin for blockquote
-  --blk-mg: 1.05rem .75rem;
+  --blk-mg: 1.05rem 0.75rem;
   
   // Padding for highlight
-  --hl-pad: 15px 18px;
+  //--hl-pad: 15px 18px;
   
   --il-pad: 0 12px;
   
   // Padding for highlight with line numbers
-  --lnhl-pad: 3px 18px;
+  //--lnhl-pad: 3px 18px;
 }
 
 
@@ -120,7 +120,7 @@ body {
     word-break: break-word;
     
     &:hover {
-      opacity: .75;
+      opacity: 0.75;
     }
   }
   
@@ -163,7 +163,7 @@ body {
           margin: 0 7.5px 15px;
           padding: 9px 21px 12px;
 
-          font-size: .75rem;
+          font-size: 0.75rem;
           font-weight: $body-bold-weight;
         }
       }
@@ -174,7 +174,7 @@ body {
     padding: 1.5rem 3rem 1rem;
     
     p {
-      line-height: 1.5rem;
+      line-height: $body-line-height;
       margin: .5rem 0;
     }
     
@@ -184,15 +184,15 @@ body {
         outline-color $change-transition;
 
       &:hover {
-        opacity: .75;
+        opacity: 0.75;
       }
     }
     
-    section {
+    div {
       padding: 12px 0;
 
       input {
-        border: 1px solid var(--fg);
+        @include chrome-border(1px, var(--fg));
         outline-offset: 3px;
         
         padding: 0;
@@ -296,7 +296,7 @@ article > header {
   
   h1 {
     line-height: 3rem;
-    margin: 9px 0; // White space
+    margin: .5rem 0; // White space
   }
   
   img {
@@ -329,7 +329,7 @@ article > header {
 
 main {
   p {
-    line-height: 1.65rem;
+    line-height: $body-line-height;
   }
 }
 
@@ -355,7 +355,7 @@ code {
       @include letterpress(var(--rlpress));
       
       display: inline-block;
-      margin: 1.5rem 0 .75rem;
+      margin: 1.5rem 0 0.75rem;
     }
   }
 {{ end }}
@@ -363,40 +363,31 @@ code {
 
 // WHITE SPACE
 article {
-  h2,
-  h3 {
-    margin: 2rem 0 1rem;
+  
+  @for $i from 2 through 6 {
+    h#{$i} {
+      margin: 1rem 0 ($body-line-height - 0.5rem); // or 2rem
+      
+      // Allow spacing when using anchor links
+      padding: 1rem 0 0;
+      
+      + p {
+        margin-top: 0;
+      }
+    }
   }
   
-  p {
-    margin: 1.5rem 0;
+  // Paragraph whitespace
+  > p {
+    margin: $body-line-height 0;
   }
 }
 
-%reset-top {
-  margin-top: 0;
-}
-
-@for $i from 1 through 6 {
-  h#{$i} + p {
-    @extend %reset-top;
-  }
-}
-
-%padding-top {
-  padding-top: 1rem;
-}
-
-@for $i from 2 through 6 {
-  h#{$i} {
-    @extend %padding-top;
-  }
-}
 
 audio,
 img,
 video {
-  margin: 1.8rem auto;
+  margin: 1.5rem auto;
 }
 
 
@@ -537,7 +528,7 @@ li::before {
   display: block;
   
   margin-top: 2.4rem;
-  padding: 1rem 0 1.8rem;
+  padding: 1rem 0 1.5rem;
   
   h2 {
     margin: 0 0 2rem;
@@ -584,7 +575,7 @@ li::before {
       padding: 0 15px 4.5px;
       vertical-align: top;
       
-      font-size: .75rem;
+      font-size: 0.75rem;
       text-transform: lowercase;
       
       word-break: break-word;
@@ -704,6 +695,10 @@ article > pre,
       &:hover {
         background: var(--accent);
         color: var(--dtl);
+        
+        a {
+          color: var(--dtl);
+        }
       }
     }
   }
@@ -711,7 +706,7 @@ article > pre,
 
 
 .highlight > div table {
-  padding: var(--lnhl-pad); // 0 24px;
+  //padding: var(--lnhl-pad); // 0 24px;
   max-height: $box-max-height;
 }
 
@@ -722,7 +717,8 @@ article > pre,
 article > pre,
 .katex-display,
 .highlight > pre {
-  padding: var(--hl-pad);
+  //padding: var(--hl-pad);
+  padding: 1rem 1.5rem;
 }
 
 article > pre,
@@ -731,7 +727,7 @@ article > pre,
 .highlight > .chroma {
   border: 1px solid $box-border;
 
-  line-height: 1.5rem;
+  line-height: $body-line-height;
   max-height: $box-max-height;
 }
 
@@ -740,7 +736,7 @@ mark,
 p code,
 li code {
   border-radius: 2px;
-  padding: 1px 3px;
+  padding: 0 3px;
 }
 
 li a {
@@ -846,8 +842,7 @@ img {
   display: block;
   
   max-width: calc(100% - 2px);
-  max-height: $box-max-height;
-
+  
   outline: 3px solid transparent;
   
   transition:
@@ -856,41 +851,46 @@ img {
     filter $change-transition;
 
   &.cover {
-    border: 1px solid var(--fg);
+    @include chrome-border(1px, var(--fg));
     
     object-fit: cover;
     width: calc(100% - 2px);
   }
+  
+  &:not([src$='.svg']) {
+    max-height: $box-max-height;
+  }
 }
 
+/*
 article p > img {
   display: block;
   margin: 2rem auto;
   max-width: calc(100% - 2px);
 }
+*/
 
 figure {
-  margin: 1.8rem auto;
+  margin: 1.5rem auto;
   
   img {
     display: block;
     margin: 0 auto;
-    max-width: 90%;
   }
   
   figcaption {
     font-size: .85rem;
     text-align: center;
     
-    margin: .75rem;
-    line-height: 1.5rem;
+    margin: 0.75rem;
+    line-height: 1.25rem;
   }
 }
 
 video {
   display: block;
   
-  max-width: 91%;
+  max-width: calc(100% - 2px);
   max-height: $box-max-height;
 
   outline: 3px solid transparent;
@@ -904,11 +904,6 @@ video {
     border-color: var(--accent);
     outline-color: var(--accent);
   }
-  
-  &.gifoid {
-    margin: 3rem auto;
-    max-width: 90%;
-  }
 }
 
 audio {
@@ -919,7 +914,7 @@ audio {
 img,
 video {
   &.border {
-    border: 1px solid var(--fg);
+    @include chrome-border(1px, var(--fg));
   }
 
   // NOTE
@@ -963,7 +958,7 @@ video {
       padding .2s ease;
     
     &:hover {
-      opacity: .75;
+      opacity: 0.75;
     }
   }
   
@@ -998,7 +993,7 @@ video {
 .footnotes ol,
 article > ul,
 article > ol {
-  line-height: 1.5rem;
+  line-height: $body-line-height;
 }
 
 #TableOfContents > ol,
@@ -1061,7 +1056,7 @@ input[type=submit] {
   @include letterpress(var(--lpress));
   
   &:hover {
-    opacity: .75;
+    opacity: 0.75;
   }
 }
 
@@ -1199,7 +1194,7 @@ summary {
   color: var(--input-fg);
   font-family: $body-font;
   font-size: .9rem;
-  line-height: 1.5rem;
+  line-height: $body-line-height;
   
   transition:
     background-color $change-transition,
@@ -1309,7 +1304,7 @@ summary {
       
       margin: 0 12px;
       
-      font-size: .75rem;
+      font-size: 0.75rem;
       font-weight: bold;
       text-transform: uppercase;
       
@@ -1317,7 +1312,7 @@ summary {
     }
     
     &:hover {
-      opacity: .75;
+      opacity: 0.75;
     }
   }
 }
@@ -1330,7 +1325,7 @@ summary {
 
   label {
     display: block;
-    line-height: 1.8rem;
+    line-height: 1.5rem;
   }
 
   input[name=name],
@@ -1364,7 +1359,7 @@ summary {
   }
 
   input[type=submit] {
-    font-size: .75rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: .05rem;
     
@@ -1477,9 +1472,9 @@ article {
 @include respond-above($mobile-breakpoint) {
   html {
     --blk-mg: 2.1rem 1.5rem;
-    --hl-pad: 18px 24px; // 21px 24px;
+    //--hl-pad: 18px 24px; // 21px 24px;
     
-    --lnhl-pad: 6px 24px;
+    //--lnhl-pad: 6px 24px;
   }
   
   // Not sure if I like this
@@ -1489,12 +1484,12 @@ article {
     align-items: center;
     
     time {
-      margin: 0 0 0 1.8rem;
+      margin: 0 0 0 1.5rem;
     }
   }
   
   .footnotes {
-    padding: 1rem .5rem 1.8rem;
+    padding: 1rem .5rem 1.5rem;
   }
   
   {{ if .Site.Params.Style.hideAnchors }}
@@ -1580,7 +1575,7 @@ dd {
 
 dt,
 dd {
-  line-height: 1.5rem;
+  line-height: $body-line-height;
 }
 
 

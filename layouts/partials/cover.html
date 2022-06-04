@@ -1,35 +1,82 @@
 {{ $file    := .Params.cover }}
 {{ $altText := .Params.coverAlt }}
 
-<!-- Image processing options -->
-{{ $imageProc := (dict "highRes" (.Site.Params.imageProc.highRes | default .Site.Data.default.imageProc.highRes) "mediumRes" (.Site.Params.imageProc.mediumRes | default .Site.Data.default.imageProc.mediumRes) "lowRes" (.Site.Params.imageProc.lowRes | default .Site.Data.default.imageProc.lowRes)) }}
+{{ $destination := $file }}
+
+
+<!-- Image processing configuration -->
+{{ $imgProcConfig := partialCached "utilities/image-processing-config" . }}
+
 
 <!-- Default image path -->
 {{ $imgPath := .Page.Param "imgPath" }}
 
 {{ if $imgPath }}
-  {{ $file = path.Join $imgPath $file }}
+  {{ $file = path.Join $imgPath .Params.cover }}
 {{ end }}
 
-{{ with $.Page.Resources.GetMatch $file }}
-  
-  {{ $mediumRes := (index $imageProc.mediumRes 0) }}
+{{ $inputFile := .Page.Resources.GetMatch $file }}
 
-  {{ $outputSet := slice }}
-  {{ $inputFile := . }}
-  
-  {{ range $imageProc }}
-    {{ $outputSet = $outputSet | append (printf "%s %s" (($inputFile.Resize (index . 0)).RelPermalink) (index . 1)) }}
+
+{{ with partial "utilities/image-processing" (dict "context" . "input" $inputFile "config" $imgProcConfig) }}
+
+  {{ if .sets.default }}
+
+    <picture>
+    
+      <!-- Extra sets -->
+      {{ range .sets.extra }}
+        <source
+          srcset='{{ delimit .source ", " }}'
+          type="{{ .mediaType }}"
+        >
+      {{ end }}
+      
+      <!-- Default set -->
+      <source
+        srcset='{{ delimit .sets.default ", " }}'
+        type="{{ .default.MediaType }}"
+      >
+      
+      <img
+        class="cover"
+        {{ with .default }}
+          src="{{ .RelPermalink }}"
+          width="{{ .Width }}"
+          height="{{ .Height }}"
+        {{ end }}
+        {{ with $altText }}alt="{{ . }}"{{ end }}
+      >
+      
+    </picture>
+
+  {{ else }}
+
+    <!-- Avoid trying to get width and height from SVG files -->
+    {{ if .input }}
+      <img
+        class="cover"
+        {{ with .input }}
+          src="{{ .RelPermalink }}"
+          {{ if ne .MediaType.SubType "svg" }}
+            width="{{ .Width }}"
+            height="{{ .Height }}"
+          {{ end }}
+        {{ end }}
+        {{ with $altText }}alt="{{ . }}"{{ end }}
+      >
+    {{ else }}
+    
+      <!-- If local file isn't found, assume it's a remote file -->
+      {{ with ($destination | safeURL) }}
+        <img
+          class="cover"
+          src="{{ . }}"
+          {{ with $altText }}alt="{{ . }}"{{ end }}
+        >
+      {{ end }}
+    {{ end }}
+
   {{ end }}
-
-  <img
-    class="cover"
-    loading="lazy"
-    srcset='{{ delimit $outputSet ", " }}'
-    src="{{ (.Resize $mediumRes).RelPermalink }}"
-    width="{{ (.Resize $mediumRes).Width }}"
-    height="{{ (.Resize $mediumRes).Height }}"
-    {{ with $altText }}alt="{{ . }}"{{ end }}
-  />
-
+  
 {{ end }}

@@ -1,14 +1,14 @@
 {{ if .Site.Params.Social }}
 
   <!-- Get SVG bundle -->
-  {{ $svgBundleLink := (.Page.Scratch.Get "svgBundle").RelPermalink }}
+  {{ $svgBundleLink := (partialCached "svg-bundle" .) }}
   
   <!-- Reduce repetition... -->
   {{ $centralized   := $.Site.Params.Social.Centralized }}
   {{ $decentralized := $.Site.Params.Social.Decentralized }}
   
   
-  <section class="social">
+  <div class="social">
 
     {{ range .Site.Data.social }}
 
@@ -58,5 +58,5 @@
 
     {{ end }}
 
-  </section>
+  </div>
 {{ end }}

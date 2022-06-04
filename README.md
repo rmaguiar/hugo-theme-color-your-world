@@ -26,7 +26,7 @@ I've been working on this theme for so long that there are features I don't even
 * Privacy-aware to an extent (no Google Analytics/Fonts, Disqus, etc);
 * Social shortcode including centralized and decentralized platforms;
 * Contact form shortcode (via [Formspree](https://formspree.io/));
-* Open Graph, Twitter Cards and Structured Data (schema.org) meta tags;
+* Open Graph, Twitter Cards and structured data (Schema.org) meta tags;
 * Responsive images via image processing;
 * Basic search functionality via [Fuse.js](https://github.com/krisk/Fuse);
 * Image lazy loading;
@@ -111,25 +111,58 @@ To disable it, you can just remove the `noClasses = false` (as its default value
 
 ## Image processing
 
-By default, images with width equal or greater than 1280 pixels are processed (resized) into 3 resolutions: 1280x, 960x and 640x (this one with quality at 90, as opposed to the default 75).
+By default, images are responsive. This is achieved through image processing, where images are resized depending on their width.
 
-You can change this behavior via config:
+For example, images with width equal or greater than 1280 pixels are processed (resized) into 3 sizes: `1280x`, `960x` and `640x`.
+
+If using Hugo v0.83 or above, a set of WEBP files will be generated as well.
+
+Cover images will *also* be resized (using the [Fill](https://gohugo.io/content-management/image-processing/#fill) method) for Open Graph (`1200x630`) and Twitter Cards (`1280x640`).
+
+You can change this behavior via config. Below you can find the default params:
 
 ```toml
-[params.imageProc]
-  highRes   = [ "1280x", "1280w" ]
-  mediumRes = [ "960x", "960w" ]
-  lowRes    = [ "640x q90", "640w" ]
-  # entry = [ resize options, condition ]
+[imageProcessing]
+
+  # Enable auto resize
+  # Includes "img" and "figure" shortcodes
+  autoResize = true
   
-  # Images with width equal or greater this value
-  # will be processed into the 3 resolutions above
-  # Valid only for images rendered via markdown
-  # The default value is 1280
-  markupAutoResizeWidth = 1280
+  # Convert "tiff" files to the format below
+  # since the most used browsers don't support it
+  fallbackOptions = "jpeg"
+  
+  # Fill options for Open Graph and Twitter card images
+  # These images are also used in the Schema.org structured data
+  openGraphFillOptions = "1200x630"
+  twitterFillOptions = "1280x640"
+  
+  # Extra formats (along JPEG/PNG)
+  [[imageProcessing.extraFormats]]
+    formatOptions = "webp"
+    mediaType = "image/webp"
+    minVersion = "0.83"
+  
+  # Sizes at which images are resized
+  # Keep the sizes in descending order
+  # The smallest size will be used as the default image
+  [[imageProcessing.sizes]]
+    resizeOptions = "1280x"
+    descriptor = "1280w"
+    minWidth = 1280
+  
+  [[imageProcessing.sizes]]
+    resizeOptions = "960x"
+    descriptor = "960w"
+    minWidth = 960
+  
+  [[imageProcessing.sizes]]
+    resizeOptions = "640x q90"
+    descriptor = "640w"
+    minWidth = 640
 ```
 
-The shortcodes `img` and `figure` will **always** process images and cover images will *also* process resolutions for Open Graph (1200x630) and Twitter (1280x640).
+When using the shortcodes `img` and `figure`, image processing can also be disabled by setting the `resize` param as `false`.
 
 ## Shortcodes
 

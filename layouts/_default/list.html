@@ -1,7 +1,7 @@
 {{ define "main" }}
   
-  {{ $currentTitle := .Scratch.Get "currentTitle" }}
-  
+  {{ $heading := (partial "basic-tags" .).heading }}
+
   <!-- Collect pages using the "search" layout -->
   {{ $searchPages := where .Site.RegularPages "Layout" "eq" "search" }}
 
@@ -12,7 +12,7 @@
       {{ partialCached "search-form" . .Layout }}
     {{ end }}
     
-    <h1>{{ $currentTitle }}</h1>
+    <h1>{{ $heading }}</h1>
     
     {{ if eq .Kind "taxonomy" }}
       {{ if eq .Type "categories" }}

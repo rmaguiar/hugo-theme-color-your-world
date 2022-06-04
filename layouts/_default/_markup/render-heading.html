@@ -9,7 +9,7 @@
 -->
 
 <!-- Get SVG bundle -->
-{{ $svgBundleLink := (.Page.Scratch.Get "svgBundle").RelPermalink }}
+{{ $svgBundleLink := (partialCached "svg-bundle" .) }}
 
 
 {{ $anchoredLinkLevels := seq 2 6 }}

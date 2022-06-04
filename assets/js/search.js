@@ -6,100 +6,19 @@
 'use strict';
 
 const fuseOptions = {
-  shouldSort: true,
-  threshold: 0,
-  ignoreLocation: true,
-  maxPatternLength: {{ .Site.Params.Search.maxLength | default .Site.Data.default.search.maxLength }},
-  minMatchCharLength: {{ .Site.Params.Search.minLength | default .Site.Data.default.search.minLength }},
   keys: [
     { name: 'title',        weight: .4 },
     { name: 'tags',         weight: .3 },
     { name: 'description',  weight: .2 },
     { name: 'content',      weight: .1 }
-  ]
+  ],
+  ignoreLocation: true,
+  minMatchCharLength: {{ .Site.Params.Search.minLength | default .Site.Data.default.search.minLength }},
+  shouldSort: false,
+  threshold: 0
 }
 
-// Sanitize
-function getUrlParameter(name) {
-  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-  const results = regex.exec(location.search);
-  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
-
-// Capture input
-const searchQuery = getUrlParameter('q');
-
-// Search info section
-const searchInfo = document.querySelector('#search-info');
-
-// Show message
-function report(message, type) {
-  const el = document.createElement('p');
-  
-  el.textContent = message;
-  
-  if (type) {
-    el.classList.add(type);
-  }
-  
-  searchInfo.appendChild(el);
-}
-
-if (searchQuery) {
-
-  // Transfer text to search field
-  document.querySelector('.search-box input')
-    .value = searchQuery;
-  
-  executeSearch(searchQuery);
-  report('{{ T "searchProcessing" }}');
-  
-} else {
-  report('{{ T "searchAwaitingSearch" }}');
-}
-
-
-function executeSearch(searchQuery) {
-  fetch('index.json')
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    
-    // Limit results and throw an error if too many pages are found
-    const limit = {{ .Site.Params.Search.maxResults | default 30 }};
-
-    import('/libs/fuse.js@6.5.3/dist/fuse.basic.esm.min.js')
-      .then((fuseBasic) => {
-        const fuse = new fuseBasic.default(data, fuseOptions);
-        return fuse.search(searchQuery);
-      })
-      .then((output) => {
-        searchInfo.firstElementChild.remove();
-        report('{{ T "searchResultsFor" }}: ' + searchQuery);
-
-        const matches = output.length;
-        
-        if (matches > 0) {
-          if (matches === 1) {
-            report('{{ T "searchOnePageFound" }}.');
-          } else if (1 < matches && matches < limit + 1) {
-            report(matches + ' {{ T "searchPagesFound" }}.');
-          } else {
-            report('{{ T "searchTooMany" }}', 'error');
-          }
-        } else {
-          report('{{ T "searchNoPageFound" }}', 'error');
-        }
-        
-        if (0 < matches && matches < limit + 1) {
-          populateResults(output);
-        }
-      });
-  });
-}
-
+const searchResults = document.querySelector('#search-results');
 
 // Populate results
 function populateResults(output) {
@@ -139,7 +58,93 @@ function populateResults(output) {
       postLink.appendChild(htmlPostTitle);
     }
 
-    document.querySelector('#search-results')
-      .appendChild(resultsTemplate);
+    searchResults.appendChild(resultsTemplate);
   });
+}
+
+
+// Search info section
+const searchInfo = document.querySelector('#search-info');
+
+// Show message
+function report(message, type) {
+  const el = document.createElement('p');
+  
+  el.textContent = message;
+  
+  if (type) {
+    el.classList.add(type);
+  }
+  
+  searchInfo.appendChild(el);
+}
+
+
+function executeSearch(query) {
+  fetch(searchResults.getAttribute('data-search-index'))
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    
+    // Limit results and throw an error if too many pages are found
+    const limit = {{ .Site.Params.Search.maxResults | default 30 }};
+
+    import(
+      '/libs/fuse.js@' +
+      searchResults.getAttribute('data-lib-version') +
+      '/dist/fuse.basic.esm.min.js'
+    )
+    .then((fuseBasic) => {
+      const fuse = new fuseBasic.default(data, fuseOptions);
+      return fuse.search(query);
+    })
+    .then((output) => {
+      searchInfo.firstElementChild.remove();
+      report('{{ T "searchResultsFor" }}: ' + query);
+
+      const matches = output.length;
+      
+      if (matches > 0) {
+        if (matches === 1) {
+          report('{{ T "searchOnePageFound" }}.');
+        } else if (1 < matches && matches < limit + 1) {
+          report(matches + ' {{ T "searchPagesFound" }}.');
+        } else {
+          report('{{ T "searchTooMany" }}', 'error');
+        }
+      } else {
+        report('{{ T "searchNoPageFound" }}', 'error');
+      }
+      
+      if (0 < matches && matches < limit + 1) {
+        populateResults(output);
+      }
+    });
+  });
+}
+
+
+// Sanitize
+function getUrlParameter(string) {
+  string = string.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  const regex = new RegExp('[\\?&]' + string + '=([^&#]*)');
+  const results = regex.exec(location.search);
+  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+// Capture input
+const searchQuery = getUrlParameter('q');
+
+if (searchQuery) {
+
+  // Transfer text to search field
+  document.querySelector('.search-box input')
+    .value = searchQuery;
+  
+  executeSearch(searchQuery);
+  report('{{ T "searchProcessing" }}');
+  
+} else {
+  report('{{ T "searchAwaitingSearch" }}');
 }

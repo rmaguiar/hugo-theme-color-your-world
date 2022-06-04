@@ -1,10 +1,9 @@
 <!--
   Usage:
-    figure "weird_cat.jpg" "Something that can (or not) be a cat."
-    figure src="weird_cat.jpg" alt="Something that can (or not) be a cat."
-    figure class="border" src="weird_cat.jpg" alt="Something that can (or not) be a cat."
-    figure "weird_cat.jpg" "Something that can (or not) be a cat." "border"
-    figure class="border" src="weird_cat.jpg" caption="Something that can (or not) be a cat." alt="Ask someone blind if a caption and alt text are the same thing."
+    img "weird_cat.jpg" "Something that can (or not) be a cat."
+    img src="weird_cat.jpg" alt="Something that can (or not) be a cat."
+    img class="border" src="weird_cat.jpg" alt="Something that can (or not) be a cat." resize=false
+    img "weird_cat.jpg" "Something that can (or not) be a cat." "border" false
 
   Default available classes:
     border
@@ -12,12 +11,16 @@
 -->
 
 {{ $file    := .Get "src"     | default (.Get 0) }}
-{{ $caption := .Get "caption" | default (.Get 1) | markdownify }}
+{{ $caption := (.Get "caption" | default (.Get 1)) | markdownify }}
 {{ $class   := .Get "class"   | default (.Get 2) }}
-{{ $alt     := .Get "alt"     | default $caption }}
+{{ $resize  := .Get "resize"  | default (.Get 3) }}
+{{ $altText := .Get "alt"     | default $caption }}
 
-<!-- Image processing options -->
-{{ $imageProc := (dict "highRes" (.Site.Params.imageProc.highRes | default .Site.Data.default.imageProc.highRes) "mediumRes" (.Site.Params.imageProc.mediumRes | default .Site.Data.default.imageProc.mediumRes) "lowRes" (.Site.Params.imageProc.lowRes | default .Site.Data.default.imageProc.lowRes)) }}
+{{ $destination := $file }}
+
+
+<!-- Image processing configuration -->
+{{ $imgProcConfig := partialCached "utilities/image-processing-config" . }}
 
 <!-- Default image path -->
 {{ $imgPath := .Page.Param "imgPath" }}
@@ -26,31 +29,91 @@
   {{ $file = path.Join $imgPath $file }}
 {{ end }}
 
-{{ with $.Page.Resources.GetMatch $file }}
+{{ $inputFile := .Page.Resources.GetMatch $file }}
 
-  {{ $mediumRes := (index $imageProc.mediumRes 0) }}
 
-  {{ $outputSet := slice }}
-  {{ $inputFile := . }}
+{{ with partial "utilities/image-processing" (dict "context" . "input" $inputFile "resize" $resize "config" $imgProcConfig) }}
+
+  {{ if .sets.default }}
   
-  {{ range $imageProc }}
-    {{ $outputSet = $outputSet | append (printf "%s %s" (($inputFile.Resize (index . 0)).RelPermalink) (index . 1)) }}
-  {{ end }}
-
-  <figure>
-    <img
-      {{ with $class }}class="{{ . }}"{{ end }}
-      loading="lazy"
-      srcset='{{ delimit $outputSet ", " }}'
-      src="{{ (.Resize $mediumRes).RelPermalink }}"
-      width="{{ (.Resize $mediumRes).Width }}"
-      height="{{ (.Resize $mediumRes).Height }}"
-      {{ with $alt }}alt="{{ . }}"{{ end }}
-    />
-
-    {{ with $caption }}
-      <figcaption>{{ . }}</figcaption>
-    {{ end }}
+    <figure>
+      <picture>
+      
+        <!-- Extra sets -->
+        {{ range .sets.extra }}
+          <source
+            srcset='{{ delimit .source ", " }}'
+            type="{{ .mediaType }}"
+          >
+        {{ end }}
+        
+        <!-- Default set -->
+        <source
+          srcset='{{ delimit .sets.default ", " }}'
+          type="{{ .default.MediaType }}"
+        >
+        
+        <img
+          {{ with $class }}class="{{ . }}"{{ end }}
+          loading="lazy"
+          {{ with .default }}
+            src="{{ .RelPermalink }}"
+            width="{{ .Width }}"
+            height="{{ .Height }}"
+          {{ end }}
+          {{ with $altText }}alt="{{ . }}"{{ end }}
+        >
+        
+      </picture>
+      
+      {{ with $caption }}
+        <figcaption>{{ . }}</figcaption>
+      {{ end }}
+    </figure>
     
-  </figure>
+  {{ else }}
+
+    <!-- Avoid trying to get width and height from SVG files -->
+    {{ if .input }}
+    
+      <figure>
+        <img
+          {{ with $class }}class="{{ . }}"{{ end }}
+          loading="lazy"
+          {{ with .input }}
+            src="{{ .RelPermalink }}"
+            {{ if ne .MediaType.SubType "svg" }}
+              width="{{ .Width }}"
+              height="{{ .Height }}"
+            {{ end }}
+          {{ end }}
+          {{ with $altText }}alt="{{ . }}"{{ end }}
+        >
+      {{ with $caption }}
+        <figcaption>{{ . }}</figcaption>
+      {{ end }}
+      </figure>
+      
+    {{ else }}
+    
+      <!-- If local file isn't found, assume it's a remote file -->
+      {{ with ($destination | safeURL) }}
+      
+      <figure>
+        <img
+          {{ with $class }}class="{{ . }}"{{ end }}
+          loading="lazy"
+          src="{{ . }}"
+          {{ with $altText }}alt="{{ . }}"{{ end }}
+        >
+        
+        {{ with $caption }}
+          <figcaption>{{ . }}</figcaption>
+        {{ end }}
+      </figure>
+      {{ end }}
+    {{ end }}
+
+  {{ end }}
+  
 {{ end }}

@@ -22,39 +22,52 @@
 
 [imageProcessing]
 
-  # Enable auto resize
-  # Includes "img" and "figure" shortcodes
   autoResize = true
   
   # Convert "tiff" files to the format below
   # since the most used browsers don't support it
   fallbackOptions = "jpeg"
   
-  # Fill options for Open Graph and Twitter Card images
-  # These images are also used in the Schema.org structured data
-  openGraphFillOptions = "1200x630"
-  twitterFillOptions = "1280x640"
+  #defaultResize = "960x"
   
-  # Extra formats (along JPEG/PNG)
+  openGraphFill = "1200x630"
+  twitterFill = "1280x640"
+  
+  #markupAutoResizeWidth = 1280
+  
+  #[[imageProcessing.extraFormats]]
+    #formatOptions = "avif"
+    #mediaType = "image/avif"
+    #minVersion = "?"
+
   [[imageProcessing.extraFormats]]
     formatOptions = "webp"
     mediaType = "image/webp"
     minVersion = "0.83"
   
-  # Sizes at which images are resized
   # Keep the sizes in descending order
-  # The smallest size will be used as the default image
   [[imageProcessing.sizes]]
     resizeOptions = "1280x"
-    descriptor = "1280w"
+    label = "1280w"
     minWidth = 1280
   
   [[imageProcessing.sizes]]
     resizeOptions = "960x"
-    descriptor = "960w"
+    label = "960w"
     minWidth = 960
   
   [[imageProcessing.sizes]]
     resizeOptions = "640x q90"
-    descriptor = "640w"
+    label = "640w"
     minWidth = 640
+    #defaultResize = true
+
+  #[[imageProcessing.sizes]]
+    #resizeOptions = "320x q90"
+    #label = "320w"
+    #minWidth = 320
+
+  #[[imageProcessing.sizes]]
+    #resizeOptions = "160x q90"
+    #label = "160w"
+    #minWidth = 160
