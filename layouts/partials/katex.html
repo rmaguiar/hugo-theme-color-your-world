@@ -20,9 +20,6 @@
 <!-- copy-tex extension -->
 {{ if or (in .Params.katexExtensions "copy-tex") (in .Site.Params.katexExtensions "copy-tex") }}
 
-  {{ $copyTexCSS := resources.Get (printf "libs/katex@%s/dist/contrib/copy-tex.css" $katexVersion) | minify | fingerprint }}
-  <link rel="stylesheet" href="{{ $copyTexCSS.Permalink }}" integrity="{{ $copyTexCSS.Data.Integrity }}" crossorigin="anonymous">
-
   {{ $copyTexJS := resources.Get (printf "libs/katex@%s/dist/contrib/copy-tex.js" $katexVersion) | minify | fingerprint }}
   <script defer src="{{ $copyTexJS.Permalink }}" integrity="{{ $copyTexJS.Data.Integrity }}" crossorigin="anonymous"></script>
   

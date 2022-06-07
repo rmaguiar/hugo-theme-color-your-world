@@ -17,7 +17,7 @@
 
 [libs]
   fusejs  = "6.6.2"
-  katex   = "0.15.6"
+  katex   = "0.16.0"
 
 
 [imageProcessing]
