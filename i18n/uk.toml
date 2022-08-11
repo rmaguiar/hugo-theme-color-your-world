@@ -1,0 +1,169 @@
+# Header & Footer
+
+[ariaMainMenu]
+other = "Головне меню."
+
+[changeAccent]
+other = "Змінити колір."
+
+[changeMode]
+other = "Змінити світлий/темний режим."
+
+[noscript]
+other = "Неможливо запустити JavaScript. Деякі функції недоступні."
+
+
+# Pages
+
+[anchorFor]
+other = "Якір для"
+
+[tableOfContents]
+other = "Зміст"
+
+[publishedOn]
+other = "Опубліковано:"
+
+[lastUpdatedOn]
+other = "Останній раз оновлено:"
+
+
+# Footnotes
+
+[references]
+other = "Джерела"
+
+[seeFootnotes]
+other = "Дивитися виноски."
+
+[return]
+other = "Повернутися"
+
+[returnToText]
+other = "Повернутися до тексту."
+
+
+# Contact form
+
+[name]
+other = "Ім'я"
+
+[subject]
+other = "Тема"
+
+[message]
+other = "Повідомлення"
+
+[submit]
+other = "Відправити"
+
+
+# List (layout)
+
+[tag]
+other = "Тег"
+
+[tags]
+other = "Теги"
+
+[category]
+other = "Категорія"
+
+[categories]
+other = "Категорії"
+
+[ariaPagination]
+other = "Навігація по сторінках."
+
+[ariaGoToPage]
+other = "Перейти на сторінку {{ .PageNumber }}."
+
+[ariaGoToFirst]
+other = "Перша сторінка."
+
+[ariaGoToNext]
+other = "Наступна."
+
+[ariaGoToPrev]
+other = "Попередня."
+
+[ariaGoToLast]
+other = "Остання."
+
+
+# List (meta tags)
+
+[page]
+other = "сторінка"
+
+[of]
+other = "з"
+
+[posts]
+other = "Дописи"
+
+[postsUnderTag]
+other = "Дописи під тегом \"{{ .Title }}\""
+
+[postsUnderCategory]
+other = "Дописи під категорією \"{{ .Title }}\"."
+
+[pageContaining]
+other = "Сторінка містить"
+
+
+# Search form
+
+[searchLabel]
+other = "Пошук"
+
+[searchAriaButton]
+other = "Запустити пошук."
+
+[searchInput]
+other = "Поле пошуку. Приймає від {{ .minLength }} до {{ .maxLength }} символів."
+
+
+# Search results page
+
+[searchNoPageFound]
+other = "Сторінок не було знайдено."
+
+[searchResultsFor]
+other = "Результати для пошукового запиту"
+
+[searchOnePageFound]
+other = "Одна сторінка знайдена"
+
+[searchPagesFound]
+other = "сторінки знайдені"
+
+[searchProcessing]
+other = "Обробка пошуку..."
+
+[searchAwaitingSearch]
+other = "В очікуванні результату."
+
+[searchTooMany]
+other = "Знайдено забагато сторінок. Спробуйте повторити пошук за іншим терміном."
+
+
+# Translations
+
+[alsoAvailable]
+other = "Також доступно"
+
+[and]
+other = " та "
+
+
+# Misc
+
+[missingCodec]
+other = "Браузер не підтримує HTML5 аудіо/відео."
+
+[boxContainingCode]
+other = "Поле, що містить код."
+
+[boxContainingExpression]
+other = "Поле, що містить вираз."
