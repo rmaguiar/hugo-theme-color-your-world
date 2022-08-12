@@ -2,7 +2,7 @@
   {
     "entry": "facebook",
     "label": "Facebook",
-    "base": "https://facebook.com/",
+    "base": "https://facebook.com/<username>",
     "icon": {
       "id": "facebook",
       "source": "Font-Awesome"
@@ -11,7 +11,7 @@
   {
     "entry": "flickr",
     "label": "Flickr",
-    "base": "https://www.flickr.com/",
+    "base": "https://www.flickr.com/<username>",
     "icon": {
       "id": "flickr",
       "source": "Font-Awesome"
@@ -29,7 +29,7 @@
   {
     "entry": "github",
     "label": "GitHub",
-    "base": "https://github.com/",
+    "base": "https://github.com/<username>",
     "icon": {
       "id": "github",
       "source": "Font-Awesome"
@@ -38,7 +38,7 @@
   {
     "entry": "gitlab",
     "label": "GitLab",
-    "base": "https://gitlab.com/",
+    "base": "https://gitlab.com/<username>",
     "icon": {
       "id": "gitlab",
       "source": "Font-Awesome"
@@ -47,7 +47,7 @@
   {
     "entry": "instagram",
     "label": "Instagram",
-    "base": "https://www.instagram.com/",
+    "base": "https://www.instagram.com/<username>",
     "icon": {
       "id": "instagram",
       "source": "Font-Awesome"
@@ -56,7 +56,7 @@
   {
     "entry": "keybase",
     "label": "Keybase",
-    "base": "https://keybase.io/",
+    "base": "https://keybase.io/<username>",
     "icon": {
       "id": "keybase",
       "source": "Font-Awesome"
@@ -65,7 +65,7 @@
   {
     "entry": "linkedin",
     "label": "LinkedIn",
-    "base": "https://www.linkedin.com/in/",
+    "base": "https://www.linkedin.com/in/<username>",
     "icon": {
       "id": "linkedin",
       "source": "Font-Awesome"
@@ -92,7 +92,7 @@
   {
     "entry": "medium",
     "label": "Medium",
-    "base": "https://medium.com/",
+    "base": "https://<username>.medium.com/",
     "icon": {
       "id": "medium",
       "source": "Font-Awesome"
@@ -119,7 +119,7 @@
   {
     "entry": "reddit",
     "label": "Reddit",
-    "base": "https://www.reddit.com/user/",
+    "base": "https://www.reddit.com/user/<username>",
     "icon": {
       "id": "reddit",
       "source": "Font-Awesome"
@@ -137,7 +137,7 @@
   {
     "entry": "snapchat",
     "label": "Snapchat",
-    "base": "https://www.snapchat.com/add/",
+    "base": "https://www.snapchat.com/add/<username>",
     "icon": {
       "id": "snapchat",
       "source": "Font-Awesome"
@@ -146,7 +146,7 @@
   {
     "entry": "soundcloud",
     "label": "SoundCloud",
-    "base": "https://soundcloud.com/",
+    "base": "https://soundcloud.com/<username>",
     "icon": {
       "id": "soundcloud",
       "source": "Font-Awesome"
@@ -155,7 +155,7 @@
   {
     "entry": "stackOverflow",
     "label": "Stack Overflow",
-    "base": "https://stackoverflow.com/users/",
+    "base": "https://stackoverflow.com/users/<username>",
     "icon": {
       "id": "stack-overflow",
       "source": "Font-Awesome"
@@ -164,7 +164,7 @@
   {
     "entry": "strava",
     "label": "Strava",
-    "base": "https://www.strava.com/athletes/",
+    "base": "https://www.strava.com/athletes/<username>",
     "icon": {
       "id": "strava",
       "source": "Font-Awesome"
@@ -173,7 +173,7 @@
   {
     "entry": "telegram",
     "label": "Telegram",
-    "base": "https://t.me/",
+    "base": "https://t.me/<username>",
     "icon": {
       "id": "telegram",
       "source": "Font-Awesome"
@@ -182,7 +182,7 @@
   {
     "entry": "twitch",
     "label": "Twitch",
-    "base": "https://www.twitch.tv/",
+    "base": "https://www.twitch.tv/<username>",
     "icon": {
       "id": "twitch",
       "source": "Font-Awesome"
@@ -191,7 +191,7 @@
   {
     "entry": "twitter",
     "label": "Twitter",
-    "base": "https://twitter.com/",
+    "base": "https://twitter.com/<username>",
     "icon": {
       "id": "twitter",
       "source": "Font-Awesome"
@@ -200,7 +200,7 @@
   {
     "entry": "vimeo",
     "label": "Vimeo",
-    "base": "https://vimeo.com/",
+    "base": "https://vimeo.com/<username>",
     "icon": {
       "id": "vimeo",
       "source": "Font-Awesome"
@@ -209,7 +209,7 @@
   {
     "entry": "whatsapp",
     "label": "WhatsApp",
-    "base": "https://wa.me/",
+    "base": "https://wa.me/<username>",
     "icon": {
       "id": "whatsapp",
       "source": "Font-Awesome"
@@ -218,7 +218,7 @@
   {
     "entry": "xing",
     "label": "XING",
-    "base": "https://www.xing.com/profile/",
+    "base": "https://www.xing.com/profile/<username>",
     "icon": {
       "id": "xing",
       "source": "Font-Awesome"
@@ -227,7 +227,7 @@
   {
     "entry": "youtube",
     "label": "YouTube",
-    "base": "https://youtube.com/channel/",
+    "base": "https://youtube.com/channel/<username>",
     "icon": {
       "id": "youtube",
       "source": "Font-Awesome"

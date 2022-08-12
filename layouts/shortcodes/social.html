@@ -9,21 +9,21 @@
   
   
   <div class="social">
-
+  
     {{ range .Site.Data.social }}
-
+    
       {{ $currentEntry  := .entry }}
       {{ $currentLabel  := .label }}
       {{ $currentBase   := .base }}
       {{ $currentIcon   := .icon.id }}
-
+      
       {{ if not .decentralized }}
-
+      
         {{ with (index $centralized $currentEntry) }}
-
-          {{ $url   := printf "%s%s" $currentBase (index . 0) }}
-          {{ $label := $currentLabel }}
         
+          {{ $url   := $currentBase | replaceRE "<username>" (index . 0) }}
+          {{ $label := $currentLabel }}
+          
           {{ with (index . 1) }}
             {{ $label = . }}
           {{ end }}
