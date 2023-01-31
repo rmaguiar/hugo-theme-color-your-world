@@ -1,5 +1,7 @@
 public
 resources
+.DS_Store
 *.bak
 *.kate-swp
-.hugo_build.lock
+*.lock
+

@@ -84,6 +84,16 @@ You can change the default mode and accent colors in the config:
   presets = [ "#1f676b", "#f3a530", "#902b37", "#1dbc91", "#754e85", "#7fc121", "#a8314a", "#ff7433", "#3e6728", "#c063bd" ]
 ```
 
+### Fonts
+
+By default, this theme uses *Oswald* and *Open Sans* fonts. Latin charset only and `woff2` format, which is supported by most modern browsers.
+
+If that's not enough for your use case, you'll have to generate a new set yourself.
+
+Fortunately, it's fairly easy thanks to this tool: [google-webfonts-helper](https://gwfh.mranftl.com/fonts).
+
+In your project folder, add the font files to a folder named `/assets/fonts` and the CSS content to a file named `/assets/scss/fonts/font-face.scss`.
+
 ### Syntax highlighting
 
 This theme comes with two chroma styles, meant to be used with dark and light mode respectively. These are **Monokai** for dark mode and **Solarized Dark** for light mode.
@@ -261,7 +271,6 @@ This information will also be used to generate social meta tags (ie.: rel="me" a
     message = "Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla nullam quis risus."
 ```
 
-
 ## Miscellaneous
 
 ### Rich content
@@ -393,6 +402,12 @@ copyright = "Copyright © 2008–2021, Steve Francia and the Hugo Authors; All r
     # The default is ".5s ease"
     changeTransition = ".3s ease"
 ```
+
+## Contributing
+
+Currently not accepting contributions.
+
+If you have any question or suggestion, please feel free to open an issue.
 
 ## Acknowledgements
 

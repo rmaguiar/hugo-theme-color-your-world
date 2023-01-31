@@ -679,7 +679,7 @@ article > pre,
       color: var(--bg);
     }
 
-    tr {
+    tbody tr {
       transition:
         background .2s ease-in-out,
         color .2s ease-in-out;
@@ -698,6 +698,11 @@ article > pre,
         
         a {
           color: var(--dtl);
+        }
+        
+        ::selection {
+          background: $selected-fg;
+          color: var(--accent);
         }
       }
     }
