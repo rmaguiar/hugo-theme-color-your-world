@@ -94,6 +94,8 @@ Fortunately, it's fairly easy thanks to this tool: [google-webfonts-helper](http
 
 In your project folder, add the font files to a folder named `/assets/fonts` and the CSS content to a file named `/assets/scss/fonts/font-face.scss`.
 
+Also make sure to copy the file `/assets/scss/fonts/variables.scss` into your project folder and change the font names accordingly.
+
 ### Syntax highlighting
 
 This theme comes with two chroma styles, meant to be used with dark and light mode respectively. These are **Monokai** for dark mode and **Solarized Dark** for light mode.
@@ -407,7 +409,7 @@ copyright = "Copyright © 2008–2021, Steve Francia and the Hugo Authors; All r
 
 Currently not accepting contributions.
 
-If you have any question or suggestion, please feel free to open an issue.
+If you have any question or suggestion, please feel free to [open an issue](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/issues).
 
 ## Acknowledgements
 
