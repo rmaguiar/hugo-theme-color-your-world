@@ -12,7 +12,7 @@
       {{ $processedFooterText = $processedFooterText | append $currentParagraph }}
     {{ end }}
     
-    {{ delimit $processedFooterText "" }}
+    {{ delimit $processedFooterText "" | safeHTML }}
 
   {{ end }}
 
@@ -32,7 +32,7 @@
     {{ $processedLangs = $processedLangs | append $currentLang }}
   {{ end }}
 
-  <p>{{ T "alsoAvailable" }}: {{ delimit $processedLangs ", " (T "and") }}.</p>
+  <p>{{ T "alsoAvailable" }}: {{ delimit $processedLangs ", " (T "and") | safeHTML }}.</p>
 
 {{ end }}
 
