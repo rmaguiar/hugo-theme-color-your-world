@@ -93,7 +93,7 @@ function executeSearch(query) {
     import(
       '/libs/fuse.js@' +
       searchResults.getAttribute('data-lib-version') +
-      '/dist/fuse.basic.esm.min.js'
+      '/dist/fuse.basic.min.mjs'
     )
     .then((fuseBasic) => {
       const fuse = new fuseBasic.default(data, fuseOptions);

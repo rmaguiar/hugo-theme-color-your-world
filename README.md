@@ -407,7 +407,7 @@ copyright = "Copyright © 2008–2021, Steve Francia and the Hugo Authors; All r
 
 ## Contributing
 
-Currently not accepting contributions.
+Translations are welcome. I just ask that the font files are kept unmodified. If the Latin charset isn't enough, it's up to the users to choose which charsets they might need.
 
 If you have any question or suggestion, please feel free to [open an issue](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/issues).
 
@@ -421,6 +421,8 @@ If you have any question or suggestion, please feel free to [open an issue](http
 * Philip Walton and [his sticky footer solution](https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/) with Flexbox;
 * [Fuse.js](https://github.com/krisk/Fuse);
 * [KaTeX](https://katex.org/);
+* [@britonad](https://gitlab.com/britonad) for the Ukranian translation;
+* [@moanos](https://gitlab.com/moanos) for the German translation;
 * Hugo and [its community](https://discourse.gohugo.io/).
 
 ## Sponsoring

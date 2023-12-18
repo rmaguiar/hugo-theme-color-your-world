@@ -1,0 +1,169 @@
+# Header & Footer
+
+[ariaMainMenu]
+other = "Hauptmenü"
+
+[changeAccent]
+other = "Aktzentfarbe wechseln."
+
+[changeMode]
+other = "Zu hellem/dunklen Layout wechseln."
+
+[noscript]
+other = "JavaScript kann nicht aufgeführt werden. Einige Funktionen sind wurden deaktiviert."
+
+
+# Pages
+
+[anchorFor]
+other = "Anker für"
+
+[tableOfContents]
+other = "Inhalt"
+
+[publishedOn]
+other = "Veröffentlicht am"
+
+[lastUpdatedOn]
+other = "Zuletzt geändert am"
+
+
+# Footnotes
+
+[references]
+other = "Referenzen"
+
+[seeFootnotes]
+other = "Siehe Fußnoten."
+
+[return]
+other = "Zurück"
+
+[returnToText]
+other = "Zurück zum text."
+
+
+# Contact form
+
+[name]
+other = "Name"
+
+[subject]
+other = "Betreff"
+
+[message]
+other = "Nachricht"
+
+[submit]
+other = "Senden"
+
+
+# List (layout)
+
+[tag]
+other = "Tag"
+
+[tags]
+other = "Tags"
+
+[category]
+other = "Kategorie"
+
+[categories]
+other = "Kategorien"
+
+[ariaPagination]
+other = "Pagination navigation."
+
+[ariaGoToPage]
+other = "Zur Seite {{ .PageNumber }}."
+
+[ariaGoToFirst]
+other = "Zur ersten Seite."
+
+[ariaGoToNext]
+other = "Zur nächsten Seite."
+
+[ariaGoToPrev]
+other = "Zur vorherigen Seite."
+
+[ariaGoToLast]
+other = "Zur letzten Seite."
+
+
+# List (meta tags)
+
+[page]
+other = "Seite"
+
+[of]
+other = "von"
+
+[posts]
+other = "Posts"
+
+[postsUnderTag]
+other = "Posts mit dem \"{{ .Title }}\" tag."
+
+[postsUnderCategory]
+other = "Posts der \"{{ .Title }}\" Kategorie."
+
+[pageContaining]
+other = "Seite mit"
+
+
+# Search form
+
+[searchLabel]
+other = "Suche"
+
+[searchAriaButton]
+other = "Los."
+
+[searchInput]
+other = "Suche. Aktzeptiert {{ .minLength }} - {{ .maxLength }} Zeichen."
+
+
+# Search results page
+
+[searchNoPageFound]
+other = "Keine Seiten gefunden."
+
+[searchResultsFor]
+other = "Ergebnisse für"
+
+[searchOnePageFound]
+other = "Eine Seite gefunden"
+
+[searchPagesFound]
+other = "Seiten gefunden"
+
+[searchProcessing]
+other = "Sucht..."
+
+[searchAwaitingSearch]
+other = "Warten auf Suchergebnisse."
+
+[searchTooMany]
+other = "Zu viele Seiten gefunden Versuche es mit einem anderen Begriff."
+
+
+# Translations
+
+[alsoAvailable]
+other = "Auch verfügbar auf"
+
+[and]
+other = " und "
+
+
+# Misc
+
+[missingCodec]
+other = "Dein Browser unterstützt kein HTML5 Ton/Video."
+
+[boxContainingCode]
+other = "Box mit Code-Ausschnitt."
+
+[boxContainingExpression]
+other = "Box mit Formel."
