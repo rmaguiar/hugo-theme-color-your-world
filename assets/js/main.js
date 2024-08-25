@@ -55,7 +55,7 @@ if (localMode === 'dark') {
 }
 
 
-{{ if .Site.IsServer }}
+{{ if .Hugo.IsServer }}
 
   function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -104,7 +104,7 @@ function getAccent() {
     
   }
   
-  {{ if .Site.IsServer }}
+  {{ if .Hugo.IsServer }}
   
     if (
       (currentMode === 'dark') &&
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
       localStorage.setItem('mode', 'light');
     }
     
-    {{ if .Site.IsServer }}
+    {{ if .Hugo.IsServer }}
       console.log('Local: ' +
       capitalize(localStorage.getItem('mode') + ' mode set.'));
     {{ end }}
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   
-  {{ if .Site.IsServer }}
+  {{ if .Hugo.IsServer }}
   
     // TEST
     // Keyboard shortcut for mode change, here for testing purposes only
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setLight();
       }
       
-      {{ if .Site.IsServer }}
+      {{ if .Hugo.IsServer }}
         console.log('System: ' +
         capitalize(rootElement.getAttribute('data-mode')) + ' mode set.');
       {{ end }}
