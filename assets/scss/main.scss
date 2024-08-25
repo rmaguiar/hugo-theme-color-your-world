@@ -543,7 +543,7 @@ li::before {
 
     // HACK
     // This should be useless out of development if using minification (that should strip the white space)
-    {{ if .Site.IsServer }}
+    {{ if .hugo.IsServer }}
       margin-left: -6px;
     {{ end }}
   }
