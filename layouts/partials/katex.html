@@ -39,5 +39,5 @@
 {{ $katexAutoRenderOptions := resources.Get "js/katex-auto-render-options.js" }}
 {{ $katexPostRender := resources.Get "js/katex-post-render.js" | resources.ExecuteAsTemplate "js/katex-post-render.js" . }}
 
-{{ $katexCustomRender := slice $autoRender $katexAutoRenderOptions $katexPostRender | resources.Concat "js/katex-custom-render.js" | minify | fingerprint }}
+{{ $katexCustomRender := slice $autoRender $katexAutoRenderOptions $katexPostRender | resources.Concat "js/katex-custom-render.js" | fingerprint }}
 <script defer src="{{ $katexCustomRender.Permalink }}" integrity="{{ $katexCustomRender.Data.Integrity }}" crossorigin="anonymous"></script>

@@ -28,7 +28,7 @@ I've been working on this theme for so long that there are features I don't even
 * Contact form shortcode (via [Formspree](https://formspree.io/));
 * Open Graph, Twitter Cards and structured data (Schema.org) meta tags;
 * Responsive images via image processing;
-* Basic search functionality via [Fuse.js](https://github.com/krisk/Fuse);
+* Basic search functionality via [Pagefind](https://pagefind.app/);
 * Image lazy loading;
 * **noscript** capable to an extent (except for KaTeX and search functionality).
 
@@ -357,26 +357,24 @@ copyright = "Copyright © 2008–2021, Steve Francia and the Hugo Authors; All r
   titleSeparator = "|"
   
   [params.search]
-  
+
     # Enable search form (at the post list)
     # The default value is false
     enable = true
-  
+
     # Limit search results
     # The default value is 30
     maxResults = 15
-    
+
     # Limit seach field input and pattern matching
     minLength = 2   # Default is 3
     maxLength = 42  # Default is 32
-    
+
     # Optional placeholder for search field
     placeholder = "ie.: lorem ipsum"
-    
-    # Stop word filter list
-    # Can also be set PER PAGE via front matter
-    # There's no default value
-    stopWords = [ "a", "an", "and", "in", "the", "to", "was", "were", "with" ]
+
+    # Results per page
+    pageResults = 3
 
   [params.style]
   
@@ -419,7 +417,8 @@ If you have any question or suggestion, please feel free to [open an issue](http
 * JeffProd and [his article](https://en.jeffprod.com/blog/2018/build-your-own-Hugo-website-search-engine/) about building a custom search engine for Hugo;
 * Many people [on this forked gist](https://gist.github.com/eddiewebb/735feb48f50f0ddd65ae5606a1cb41ae) for their takes on Fuse.js + Hugo;
 * Philip Walton and [his sticky footer solution](https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/) with Flexbox;
-* [Fuse.js](https://github.com/krisk/Fuse);
+* [Fuse.js](https://github.com/krisk/Fuse) (now replaced with Pagefind);
+* [Pagefind](https://pagefind.app/);
 * [KaTeX](https://katex.org/);
 * [@britonad](https://gitlab.com/britonad) for the Ukranian translation;
 * [@moanos](https://gitlab.com/moanos) for the German translation;

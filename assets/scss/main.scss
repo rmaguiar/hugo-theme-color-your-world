@@ -540,12 +540,6 @@ li::before {
   
   ol li p:first-of-type {
     display: inline;
-
-    // HACK
-    // This should be useless out of development if using minification (that should strip the white space)
-    {{ if .Site.IsServer }}
-      margin-left: -6px;
-    {{ end }}
   }
   
   // HACK
@@ -615,6 +609,7 @@ code,
     background-color $change-transition,
     color $change-transition;
 }
+
 
 
 article > pre,
@@ -823,10 +818,10 @@ article > header {
 
 .katex-display {
   border: 1px dashed var(--alt-fg);
-  
+
   overflow-x: auto;
   padding: 15px 30px;
-  
+
   &:focus {
     border: 1px solid $box-border;
   }
@@ -1563,6 +1558,7 @@ article {
 
 
 // "Honeypot"
+.hidden,
 input[name="_gotcha"] {
   display: none;
 }

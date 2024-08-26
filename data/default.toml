@@ -16,8 +16,7 @@
   paragraph     = "Nothing to see here, buddy."
 
 [libs]
-  fusejs  = "7.0.0"
-  katex   = "0.16.9"
+  katex = "0.16.11"
 
 
 [imageProcessing]

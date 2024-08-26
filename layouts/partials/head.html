@@ -128,7 +128,7 @@
 <!-- Will be replaced by JS anyway -->
 <meta name="theme-color" content="#222">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 
@@ -232,13 +232,6 @@
 {{ end }}
 
 
-<!-- Preload search index -->
-{{ if eq .Layout "search" }}
-  {{ $searchIndexLink := partialCached "search-index" . }}
-  <link rel="preload" href="{{ $searchIndexLink }}" as="fetch" crossorigin="anonymous">
-{{ end }}
-
-
 <!--
   rel="me"
   Not even sure how useful is this nowdays,
@@ -251,11 +244,6 @@
 
 
 <!-- Main JS -->
-{{ $mainJS := resources.Get "js/main.js" | resources.ExecuteAsTemplate "js/main.js" . | minify | fingerprint }}
-
-<!-- Use ESBuild if available -->
-{{ if ge hugo.Version "0.74" }}  
-  {{ $mainJS = resources.Get "js/main.js" | resources.ExecuteAsTemplate "js/main.js" . | js.Build (dict "minify" "true") | fingerprint }}
-{{ end }}
+{{ $mainJS := resources.Get "js/main.js" | resources.ExecuteAsTemplate "js/main.js" . | js.Build (dict "minify" "true") | fingerprint }}
 
 <script src="{{ $mainJS.Permalink }}" integrity="{{ $mainJS.Data.Integrity }}" crossorigin="anonymous"></script>

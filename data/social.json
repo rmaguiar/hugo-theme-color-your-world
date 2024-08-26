@@ -189,11 +189,11 @@
     }
   },
   {
-    "entry": "twitter",
-    "label": "Twitter",
-    "base": "https://twitter.com/<username>",
+    "entry": "x",
+    "label": "X",
+    "base": "https://x.com/<username>",
     "icon": {
-      "id": "twitter",
+      "id": "x-twitter",
       "source": "Font-Awesome"
     }
   },

@@ -21,12 +21,6 @@
     <footer>
       {{ partial "footer" . }}
     </footer>
-    
-    <!-- Search -->
-    {{ if eq .Layout "search" }}
-      {{ $searchJS := resources.Get "js/search.js" | resources.ExecuteAsTemplate (print "js/search.js" | relLangURL) . | minify | fingerprint }}
-      <script async type="module" src="{{ $searchJS.Permalink }}" integrity="{{ $searchJS.Data.Integrity }}" crossorigin="anonymous"></script>
-    {{ end }}
 
     <!-- KaTeX -->
     {{ if or .Params.katex .Site.Params.katex .Params.math .Site.Params.math }}

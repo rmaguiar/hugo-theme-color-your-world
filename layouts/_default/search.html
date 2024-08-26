@@ -1,10 +1,11 @@
 {{ define "main" }}
 
+  <!-- Get SVG bundle -->
+  {{ $svgBundleLink := (partialCached "svg-bundle" .) }}
+
   <main class="list">
 
     {{ partialCached "search-form" . }}
-    
-    {{ $searchIndexLink := partialCached "search-index" . }}
 
     <h1>{{ .Title }}</h1>
     
@@ -15,16 +16,68 @@
     <ul
       id="search-results"
       class="posts"
-      data-search-index="{{ $searchIndexLink }}"
-      data-lib-version="{{ .Site.Data.default.libs.fusejs }}"
     />
       <!-- Results -->
     </ul>
+
+    <nav>
+      <ul class="pagination hidden">
+
+        <li class="back first">
+          <a class="btn" href="#" aria-label="{{ T "ariaGoToFirst" }}">
+            <svg transform="rotate(180)" aria-hidden="true">
+              <use xlink:href="{{ $svgBundleLink }}#angle-double-right">
+            </svg>
+          </a>
+        </li>
+
+        <li class="back prev">
+          <a class="btn" href="#" aria-label="{{ T "ariaGoToPrev" }}">
+            <svg transform="rotate(180)" aria-hidden="true">
+              <use xlink:href="{{ $svgBundleLink }}#angle-right">
+            </svg>
+          </a>
+        </li>
+
+        <li class="current">
+          <p>
+            <!--
+              JavaScript generated content
+              Page number
+            -->
+          </p>
+        </li>
+
+        <li class="advance next">
+          <a class="btn" href="#" aria-label="{{ T "ariaGoToNext" }}">
+            <svg aria-hidden="true">
+              <use xlink:href="{{ $svgBundleLink }}#angle-right">
+            </svg>
+          </a>
+        </li>
+
+        <li class="advance last">
+          <a class="btn" href="#" aria-label="{{ T "ariaGoToLast" }}">
+            <svg aria-hidden="true">
+              <use xlink:href="{{ $svgBundleLink }}#angle-double-right">
+            </svg>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
     
     <template id="search-results-template">
       <li><a class="btn"></a></li>
     </template>
 
   </main>
+
+  <!-- Search script -->
+  {{ $searchJS := resources.Get "js/search.js" | resources.ExecuteAsTemplate (printf "%s/js/search.js" .Lang) . }}
+
+  <script>
+    {{ $searchJS.Content | safeJS }}
+  </script>
 
 {{ end }}

@@ -1,7 +1,7 @@
 {{ define "main" }}
 
   <main>
-    <article>
+    <article {{ if not .Params.sitemapExclude }}data-pagefind-body{{ end }}>
       <header>
         
         <h1>{{ .Title | emojify }}</h1>
@@ -21,10 +21,10 @@
         
         {{ if not .Date.IsZero }}
           <p>
-            {{ if eq .PublishDate .Lastmod }}
-              {{ T "publishedOn" }} <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "2006-01-02" }}</time>
+            {{ if .Date.Equal .Lastmod }}
+              {{ T "publishedOn" }} <time data-pagefind-meta="date[datetime]" datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "2006-01-02" }}</time>
             {{ else }}
-              {{ T "lastUpdatedOn" }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time>
+              {{ T "lastUpdatedOn" }} <time data-pagefind-meta="date[datetime]" datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time>
             {{ end }}
           </p>
         {{ end }}
