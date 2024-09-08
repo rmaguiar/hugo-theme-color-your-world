@@ -1,6 +1,6 @@
 # Color Your World
 
-[![Hugo](https://img.shields.io/badge/Hugo-%5E0.73.0-ff4088?logo=hugo)](https://gohugo.io/)
+[![Hugo](https://img.shields.io/badge/Hugo-%5E0.122.0-ff4088?logo=hugo)](https://gohugo.io/)
 [![License](https://badgen.net/badge/license/MIT/blue)](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/blob/master/LICENSE)
 [![Hugo Themes](https://badgen.net/badge/Hugo%20Themes/Color%20Your%20World?color=1dbc91)](https://themes.gohugo.io/hugo-theme-color-your-world/)
 [![Buy Me a Coffee](https://badgen.net/badge/icon/buy%20me%20a%20coffee?icon=kofi&label&color=ff5e5b)](https://ko-fi.com/rmaguiar)
@@ -42,7 +42,7 @@ I've been working on this theme for so long that there are features I don't even
 ## Requirements
 
 * Hugo Extended
-* Minimum version: 0.73.0
+* Minimum version: 0.122.0
 
 ## Installation
 

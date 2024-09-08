@@ -25,11 +25,11 @@
   {{ end }}
 {{ else if (eq .Kind "section") }}
   <link rel="canonical" href="{{ .Paginator.URL | absURL }}">
-  
+
   {{ if .Paginator.HasPrev }}
     <link rel="prev" href="{{ .Paginator.Prev.URL | absURL }}">
   {{ end }}
-  
+
   {{ if .Paginator.HasNext }}
     <link rel="next" href="{{ .Paginator.Next.URL | absURL }}">
   {{ end }}
@@ -77,7 +77,7 @@
 <!-- More social crap -->
 {{ if and (in .Site.Params.mainSections .Section) (.IsPage) (not .Params.sitemapExclude) }}
   <meta property="og:type" content="article">
-  
+
   {{ if not .Date.IsZero }}
     <meta property="article:published_time" content="{{ .PublishDate.Format "2006-01-02" | safeHTML }}">
     <meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02" | safeHTML }}">
@@ -87,11 +87,11 @@
   {{ with .Params.author }}
     <meta property="article:author" content="{{ . }}">
   {{ end }}
-  
+
   {{ with .Site.Params.Social.Centralized.twitter }}
     <meta name="twitter:creator" content="{{ printf "@%s" (index . 0) }}">
   {{ end}}
-  
+
 {{ else }}
   <meta property="og:type" content="website">
 {{ end -}}
@@ -150,15 +150,15 @@
       {{- with (index $centralized $currentEntry) -}}
         {{- $sameAs = $sameAs | append (printf "%s%s" $currentBase (index . 0)) -}}
       {{- end -}}
-      
+
     {{- else -}}
-    
+
       {{- if (index $decentralized $currentEntry) -}}
         {{- range (index $decentralized $currentEntry) -}}
           {{- $sameAs = $sameAs | append (index . 0) -}}
         {{- end -}}
       {{- end -}}
-      
+
     {{- end -}}
 
   {{- end -}}
@@ -170,10 +170,10 @@
   TODO
   The lack of "datePublished" will throw an error,
   but I don't know if leaving it as "0001-01-01" is any better.
-  
+
   Also, there's something wrong with the Google's validation tool.
   It's ignoring the "Person" type for https://schema.org/publisher.
-  
+
   Reference: https://www.drupal.org/project/schema_metatag/issues/3097526
 -->
 
@@ -239,7 +239,7 @@
 -->
 
 {{- range $sameAs -}}
-  <link rel="me" href="{{ . }}"> 
+  <link rel="me" href="{{ . }}">
 {{ end -}}
 
 
