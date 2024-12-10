@@ -1,6 +1,6 @@
 # Color Your World
 
-[![Hugo](https://img.shields.io/badge/Hugo-%5E0.122.0-ff4088?logo=hugo)](https://gohugo.io/)
+[![Hugo](https://img.shields.io/badge/Hugo-%5E0.128.0-ff4088?logo=hugo)](https://gohugo.io/)
 [![License](https://badgen.net/badge/license/MIT/blue)](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/blob/master/LICENSE)
 [![Hugo Themes](https://badgen.net/badge/Hugo%20Themes/Color%20Your%20World?color=1dbc91)](https://themes.gohugo.io/hugo-theme-color-your-world/)
 [![Buy Me a Coffee](https://badgen.net/badge/icon/buy%20me%20a%20coffee?icon=kofi&label&color=ff5e5b)](https://ko-fi.com/rmaguiar)
@@ -42,7 +42,7 @@ I've been working on this theme for so long that there are features I don't even
 ## Requirements
 
 * Hugo Extended
-* Minimum version: 0.122.0
+* Minimum version: 0.128.0
 
 ## Installation
 
@@ -207,20 +207,23 @@ Here's an example of config file:
   strava        = [ "<username>" ]
   telegram      = [ "<username>" ]
   twitch        = [ "<username>" ]
-  twitter       = [ "<username>", "@birb" ]
   vimeo         = [ "<username>" ]
   whatsapp      = [ "<number>" ]
+  x             = [ "<username>", "@birb" ]
   xing          = [ "<username>" ]
-  youtube       = [ "<channelid>" ]
+  youtube       = [ "<username>" ]
   #entry         = [ "username", "label (optional)" ]
   
   # The "entry" here IS important. It's used to load the data.
 
 [params.social.decentralized]
 
+  [params.social.decentralized.bsky]
+    1 = [ "https://bsky.app/profile/<username>.bsky.social", "bsky.social" ]
+    #entry = [ "full url", "label (required)" ]
+
   [params.social.decentralized.element]
     1 = [ "https://app.element.io/#/user/<username>:matrix.org", "matrix.org" ]
-    #entry = [ "full url", "label (required)" ]
     
   [params.social.decentralized.funkwhale]
     1 = [ "https://open.audio/<username>", "open.audio" ]
@@ -408,6 +411,8 @@ copyright = "Copyright © 2008–2021, Steve Francia and the Hugo Authors; All r
 Translations are welcome. I just ask that the font files are kept unmodified. If the Latin charset isn't enough, it's up to the users to choose which charsets they might need.
 
 If you have any question or suggestion, please feel free to [open an issue](https://gitlab.com/rmaguiar/hugo-theme-color-your-world/-/issues).
+
+Confidential issues will be ignored.
 
 ## Acknowledgements
 

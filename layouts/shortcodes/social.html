@@ -21,7 +21,7 @@
       
         {{ with (index $centralized $currentEntry) }}
         
-          {{ $url   := $currentBase | replaceRE "<username>" (index . 0) }}
+          {{ $url   := $currentBase | replaceRE "<username>|<number>" (index . 0) }}
           {{ $label := $currentLabel }}
           
           {{ with (index . 1) }}

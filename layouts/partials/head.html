@@ -148,7 +148,7 @@
     {{- if not .decentralized -}}
 
       {{- with (index $centralized $currentEntry) -}}
-        {{- $sameAs = $sameAs | append (printf "%s%s" $currentBase (index . 0)) -}}
+        {{- $sameAs = $sameAs | append (replaceRE "<username>|<number>" (index . 0) $currentBase) -}}
       {{- end -}}
 
     {{- else -}}

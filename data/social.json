@@ -1,5 +1,14 @@
 [
   {
+    "entry": "bsky",
+    "label": "Bluesky",
+    "decentralized": true,
+    "icon": {
+      "id": "bsky",
+      "source": "Font-Awesome"
+    }
+  },
+  {
     "entry": "facebook",
     "label": "Facebook",
     "base": "https://facebook.com/<username>",
@@ -92,7 +101,7 @@
   {
     "entry": "medium",
     "label": "Medium",
-    "base": "https://<username>.medium.com/",
+    "base": "https://medium.com/@<username>",
     "icon": {
       "id": "medium",
       "source": "Font-Awesome"
@@ -209,7 +218,7 @@
   {
     "entry": "whatsapp",
     "label": "WhatsApp",
-    "base": "https://wa.me/<username>",
+    "base": "https://wa.me/<number>",
     "icon": {
       "id": "whatsapp",
       "source": "Font-Awesome"
@@ -227,7 +236,7 @@
   {
     "entry": "youtube",
     "label": "YouTube",
-    "base": "https://youtube.com/channel/<username>",
+    "base": "https://youtube.com/@<username>",
     "icon": {
       "id": "youtube",
       "source": "Font-Awesome"
