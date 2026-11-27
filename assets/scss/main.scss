@@ -7,7 +7,7 @@
 
 
 // Get transition for color changes
-$change-transition: {{ .Site.Params.Style.changeTransition | default .Site.Data.default.style.changeTransition }};
+$change-transition: {{ .Site.Params.Style.changeTransition | default hugo.Data.default.style.changeTransition }};
 
 
 

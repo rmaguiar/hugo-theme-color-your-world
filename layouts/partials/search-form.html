@@ -7,8 +7,8 @@
 -->
 {{ $searchPage := index (where .Site.RegularPages "Layout" "eq" "search") 0 }}
 
-{{ $minLength := .Site.Params.Search.minLength | default .Site.Data.default.search.minLength }}
-{{ $maxLength := .Site.Params.Search.maxLength | default .Site.Data.default.search.maxLength }}
+{{ $minLength := .Site.Params.Search.minLength | default hugo.Data.default.search.minLength }}
+{{ $maxLength := .Site.Params.Search.maxLength | default hugo.Data.default.search.maxLength }}
 
 
 <div class="req-js search-box">

@@ -10,7 +10,7 @@
   
   <div class="social">
   
-    {{ range .Site.Data.social }}
+    {{ range hugo.Data.social }}
     
       {{ $currentEntry  := .entry }}
       {{ $currentLabel  := .label }}

@@ -7,7 +7,7 @@
 <!-- If 404 page -->
 {{ if (eq .Kind "404") }}
   
-  {{ $currentHeading = (.Site.Params.notFound.title | default .Site.Data.default.notFound.title) | emojify }}
+  {{ $currentHeading = (.Site.Params.notFound.title | default hugo.Data.default.notFound.title) | emojify }}
 
 <!-- If post list -->
 {{ else if (eq .Kind "section") }}
@@ -54,7 +54,7 @@
 {{ end }}
 
 
-{{ $currentDesc := .Params.Description | emojify }}
+{{ $currentDesc := .Description | emojify }}
 
 {{ if .IsHome }}
   {{ $currentDesc = .Site.Params.description | emojify }}
@@ -65,7 +65,7 @@
 {{ else if eq .Kind "taxonomy" }}
   {{ $currentDesc = printf `%v %v.` (T "pageContaining") $currentHeading }}
 {{ else if (eq .Kind "404") }}
-  {{ $currentDesc = (.Site.Params.notFound.description | default .Site.Data.default.notFound.description) | emojify }}
+  {{ $currentDesc = (.Site.Params.notFound.description | default hugo.Data.default.notFound.description) | emojify }}
 {{ end }}
 
 

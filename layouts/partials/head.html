@@ -106,7 +106,7 @@
   <meta property="og:locale" content="{{ . }}">
 {{ end }}
 
-{{ if .Site.Config.Privacy.Twitter.EnableDNT }}
+{{ if .Site.Config.Privacy.X.EnableDNT }}
   <meta name="twitter:dnt" content="on">
 {{ end }}
 
@@ -120,7 +120,7 @@
 <!-- i18n -->
 {{ if .IsTranslated }}
   {{ range .Translations }}
-    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" title="{{ .Language.LanguageName }}">
+    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" title="{{ .Language.Label }}">
   {{ end }}
 {{ end }}
 
@@ -140,7 +140,7 @@
 {{- $sameAs := slice -}}
 
 {{- if .Site.Params.Social -}}
-  {{- range .Site.Data.social -}}
+  {{- range hugo.Data.social -}}
 
     {{- $currentEntry  := .entry -}}
     {{- $currentBase   := .base -}}
