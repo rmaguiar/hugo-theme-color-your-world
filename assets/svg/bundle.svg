@@ -29,7 +29,7 @@
   <!-- Social stuff -->
   {{ if $.Site.Params.Social }}
     <!-- Get info about social platform and icon id from "social.json" -->
-    {{ range .Site.Data.social }}
+    {{ range hugo.Data.social }}
       {{ if and (or (index $.Site.Params.Social.Centralized .entry) (index $.Site.Params.Social.Decentralized .entry)) .icon }}
         {{ $iconId        := .icon.id }}
         {{ $svgEssential  := `(?:<svg (?:.*?)(viewBox="(?:.*?)")(?:.*?)>((?:.|\n)+?)(?:</svg>))` }}

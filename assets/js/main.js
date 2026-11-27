@@ -1,11 +1,11 @@
 'use strict';
 
 // Get default accent colors
-{{ $defaultDarkAccent   := .Site.Params.Style.darkAccent  | default .Site.Data.default.style.darkAccent }}
-{{ $defaultLightAccent  := .Site.Params.Style.lightAccent | default .Site.Data.default.style.lightAccent }}
+{{ $defaultDarkAccent   := .Site.Params.Style.darkAccent  | default hugo.Data.default.style.darkAccent }}
+{{ $defaultLightAccent  := .Site.Params.Style.lightAccent | default hugo.Data.default.style.lightAccent }}
 
 // Get CSS transition
-{{ $changeTransition := .Site.Params.Style.changeTransition | default .Site.Data.default.style.changeTransition }}
+{{ $changeTransition := .Site.Params.Style.changeTransition | default hugo.Data.default.style.changeTransition }}
 
 // =================================================
 // Mode switcher + Custom accent color

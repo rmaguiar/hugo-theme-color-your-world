@@ -28,7 +28,7 @@
   {{ $processedLangs := slice }}
 
   {{ range .Translations }}
-    {{ $currentLang := printf `<a rel="alternate" hreflang="%s" href="%s">%s</a>` .Language.Lang .RelPermalink .Language.LanguageName }}
+    {{ $currentLang := printf `<a rel="alternate" hreflang="%s" href="%s">%s</a>` .Language.Lang .RelPermalink .Language.Label }}
     {{ $processedLangs = $processedLangs | append $currentLang }}
   {{ end }}
 

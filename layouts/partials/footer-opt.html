@@ -2,8 +2,8 @@
 {{ $svgBundleLink := (partialCached "svg-bundle" .) }}
 
 <!-- Get default accent colors -->
-{{ $defaultLightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
-{{ $defaultDarkAccent   := .Site.Params.Style.darkAccent   | default .Site.Data.default.style.darkAccent }}
+{{ $defaultLightAccent  := .Site.Params.Style.lightAccent  | default hugo.Data.default.style.lightAccent }}
+{{ $defaultDarkAccent   := .Site.Params.Style.darkAccent   | default hugo.Data.default.style.darkAccent }}
 
 {{ $allAccentColors := union (slice $defaultLightAccent $defaultDarkAccent) .Site.Params.Style.presets }}
 

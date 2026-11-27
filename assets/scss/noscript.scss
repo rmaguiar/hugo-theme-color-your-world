@@ -1,5 +1,5 @@
-{{ $lightAccent  := .Site.Params.Style.lightAccent  | default .Site.Data.default.style.lightAccent }}
-{{ $darkAccent   := .Site.Params.Style.darkAccent   | default .Site.Data.default.style.darkAccent }}
+{{ $lightAccent  := .Site.Params.Style.lightAccent  | default hugo.Data.default.style.lightAccent }}
+{{ $darkAccent   := .Site.Params.Style.darkAccent   | default hugo.Data.default.style.darkAccent }}
 
 html {
   --accent: {{ if .Site.Params.Style.isDark }}{{ $darkAccent }}{{ else }}{{ $lightAccent }}{{ end }};
